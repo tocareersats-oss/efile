@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ml"><head><meta charset="utf-8">
+<title>Anatech · ഇ-ഫയൽ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{--bg:#eef1f4;--fg:#16263d;--card:#fff;--bd:#cfd6df;--ac:#0f766e;--acf:#fff;--mu:#5b6b80;--red:#b3261e;--ok:#17703f;--wn:#9a5b00}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1722;--fg:#e6ecf4;--card:#172231;--bd:#2c3b50;--ac:#3dbdb1;--acf:#06201d;--mu:#9bb0c8;--red:#ff8a80;--ok:#6fd49a;--wn:#f0b45a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,"Noto Sans Malayalam","Segoe UI",sans-serif}
+.w{max-width:960px;margin:0 auto;padding:12px}
+h1{font-size:18px;margin:0}
+h3{margin:10px 0 6px;font-size:16px}
+.top{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px;padding-bottom:10px;border-bottom:2px solid var(--fg)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px}
+button,select,input,textarea{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:7px 10px}
+textarea,input[type=text],input[type=email],input[type=password],input[type=date],input[type=number],select.f{width:100%}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+button.on,button.p{background:var(--ac);color:var(--acf);border-color:var(--ac);font-weight:600}
+button:disabled{opacity:.5;cursor:wait}
+.tabs button{border-radius:6px 6px 0 0;padding:6px 9px;font-size:14px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:12px;margin-bottom:10px}
+.r{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.m{color:var(--mu);font-size:13px}
+.b{display:inline-block;font-size:12px;padding:1px 8px;border-radius:4px;border:1px solid var(--bd)}
+.hi{color:var(--red);border-color:var(--red)}.cl{color:var(--ok);border-color:var(--ok)}.wn{color:var(--wn);border-color:var(--wn)}
+.it{cursor:pointer;border-left:4px solid var(--ac)}.it.u{border-left-color:var(--red)}.it:hover{border-color:var(--ac)}
+.lg{border-left:3px solid var(--bd);padding:2px 0 2px 10px;margin:8px 0}
+label{display:block;margin:8px 0 3px;font-size:13px;color:var(--mu)}
+label.k{display:inline-flex;gap:6px;align-items:center;margin:4px 12px 4px 0;color:var(--fg);font-size:14px}
+.sc{overflow-x:auto}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--bd);padding:6px;text-align:left;font-size:14px;vertical-align:top}
+.lo{max-width:380px;margin:8vh auto}
+.er{color:var(--red)}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 12px}
+.sec{margin-top:14px;padding-top:10px;border-top:1px dashed var(--bd)}
+</style></head><body><div class="w" id="app"><p class="m">ലോഡ് ചെയ്യുന്നു…</p></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
+<script>
+const SB=supabase.createClient('https://nuhrymlefclfvtlodcwc.supabase.co','sb_publishable_OKG7B4q4Xwnr3DnnbY3xMg_V4-dwgP_');
+let me=null,uid=null,P=[],ST=[],SA=[],F=[],L=[],K=[],T=[],TE=[],D=[],RM=[],HO=[],AU=[],CFG={pending_days:'5'};
+let tab='',openId=null,err='',prefTapal=null;
+const $=id=>document.getElementById(id);
+const E=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=t=>t?new Date(t).toLocaleString('ml-IN',{dateStyle:'short',timeStyle:'short'}):'';
+const fmtD=t=>t?new Date(t).toLocaleDateString('ml-IN'):'';
+const todayS=()=>new Date().toISOString().slice(0,10);
+const days=t=>Math.max(0,Math.floor((Date.now()-t)/864e5));
+const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const todayL=()=>ymd(new Date());
+function wdays(t0,t1){t1=t1||Date.now();const d=new Date(t0);d.setHours(0,0,0,0);const e=new Date(t1);e.setHours(0,0,0,0);const hs=new Set(HO.map(h=>h.day));let n=0;while(d<e){d.setDate(d.getDate()+1);if(d.getDay()!=0&&!hs.has(ymd(d)))n++}return n}
+const DISP={R:'R — സ്ഥിരമായി സൂക്ഷിക്കുക',D:'D — 10 വർഷത്തിന് ശേഷം നശിപ്പിക്കുക',K:'K — 3 വർഷത്തിന് ശേഷം നശിപ്പിക്കുക',L:'L — 1 വർഷത്തിന് ശേഷം നശിപ്പിക്കുക'};
+const KEEPY={R:null,D:10,K:3,L:1};
+const RK={reminder:'ഓർമ്മപ്പെടുത്തൽ',call_book:'കോൾ ബുക്ക്',lie_over:'ലൈ-ഓവർ'};
+const ORG={office:'ഓഫീസ്',instruction:'നിർദ്ദേശപ്രകാരം',tapal:'തപാലിൽ നിന്ന്'};
+const KIND={create:'ഫയൽ തുടങ്ങി',forward:'ഫോർവേഡ്',return:'തിരിച്ചയച്ചു',close:'തീർപ്പാക്കി',admin_move:'അഡ്മിൻ മാറ്റി നൽകി',link:'ബന്ധിപ്പിച്ചു',tapal_add:'തപാൽ ചേർത്തു',despatch:'ഡെസ്പാച്ച്',reminder:'ഓർമ്മപ്പെടുത്തൽ'};
+const MODE={post:'തപാൽ',courier:'കൊറിയർ',hand:'നേരിട്ട്',email:'ഇമെയിൽ'};
+const PERMS=[['originate','ഫയൽ തുടങ്ങാം'],['tapal','തപാൽ രജിസ്റ്റർ'],['despatch','ഡെസ്പാച്ച് രജിസ്റ്റർ'],['view_all','എല്ലാ ഫയലും കാണാം (വായന മാത്രം)']];
+
+const usr=id=>P.find(x=>x.id==id);
+const seat=id=>ST.find(x=>x.id==id);
+const covers=a=>a.active&&a.from_date<=todayS()&&(!a.to_date||a.to_date>=todayS());
+function seatUsers(sid){const s=new Set();P.forEach(p=>{if(p.active&&p.seat_id==sid)s.add(p.id)});SA.forEach(a=>{if(covers(a)&&a.seat_id==sid){const p=usr(a.user_id);if(p&&p.active)s.add(p.id)}});return [...s]}
+function mySeats(){const s=new Set();if(me.seat_id)s.add(me.seat_id);SA.forEach(a=>{if(covers(a)&&a.user_id==uid)s.add(a.seat_id)});return [...s].filter(id=>{const x=seat(id);return x&&x.active})}
+const sn=id=>{const s=seat(id);return s?E(s.name)+(s.section?' · '+E(s.section):''):'—'};
+const un=id=>{const u=usr(id);return u?E(u.name):'—'};
+const sw=id=>{const u=seatUsers(id);return sn(id)+' <span class="m">('+(u.length?u.map(un).join(', '):'ആരുമില്ല')+')</span>'};
+const perm=p=>me.is_admin||(me.perms||[]).includes(p);
+const hold=f=>f.path[f.path.length-1];
+const flog=f=>L.filter(l=>l.file_id==f.id);
+const lastT=f=>{const a=flog(f);return a.length?new Date(a[a.length-1].created_at).getTime():new Date(f.created_at).getTime()};
+const fno=id=>{const f=F.find(x=>x.id==id);return f?E(f.no):'#'+id};
+function anc(sid){const r=[];let c=seat(sid),n=0;while(c&&c.boss_seat&&n++<100){r.push(c.boss_seat);c=seat(c.boss_seat)}return r}
+function desc(id){const s=new Set([id]);let ch=true;while(ch){ch=false;ST.forEach(p=>{if(p.boss_seat&&s.has(p.boss_seat)&&!s.has(p.id)){s.add(p.id);ch=true}})}return s}
+const cbActive=f=>RM.some(r=>r.file_id==f.id&&r.kind=='call_book'&&!r.done_at&&r.remind_on>todayL()&&r.seat_id==hold(f));
+const inboxF=()=>{const m=mySeats();return F.filter(f=>f.status=='open'&&m.includes(hold(f))&&!cbActive(f))};
+const myRems=()=>{const m=mySeats();return RM.filter(r=>!r.done_at&&m.includes(r.seat_id)).sort((a,b)=>a.remind_on<b.remind_on?-1:1)};
+const dueRems=()=>myRems().filter(r=>r.remind_on<=todayL());
+const tSeat=id=>{const e=TE.filter(x=>x.tapal_id==id&&(x.event=='recorded'||x.event=='redirected')).sort((a,b)=>b.id-a.id)[0];return e?e.seat:null};
+const tDisp=id=>TE.find(x=>x.tapal_id==id&&(x.event=='file_opened'||x.event=='added_to_file'));
+const myTapals=()=>{const m=mySeats();return T.filter(t=>m.includes(tSeat(t.id))&&!tDisp(t.id))};
+const involved=f=>{const m=mySeats();return f.path.some(s=>m.includes(s))||L.some(l=>l.file_id==f.id&&m.includes(l.by_seat))};
+const opts=(a,sel,ph)=>(ph!==undefined?`<option value="">${ph}</option>`:'')+a.map(x=>`<option value="${x[0]}" ${x[0]==sel?'selected':''}>${x[1]}</option>`).join('');
+const seatOpts=(sel,ph,only)=>opts(ST.filter(s=>s.active&&(!only||only.includes(s.id))).map(s=>[s.id,sn(s.id)]),sel,ph);
+
+async function boot(){
+  const {data:{session}}=await SB.auth.getSession();
+  if(!session){uid=null;me=null;render();return}
+  uid=session.user.id;await loadAll();render();
+}
+async function loadAll(){
+  const q=(t,o)=>{let r=SB.from(t).select('*');if(o)r=r.order(o[0],{ascending:o[1]});return r};
+  const r=await Promise.all([q('profiles',['name',true]),q('seats',['name',true]),q('seat_assignments',['id',false]),q('settings'),
+    q('files',['id',false]),q('file_log',['id',true]),q('file_links',['id',true]),q('tapal',['id',false]),q('tapal_events',['id',true]),q('despatch',['id',false]),q('reminders',['remind_on',true]),q('holidays',['day',true])]);
+  const bad=r.find(x=>x.error);if(bad){alert('ഡാറ്റ ലഭിച്ചില്ല: '+bad.error.message);return}
+  [P,ST,SA,,F,L,K,T,TE,D,RM,HO]=r.map(x=>x.data);
+  CFG={pending_days:'5'};r[3].data.forEach(s=>CFG[s.key]=s.value);
+  me=P.find(x=>x.id==uid)||null;
+  if(!me||!me.active){err='ഈ ലോഗിൻ പ്രവർത്തനക്ഷമമല്ല. അഡ്മിനെ സമീപിക്കുക.';await SB.auth.signOut();me=null;uid=null;return}
+  if(me.is_admin){const a=await SB.from('admin_audit').select('*').order('id',{ascending:false}).limit(300);AU=a.data||[]}else AU=[];
+}
+async function login(){
+  $('lb').disabled=true;
+  const {error}=await SB.auth.signInWithPassword({email:$('lu').value.trim(),password:$('lp').value});
+  if(error){err='ഇമെയിൽ അല്ലെങ്കിൽ പാസ്‌വേഡ് ശരിയല്ല.';render();return}
+  err='';tab='';openId=null;await boot();
+}
+async function logout(){await SB.auth.signOut();me=null;uid=null;openId=null;render()}
+async function refresh(){await loadAll();render()}
+async function call(fn,args){const {data,error}=await SB.rpc(fn,args);if(error){alert(error.message);return {ok:false}}return {ok:true,data}}
+async function dbw(p){const {error}=await p;if(error){alert(error.message);return false}return true}
+
+function tabsDef(){
+  const hs=mySeats().length>0,t=[];
+  if(hs)t.push(['in','ഇൻബോക്സ് ('+inboxF().length+')'],['rem','ഓർമ്മപ്പെടുത്തൽ ('+dueRems().length+')'],['tp','വന്ന തപാൽ ('+myTapals().length+')'],['new','പുതിയ ഫയൽ'],['sent','ഞാൻ കൈകാര്യം ചെയ്തവ']);
+  t.push(['srch','തിരയുക']);
+  if(hs)t.push(['rep','എന്റെ റിപ്പോർട്ട്']);
+  if(perm('tapal'))t.push(['treg','തപാൽ രജിസ്റ്റർ']);
+  if(perm('despatch'))t.push(['dreg','ഡെസ്പാച്ച് രജിസ്റ്റർ']);
+  if(perm('view_all'))t.push(['rec','റെക്കോർഡ്സ്']);
+  if(me.is_admin)t.push(['all','എല്ലാ ഫയലുകളും'],['seats','സീറ്റുകൾ'],['users','ജീവനക്കാർ'],['deleg','ചുമതല കൈമാറ്റം'],['arep','സ്ഥാപന റിപ്പോർട്ട്'],['aud','ഓഡിറ്റ്']);
+  return t;
+}
+function render(){
+  const a=$('app');
+  if(!me){a.innerHTML=`<div class="lo c"><h1>📁 Anatech · ഇ-ഫയൽ</h1><form onsubmit="login();return false"><label for="lu">ഇമെയിൽ</label><input id="lu" type="email" autocomplete="username"><label for="lp">പാസ്‌വേഡ്</label><input id="lp" type="password" autocomplete="current-password"><p class="er">${E(err)}</p><button id="lb" class="p" type="submit">ലോഗിൻ</button></form><p class="m">ലോഗിൻ ലഭിക്കാൻ അഡ്മിനെ സമീപിക്കുക.</p></div>`;return}
+  const T_=tabsDef();if(!T_.some(x=>x[0]==tab))tab=T_[0][0];
+  const ms=mySeats();
+  a.innerHTML=`<div class="top"><h1>📁 Anatech · ഇ-ഫയൽ</h1><div class="r"><span>${E(me.name)} <span class="m">${ms.map(sn).join(' / ')}${me.is_admin?' · അഡ്മിൻ':''}</span></span><button onclick="refresh()">പുതുക്കുക</button><button onclick="logout()">ലോഗൗട്ട്</button></div></div>
+  <div class="tabs">${T_.map(t=>`<button class="${tab==t[0]&&!openId?'on':''}" onclick="tab='${t[0]}';openId=null;render()">${t[1]}</button>`).join('')}</div><div id="v"></div>`;
+  const v=$('v');
+  if(openId){const f=F.find(x=>x.id==openId);v.innerHTML=f?fileView(f):'<div class="c">ഫയൽ കണ്ടെത്തിയില്ല.</div>';return}
+  const V={in:()=>list(inboxF(),'ഇൻബോക്സ് ശൂന്യമാണ്.'),rem:remView,rec:recView,tp:tapalMine,new:newForm,sent:()=>list(F.filter(f=>involved(f)&&!inboxF().includes(f)),'ഒന്നും ഇല്ല.'),
+    srch:searchView,rep:myRep,treg:tapalReg,dreg:desReg,all:()=>list(F,'ഫയലുകൾ ഒന്നും ഇല്ല.'),seats:seatsView,users:usersView,deleg:delegView,arep:adminRep,aud:audit};
+  v.innerHTML=V[tab]();
+  if(tab=='new')nfChange();
+}
+function badge(f){return `${f.priority=='h'?'<span class="b hi">അടിയന്തിരം</span>':''}${f.due_on?`<span class="b ${f.status=='open'&&f.due_on<todayL()?'hi':''}">സമയപരിധി ${fmtD(f.due_on)}${f.status=='open'&&f.due_on<todayL()?' — കഴിഞ്ഞു':''}</span>`:''}<span class="b">${ORG[f.origin]}</span><span class="b ${f.status=='closed'?'cl':''}">${f.status=='closed'?'തീർപ്പാക്കി ('+E(f.disposal||'')+')':'തുറന്നത്'}</span>`}
+function list(a,empty){
+  if(!a.length)return `<div class="c m">${empty}</div>`;
+  return a.map(f=>`<div class="c it ${f.priority=='h'?'u':''}" onclick="openId=${f.id};render()"><div class="r"><b>${E(f.no)}</b><span>${E(f.subject)}</span>${badge(f)}</div><div class="m">${f.status=='closed'?'':'ഇപ്പോൾ: '+sw(hold(f))+' · '+wdays(lastT(f))+' പ്രവൃത്തി ദിവസമായി'}</div></div>`).join('');
+}
+
+/* ---------- ഫയൽ ---------- */
+function fileView(f){
+  const ms=mySeats(),h=hold(f),open_=f.status=='open',mineH=open_&&ms.includes(h);
+  let org=ORG[f.origin];
+  if(f.origin=='instruction')org+=': '+sn(f.instructed_by);
+  if(f.origin=='tapal'&&f.tapal_id){const t=T.find(x=>x.id==f.tapal_id);if(t)org+=': '+E(t.reg_no)+' — '+E(t.from_party)}
+  const lk=K.filter(k=>k.file_id==f.id).map(k=>{const x=F.find(y=>y.id==k.linked_file_id);return `<span class="b ${x?'':'m'}" ${x?`style="cursor:pointer" onclick="openId=${x.id};render()"`:''}>${k.kind=='back'?'ബാക്ക് ഫയൽ':'ബന്ധിപ്പിച്ചത്'}: ${x?E(x.no):'#'+k.linked_file_id}</span>`}).join(' ');
+  const tps=TE.filter(e=>e.file_id==f.id).map(e=>{const t=T.find(x=>x.id==e.tapal_id);return t?`<span class="b">തപാൽ ${E(t.reg_no)}</span>`:''}).join(' ');
+  let act='';
+  if(mineH){
+    const s=seat(h),boss=s&&s.boss_seat?seat(s.boss_seat):null;
+    const canClose=!s.boss_seat||(h==f.created_seat&&flog(f).some(l=>l.kind=='forward'));
+    const bossEmpty=boss&&boss.active&&!seatUsers(boss.id).length;
+    const pend=myTapals().filter(t=>tSeat(t.id)==h);
+    act=`<div class="c"><b>നിങ്ങളുടെ നടപടി</b> <span class="m">(സീറ്റ്: ${sn(h)})</span><label for="an">നോട്ട്</label><textarea id="an" rows="3"></textarea><p class="r">
+      ${boss&&boss.active?`<button class="p" onclick="act(${f.id},'f','${h}')">ഫോർവേഡ് → ${sn(boss.id)}</button>`:(s.boss_seat?'<span class="er">മേലധികാരി സീറ്റ് സജീവമല്ല. അഡ്മിനെ അറിയിക്കുക.</span>':'')}
+      ${f.path.length>1?`<button onclick="act(${f.id},'r','${h}')">തിരിച്ചയക്കുക ← ${sn(f.path[f.path.length-2])}</button>`:''}</p>
+      ${bossEmpty?'<p class="m wn b">ആ സീറ്റിൽ ഇപ്പോൾ ആരുമില്ല. ഫയൽ അവിടെ കാത്തിരിക്കും; അഡ്മിൻ ചുമതല നൽകണം.</p>':''}
+      ${canClose?`<div class="sec"><b>തീർപ്പാക്കുക</b><div class="r"><select id="ad"><option value="">ഡിസ്‌പോസൽ വിഭാഗം</option>${Object.entries(DISP).map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('')}</select><button onclick="act(${f.id},'c','${h}')">${s.boss_seat?'നടപടി പൂർത്തിയായി, തീർപ്പാക്കുക':'അനുമതി നൽകി തീർപ്പാക്കുക'}</button></div></div>`:''}
+      <div class="sec"><b>ബാക്ക് ഫയൽ / ബന്ധിപ്പിക്കൽ</b><div class="r"><input id="lf" list="fl" placeholder="ഫയൽ നമ്പർ (ഉദാ: ANA/2026/001)" style="flex:1;min-width:200px"><select id="lk"><option value="back">ബാക്ക് ഫയൽ</option><option value="chain">ബന്ധിപ്പിക്കുക</option></select><button onclick="linkF(${f.id},'${h}')">ചേർക്കുക</button></div><datalist id="fl">${F.filter(x=>x.id!=f.id).map(x=>`<option value="${E(x.no)}">${E(x.subject)}</option>`).join('')}</datalist></div>
+      <div class="sec"><b>ഓർമ്മപ്പെടുത്തൽ / കോൾ ബുക്ക് / ലൈ-ഓവർ</b><div class="r"><select id="rk">${opts(Object.entries(RK))}</select><input id="rd" type="date" style="width:170px"><input id="rn" type="text" placeholder="കുറിപ്പ്" style="flex:1;min-width:140px"><button onclick="addRem(${f.id},'${h}')">ചേർക്കുക</button></div><div class="m">കോൾ ബുക്ക്: ആ തീയതി വരെ ഫയൽ ഇൻബോക്സിൽ നിന്ന് മാറി നിൽക്കും. ലൈ-ഓവർ പരമാവധി 3 മാസം.</div></div>
+      ${pend.length?`<div class="sec"><b>വന്ന തപാൽ ഈ ഫയലിൽ ചേർക്കുക</b><div class="r"><select id="tpa">${opts(pend.map(t=>[t.id,E(t.reg_no)+' — '+E(t.subject)]))}</select><button onclick="addTp(${f.id},'${h}')">ചേർക്കുക</button></div></div>`:''}</div>`;
+  }else if(open_)act=`<div class="c m">ഈ ഫയൽ ഇപ്പോൾ ${sw(h)} ന്റെ കയ്യിലാണ്. നിങ്ങൾക്ക് കാണാൻ മാത്രം പറ്റും.</div>`;
+  if(me.is_admin&&open_)act+=`<div class="c"><b>അഡ്മിൻ നിയന്ത്രണം</b><label for="ao">ഫയൽ മറ്റൊരു സീറ്റിലേക്ക് മാറ്റുക</label><div class="r"><select id="ao">${seatOpts('',undefined,ST.filter(s=>s.id!=h).map(s=>s.id))}</select></div><label for="am">കാരണം (നിർബന്ധം)</label><input id="am" type="text"><p><button onclick="adminMove(${f.id})">മാറ്റുക</button></p></div>`;
+  const entries=flog(f);
+  return `<p><button onclick="openId=null;render()">← തിരികെ</button></p><div class="c"><div class="r"><b>${E(f.no)}</b>${badge(f)}</div><h3>${E(f.subject)}</h3><div class="m">ഉറവിടം: ${org}</div>${f.status=='open'?`<div class="m">ഇപ്പോൾ കയ്യിൽ: ${sw(h)}</div>`:`<div class="m">തീർപ്പാക്കിയത്: ${fmt(f.closed_at)}</div>`}<div class="m">വഴി: ${f.path.map(sn).join(' → ')}</div>${lk||tps?`<p class="r">${lk} ${tps}</p>`:''}${RM.filter(r=>r.file_id==f.id).map(r=>`<div class="m">${RK[r.kind]}: ${fmtD(r.remind_on)}${r.note?' — '+E(r.note):''} ${r.done_at?'(കഴിഞ്ഞു)':''}</div>`).join('')}</div>${act}<div class="c"><b>നോട്ട് ഫയൽ / ചലന രേഖ</b>${entries.map((l,i)=>`<div class="lg"><div class="m">${i+1}. ${fmt(l.created_at)} · ${un(l.by_user)}${l.by_seat?' ('+sn(l.by_seat)+')':''} · ${KIND[l.kind]||E(l.kind)}${l.to_seat?' → '+sn(l.to_seat):''}</div>${l.note?`<div>${E(l.note)}</div>`:''}</div>`).join('')}</div>`;
+}
+async function act(id,k,s){
+  const n=($('an')||{value:''}).value.trim();
+  if(k=='r'&&!n){alert('തിരിച്ചയക്കുമ്പോൾ കാരണം നോട്ടിൽ എഴുതുക');return}
+  let r;
+  if(k=='f')r=await call('forward_file',{p_id:id,p_note:n,p_seat:s});
+  else if(k=='r')r=await call('return_file',{p_id:id,p_note:n,p_seat:s});
+  else{const d=$('ad').value;if(!d){alert('ഡിസ്‌പോസൽ വിഭാഗം (R / D / K / L) തിരഞ്ഞെടുക്കുക');return}if(!confirm('ഫയൽ തീർപ്പാക്കിയാൽ പിന്നീട് മാറ്റാൻ പറ്റില്ല. തുടരട്ടെ?'))return;r=await call('close_file',{p_id:id,p_note:n,p_seat:s,p_disposal:d})}
+  if(r.ok){await loadAll();openId=null;tab='in';render()}
+}
+async function linkF(id,s){
+  const no=$('lf').value.trim(),x=F.find(y=>y.no==no);
+  if(!x){alert('ആ നമ്പറിൽ നിങ്ങൾക്ക് കാണാവുന്ന ഫയൽ ഇല്ല');return}
+  const r=await call('link_file',{p_id:id,p_back:x.id,p_kind:$('lk').value,p_seat:s});
+  if(r.ok){await loadAll();render()}
+}
+async function addRem(id,s){
+  const on=$('rd').value;if(!on){alert('തീയതി തിരഞ്ഞെടുക്കുക');return}
+  const r=await call('add_reminder',{p_file:id,p_seat:s,p_kind:$('rk').value,p_on:on,p_note:$('rn').value});
+  if(r.ok){await loadAll();render()}
+}
+async function doneRem(id){const r=await call('done_reminder',{p_id:id});if(r.ok){await loadAll();render()}}
+function remView(){
+  const a=myRems(),t=todayL();
+  const cb=F.filter(f=>f.status=='open'&&cbActive(f)&&mySeats().includes(hold(f)));
+  return (a.length?a.map(r=>`<div class="c ${r.remind_on<=t?'it u':''}"><div class="r"><span class="b ${r.remind_on<=t?'hi':''}">${RK[r.kind]}</span><b>${fmtD(r.remind_on)}</b>${r.remind_on<t?'<span class="b hi">കഴിഞ്ഞു</span>':r.remind_on==t?'<span class="b wn">ഇന്ന്</span>':''}<a href="#" onclick="openId=${r.file_id};render();return false">${fno(r.file_id)}</a><span class="m">${E(r.note||'')}</span><span style="flex:1"></span><button onclick="doneRem(${r.id})">ചെയ്തു</button></div></div>`).join(''):'<div class="c m">ഓർമ്മപ്പെടുത്തലുകൾ ഒന്നുമില്ല.</div>')+(cb.length?`<div class="c"><b>കോൾ ബുക്കിലുള്ള ഫയലുകൾ</b> <span class="m">(തീയതിയാകുമ്പോൾ ഇൻബോക്സിൽ തിരിച്ചെത്തും)</span>${cb.map(f=>`<div class="m"><a href="#" onclick="openId=${f.id};render();return false">${E(f.no)}</a> — ${E(f.subject)}</div>`).join('')}</div>`:'');
+}
+function recView(){
+  const c=F.filter(f=>f.status=='closed').sort((a,b)=>a.closed_at<b.closed_at?1:-1),n=new Date();
+  const due=f=>{const y=KEEPY[f.disposal];if(!y)return null;const d=new Date(f.closed_at);d.setFullYear(d.getFullYear()+y);return d};
+  return `<div class="c m">തീർപ്പാക്കിയ ഫയലുകളുടെ റെക്കോർഡ് (ഓഫീസ് മാനുവൽ അനുസരിച്ചുള്ള സൂക്ഷിപ്പ് കാലാവധി). ഫയൽ നശിപ്പിക്കുന്നത് സ്വയം നടക്കില്ല; സമയമായവയെ അടയാളപ്പെടുത്തുക മാത്രം ചെയ്യും.</div><div class="c sc"><table><tr><th>ഫയൽ</th><th>വിഷയം</th><th>ഡിസ്‌പോസൽ</th><th>തീർപ്പാക്കിയത്</th><th>നശിപ്പിക്കാവുന്നത്</th></tr>${c.map(f=>{const d=due(f);return `<tr><td><a href="#" onclick="openId=${f.id};render();return false">${E(f.no)}</a></td><td>${E(f.subject)}</td><td>${E(f.disposal||'')}</td><td>${fmtD(f.closed_at)}</td><td>${d?fmtD(d)+(d<n?' <span class="b wn">സമയമായി</span>':''):'സ്ഥിരം'}</td></tr>`}).join('')||'<tr><td colspan="5" class="m">ഒന്നുമില്ല</td></tr>'}</table></div>`;
+}
+async function addTp(id,s){const r=await call('add_tapal_to_file',{p_id:id,p_tapal:+$('tpa').value,p_seat:s,p_note:($('an')||{value:''}).value});if(r.ok){await loadAll();render()}}
+async function adminMove(id){
+  const to=$('ao').value,n=$('am').value.trim();if(!to||!n){alert('സീറ്റും കാരണവും നൽകുക');return}
+  const r=await call('admin_move',{p_id:id,p_to:to,p_note:n});if(r.ok){await loadAll();render()}
+}
+
+/* ---------- പുതിയ ഫയൽ ---------- */
+function newForm(){
+  const ms=mySeats();
+  if(!perm('originate'))return '<div class="c">ഫയൽ തുടങ്ങാൻ നിങ്ങൾക്ക് അനുമതിയില്ല.</div>';
+  const pt=myTapals();
+  return `<div class="c"><div class="g2"><div><label for="nfs">ഏത് സീറ്റിൽ നിന്ന്</label><select id="nfs" class="f" onchange="nfChange()">${seatOpts(ms[0],undefined,ms)}</select></div>
+  <div><label for="nfo">ഫയൽ തുടങ്ങുന്നത്</label><select id="nfo" class="f" onchange="nfChange()"><option value="office">ഓഫീസ് ആവശ്യത്തിന് (സ്വന്തം)</option><option value="instruction">മേലധികാരിയുടെ നിർദ്ദേശപ്രകാരം</option><option value="tapal" ${prefTapal?'selected':''}>വന്ന തപാലിൽ നിന്ന്</option></select></div></div>
+  <div id="nfi"><label for="nfib">നിർദ്ദേശം നൽകിയ സീറ്റ്</label><select id="nfib" class="f"></select></div>
+  <div id="nft"><label for="nftp">തപാൽ</label><select id="nftp" class="f">${opts(pt.map(t=>[t.id,E(t.reg_no)+' — '+E(t.subject)]),prefTapal,'— തിരഞ്ഞെടുക്കുക —')}</select></div>
+  <label for="fs">വിഷയം</label><input id="fs" type="text"><label for="fp">പ്രയോറിറ്റി</label><select id="fp"><option value="n">സാധാരണ</option><option value="h">അടിയന്തിരം</option></select>
+  <label for="fdue">സമയപരിധി (ടൈം-ലിമിറ്റ് പേപ്പർ ആണെങ്കിൽ മാത്രം)</label><input id="fdue" type="date"><label for="fn">ആദ്യ നോട്ട്</label><textarea id="fn" rows="4"></textarea><p><button id="mkb" class="p" onclick="mk()">ഫയൽ തുടങ്ങുക</button></p><p class="m">ബാക്ക് ഫയൽ ചേർക്കാൻ ഫയൽ തുടങ്ങിയ ശേഷം അതിൽ തുറന്ന് "ബാക്ക് ഫയൽ" ഭാഗം ഉപയോഗിക്കുക.</p></div>`;
+}
+function nfChange(){
+  const o=$('nfo');if(!o)return;
+  $('nfi').style.display=o.value=='instruction'?'':'none';$('nft').style.display=o.value=='tapal'?'':'none';
+  $('nfib').innerHTML=seatOpts('',undefined,anc($('nfs').value));
+  if(o.value=='tapal'&&$('nftp').value){const t=T.find(x=>x.id==$('nftp').value);if(t&&!$('fs').value)$('fs').value=t.subject}
+}
+async function mk(){
+  const s=$('fs').value.trim();if(!s){alert('വിഷയം എഴുതുക');return}
+  const o=$('nfo').value,args={p_subject:s,p_priority:$('fp').value,p_note:$('fn').value,p_seat:$('nfs').value,p_origin:o};
+  if(o=='instruction'){if(!$('nfib').value){alert('നിർദ്ദേശം നൽകിയ സീറ്റ് തിരഞ്ഞെടുക്കുക');return}args.p_instructed_by=$('nfib').value}
+  if(o=='tapal'){if(!$('nftp').value){alert('തപാൽ തിരഞ്ഞെടുക്കുക');return}args.p_tapal=+$('nftp').value}
+  if($('fdue').value)args.p_due_on=$('fdue').value;
+  $('mkb').disabled=true;
+  const r=await call('create_file',args);
+  if(!r.ok){$('mkb').disabled=false;return}
+  prefTapal=null;await loadAll();openId=r.data;render();
+}
+
+/* ---------- തപാൽ ---------- */
+function tapalMine(){
+  const a=myTapals();
+  if(!a.length)return '<div class="c m">ഫയലാക്കാനുള്ള തപാൽ ഒന്നുമില്ല.</div>';
+  return a.map(t=>`<div class="c"><div class="r"><b>${E(t.reg_no)}</b><span>${E(t.subject)}</span><span class="b">${MODE[t.mode]}</span></div><div class="m">${t.instruction?'<b>നിർദ്ദേശം: '+E(t.instruction)+'</b><br>':''}അയച്ചത്: ${E(t.from_party)} · കത്ത് നമ്പർ: ${E(t.letter_no)||'—'} · കത്ത് തീയതി: ${fmtD(t.letter_date)||'—'} · ലഭിച്ചത്: ${fmtD(t.received_on)}</div><p><button class="p" onclick="prefTapal=${t.id};tab='new';render()">ഈ തപാലിൽ നിന്ന് ഫയൽ തുടങ്ങുക</button></p><div class="m">നിലവിലുള്ള ഫയലിൽ ചേർക്കാൻ: ആ ഫയൽ തുറന്ന് "വന്ന തപാൽ ചേർക്കുക" ഉപയോഗിക്കുക.</div></div>`).join('');
+}
+function tapalReg(){
+  return `<div class="c"><b>പുതിയ തപാൽ രേഖപ്പെടുത്തുക</b><div class="g2"><div><label for="tf">അയച്ചയാൾ / സ്ഥാപനം</label><input id="tf" type="text"></div><div><label for="tn">കത്ത് നമ്പർ</label><input id="tn" type="text"></div><div><label for="td">കത്ത് തീയതി</label><input id="td" type="date"></div><div><label for="tm">എത്തിയ രീതി</label><select id="tm" class="f">${opts(Object.entries(MODE))}</select></div></div><label for="ts">വിഷയം</label><input id="ts" type="text"><label for="ti">തപാൽ തുറന്നപ്പോൾ ഉദ്യോഗസ്ഥൻ നൽകിയ നിർദ്ദേശം (ഉണ്ടെങ്കിൽ)</label><input id="ti" type="text"><label for="tt">ഏത് സീറ്റിലേക്ക്</label><select id="tt" class="f">${seatOpts('','— തിരഞ്ഞെടുക്കുക —')}</select><p><button class="p" onclick="recT()">രേഖപ്പെടുത്തുക</button></p></div>
+  <div class="c sc"><table><tr><th>നമ്പർ</th><th>ലഭിച്ചത്</th><th>അയച്ചയാൾ</th><th>വിഷയം</th><th>ഇപ്പോൾ</th><th></th></tr>${T.map(t=>{const d=tDisp(t.id),ev=d?F.find(f=>f.id==d.file_id):null;return `<tr><td>${E(t.reg_no)}</td><td>${fmtD(t.received_on)}</td><td>${E(t.from_party)}<div class="m">${E(t.letter_no)}</div></td><td>${E(t.subject)}${t.instruction?'<div class="m">നിർദ്ദേശം: '+E(t.instruction)+'</div>':''}</td><td>${d?'ഫയലിൽ: '+(ev?E(ev.no):'#'+d.file_id):sn(tSeat(t.id))}</td><td>${d?'':`<select id="rd${t.id}">${seatOpts(tSeat(t.id),undefined,ST.filter(s=>s.id!=tSeat(t.id)).map(s=>s.id))}</select> <button onclick="redT(${t.id})">മാറ്റുക</button>`}</td></tr>`}).join('')||'<tr><td colspan="6" class="m">ഒന്നുമില്ല</td></tr>'}</table></div>`;
+}
+async function recT(){
+  const r=await call('record_tapal',{p_from:$('tf').value,p_letter_no:$('tn').value,p_letter_date:$('td').value||null,p_subject:$('ts').value,p_mode:$('tm').value,p_to_seat:$('tt').value||null,p_instruction:$('ti').value});
+  if(r.ok){await loadAll();render()}
+}
+async function redT(id){
+  const n=prompt('സീറ്റ് മാറ്റുന്നതിന്റെ കാരണം');if(!n)return;
+  const r=await call('redirect_tapal',{p_id:id,p_to_seat:$('rd'+id).value,p_note:n});if(r.ok){await loadAll();render()}
+}
+function desReg(){
+  return `<div class="c"><b>പുതിയ ഡെസ്പാച്ച് (പുറത്തേക്ക് അയച്ചത്)</b><div class="g2"><div><label for="dp">ലഭിക്കേണ്ടയാൾ</label><input id="dp" type="text"></div><div><label for="dm">അയച്ച രീതി</label><select id="dm" class="f">${opts(Object.entries(MODE))}</select></div></div><label for="ds">വിഷയം</label><input id="ds" type="text"><label for="df">ബന്ധപ്പെട്ട ഫയൽ (ഉണ്ടെങ്കിൽ)</label><input id="df" list="dfl" type="text" placeholder="ഫയൽ നമ്പർ"><datalist id="dfl">${F.map(x=>`<option value="${E(x.no)}">${E(x.subject)}</option>`).join('')}</datalist><label for="dn">കുറിപ്പ്</label><input id="dn" type="text"><p><button class="p" onclick="recD()">രേഖപ്പെടുത്തുക</button></p></div>
+  <div class="c sc"><table><tr><th>നമ്പർ</th><th>തീയതി</th><th>ആർക്ക്</th><th>വിഷയം</th><th>ഫയൽ</th></tr>${D.map(d=>`<tr><td>${E(d.reg_no)}</td><td>${fmtD(d.dispatched_on)}</td><td>${E(d.to_party)}<div class="m">${MODE[d.mode]}</div></td><td>${E(d.subject)}</td><td>${d.file_id?fno(d.file_id):'—'}</td></tr>`).join('')||'<tr><td colspan="5" class="m">ഒന്നുമില്ല</td></tr>'}</table></div>`;
+}
+async function recD(){
+  const no=$('df').value.trim(),f=no?F.find(x=>x.no==no):null;
+  if(no&&!f){alert('ആ ഫയൽ നമ്പർ കണ്ടെത്തിയില്ല');return}
+  const r=await call('record_despatch',{p_to_party:$('dp').value,p_subject:$('ds').value,p_mode:$('dm').value,p_file:f?f.id:null,p_note:$('dn').value});
+  if(r.ok){await loadAll();render()}
+}
+
+/* ---------- തിരയൽ ---------- */
+function searchView(){
+  return `<div class="c"><div class="g2"><div><label for="sq">ഫയൽ നമ്പർ / വിഷയം / നോട്ടിലെ വാക്ക്</label><input id="sq" type="text" onkeydown="if(event.key=='Enter')doSearch()"></div>
+  <div><label for="ss">അവസ്ഥ</label><select id="ss" class="f"><option value="">എല്ലാം</option><option value="open">തുറന്നത്</option><option value="closed">തീർപ്പാക്കിയത്</option></select></div>
+  <div><label for="sp">പ്രയോറിറ്റി</label><select id="sp" class="f"><option value="">എല്ലാം</option><option value="h">അടിയന്തിരം</option><option value="n">സാധാരണ</option></select></div>
+  <div><label for="so">ഉറവിടം</label><select id="so" class="f">${opts(Object.entries(ORG),'','എല്ലാം')}</select></div>
+  <div><label for="sh">ഇപ്പോൾ കയ്യിലുള്ള സീറ്റ്</label><select id="sh" class="f">${seatOpts('','എല്ലാം')}</select></div>
+  <div><label for="sf">തുടങ്ങിയത് (മുതൽ)</label><input id="sf" type="date"></div><div><label for="st">(വരെ)</label><input id="st" type="date"></div></div>
+  <p><button class="p" onclick="doSearch()">തിരയുക</button></p></div><div id="sr"></div>`;
+}
+function doSearch(){
+  const q=$('sq').value.trim().toLowerCase(),s=$('ss').value,p=$('sp').value,o=$('so').value,h=$('sh').value,fr=$('sf').value,to=$('st').value;
+  const r=F.filter(f=>{
+    if(s&&f.status!=s)return false;if(p&&f.priority!=p)return false;if(o&&f.origin!=o)return false;
+    if(h&&!(f.status=='open'&&hold(f)==h))return false;
+    const d=f.created_at.slice(0,10);if(fr&&d<fr)return false;if(to&&d>to)return false;
+    if(q&&!(f.no.toLowerCase().includes(q)||f.subject.toLowerCase().includes(q)||L.some(l=>l.file_id==f.id&&(l.note||'').toLowerCase().includes(q))))return false;
+    return true;
+  });
+  $('sr').innerHTML=`<p class="m">${r.length} ഫയൽ കണ്ടെത്തി</p>`+list(r,'ഒന്നും കണ്ടെത്തിയില്ല.');
+}
+
+/* ---------- റിപ്പോർട്ടുകൾ ---------- */
+function myRep(){
+  const ms=mySeats(),pd=+CFG.pending_days||5,ib=inboxF();
+  const oth=F.filter(f=>f.status=='open'&&involved(f)&&!ms.includes(hold(f))),cl=F.filter(f=>f.status=='closed'&&involved(f));
+  const rows=[];
+  F.forEach(f=>{
+    let rec=null;
+    flog(f).forEach(l=>{
+      if(ms.includes(l.to_seat)||(l.kind=='create'&&ms.includes(l.by_seat)))rec=rec||l.created_at;
+      if(ms.includes(l.by_seat)&&['forward','return','close'].includes(l.kind)&&rec){rows.push({f,rec,out:l.created_at,k:l.kind});rec=null}
+    });
+    if(rec&&f.status=='open'&&ms.includes(hold(f)))rows.push({f,rec,out:null});
+  });
+  rows.sort((a,b)=>new Date(b.rec)-new Date(a.rec));
+  return `<div class="c"><table><tr><td>എന്റെ ഇൻബോക്സിൽ (പെൻഡിംഗ്)</td><td><b>${ib.length}</b></td></tr><tr><td>${pd} പ്രവൃത്തി ദിവസത്തിലേറെ പെൻഡിംഗ് (മാനുവൽ: 5 ദിവസത്തിനുള്ളിൽ സമർപ്പിക്കണം)</td><td><b class="${ib.filter(f=>wdays(lastT(f))>pd).length?'er':''}">${ib.filter(f=>wdays(lastT(f))>pd).length}</b></td></tr><tr><td>സമയപരിധി കഴിഞ്ഞ ഫയലുകൾ</td><td><b class="${ib.filter(f=>f.due_on&&f.due_on<todayL()).length?'er':''}">${ib.filter(f=>f.due_on&&f.due_on<todayL()).length}</b></td></tr><tr><td>ഇന്നത്തെ / കഴിഞ്ഞ ഓർമ്മപ്പെടുത്തലുകൾ</td><td><b>${dueRems().length}</b></td></tr><tr><td>അടിയന്തിരം (പെൻഡിംഗ്)</td><td><b>${ib.filter(f=>f.priority=='h').length}</b></td></tr><tr><td>വന്ന തപാൽ (ഫയലാക്കാനുള്ളത്)</td><td><b>${myTapals().length}</b></td></tr><tr><td>ഞാൻ അയച്ചത്, ഇപ്പോൾ മറ്റുള്ളവരുടെ കയ്യിൽ</td><td><b>${oth.length}</b></td></tr><tr><td>എന്റെ വഴിയിലൂടെ തീർപ്പായവ</td><td><b>${cl.length}</b></td></tr></table></div>
+  <div class="c sc"><b>പേഴ്സണൽ രജിസ്റ്റർ</b> <span class="m">(എന്റെ സീറ്റിൽ വന്നതും അയച്ചതും)</span><table><tr><th>ഫയൽ</th><th>വിഷയം</th><th>ലഭിച്ചത്</th><th>അയച്ചത്</th><th>നടപടി</th><th>പ്രവൃത്തി ദിവസം</th></tr>${rows.map(r=>`<tr><td><a href="#" onclick="openId=${r.f.id};render();return false">${E(r.f.no)}</a></td><td>${E(r.f.subject)}</td><td>${fmt(r.rec)}</td><td>${r.out?fmt(r.out):'<span class="b wn">പെൻഡിംഗ്</span>'}</td><td>${r.k?KIND[r.k]:'—'}</td><td class="${wdays(new Date(r.rec).getTime(),r.out?new Date(r.out).getTime():Date.now())>pd?'er':''}">${wdays(new Date(r.rec).getTime(),r.out?new Date(r.out).getTime():Date.now())}</td></tr>`).join('')||'<tr><td colspan="6" class="m">ഒന്നുമില്ല</td></tr>'}</table></div>`;
+}
+function monthly(){
+  const v=($('mm')||{}).value||todayL().slice(0,7),[y,m]=v.split('-').map(Number),a=new Date(y,m-1,1),b=new Date(y,m,1);
+  const inR=t=>{const d=new Date(t);return d>=a&&d<b};
+  const rows=ST.filter(s=>s.active).map(s=>({s,rec:L.filter(l=>inR(l.created_at)&&((l.kind=='create'&&l.by_seat==s.id)||(['forward','return','admin_move'].includes(l.kind)&&l.to_seat==s.id))).length,
+    dis:L.filter(l=>inR(l.created_at)&&l.kind=='close'&&l.by_seat==s.id).length,
+    pend:F.filter(f=>f.status=='open'&&hold(f)==s.id).length,
+    late:F.filter(f=>f.status=='open'&&hold(f)==s.id&&wdays(lastT(f))>(+CFG.pending_days||5)).length}));
+  const tp=T.filter(t=>inR(t.created_at)).length,dp=D.filter(d=>inR(d.created_at)).length;
+  return `<table><tr><th>സീറ്റ്</th><th>ലഭിച്ചത്</th><th>തീർപ്പാക്കിയത്</th><th>ഇപ്പോൾ പെൻഡിംഗ്</th><th>വൈകിയത്</th></tr>${rows.map(r=>`<tr><td>${sn(r.s.id)}</td><td>${r.rec}</td><td>${r.dis}</td><td>${r.pend}</td><td class="${r.late?'er':''}">${r.late}</td></tr>`).join('')||'<tr><td colspan="5" class="m">സീറ്റുകൾ ഇല്ല</td></tr>'}</table><div class="m">ആ മാസം രേഖപ്പെടുത്തിയ തപാൽ ${tp} · ഡെസ്പാച്ച് ${dp}</div>`;
+}
+function adminRep(){
+  const O=F.filter(f=>f.status=='open'),pd=+CFG.pending_days||5;
+  const rows=ST.filter(s=>s.active).map(s=>{const a=O.filter(f=>hold(f)==s.id);const ages=a.map(f=>wdays(lastT(f)));const u=seatUsers(s.id);return {s,n:a.length,old:ages.length?Math.max(...ages):null,over:ages.filter(x=>x>pd).length,tl:a.filter(f=>f.due_on&&f.due_on<todayL()).length,u}});
+  const pt=T.filter(t=>!tDisp(t.id));
+  return `<div class="c sc"><table><tr><th>സീറ്റ്</th><th>ആൾ</th><th>പെൻഡിംഗ്</th><th>ഏറ്റവും പഴയത് (പ്രവൃത്തി ദിവസം)</th><th>${pd} ദിവസത്തിലേറെ</th><th>സമയപരിധി കഴിഞ്ഞത്</th></tr>${rows.map(r=>`<tr><td>${sn(r.s.id)}</td><td>${r.u.length?r.u.map(un).join(', '):'<span class="b hi">ആരുമില്ല</span>'}</td><td>${r.n}</td><td>${r.old??'—'}</td><td class="${r.over?'er':''}">${r.over}</td><td class="${r.tl?'er':''}">${r.tl}</td></tr>`).join('')||'<tr><td colspan="6" class="m">സീറ്റുകൾ ഇല്ല</td></tr>'}</table></div>
+  <div class="c">ആകെ ഫയൽ ${F.length} · തുറന്നത് ${O.length} · തീർപ്പാക്കിയത് ${F.length-O.length} · ഫയലാക്കാത്ത തപാൽ ${pt.length} · അടിയന്തിരം (തുറന്നത്) ${O.filter(f=>f.priority=='h').length}</div>
+  <div class="c sc"><b>മാസ ബിസിനസ് സ്റ്റേറ്റ്മെന്റ്</b> <span class="m">(മാനുവൽ പ്രകാരം ഓരോ മാസവും 5-ന് മുമ്പ് തയ്യാറാക്കണം)</span><div class="r" style="margin:6px 0"><input id="mm" type="month" value="${todayL().slice(0,7)}" style="width:170px" onchange="$('ms').innerHTML=monthly()"></div><div id="ms">${monthly()}</div></div>
+  <div class="c"><label for="pdv">"പെൻഡിംഗ്" മുന്നറിയിപ്പിനുള്ള പ്രവൃത്തി ദിവസം (മാനുവൽ: 5)</label><div class="r"><input id="pdv" type="number" min="1" max="90" value="${pd}" style="width:90px"><button onclick="savePd()">സേവ്</button></div></div>
+  <div class="c"><b>അവധി ദിവസങ്ങൾ</b> <span class="m">(ഞായർ സ്വയം ഒഴിവാകും; മറ്റ് അവധികൾ ഇവിടെ ചേർക്കുക)</span><div class="r" style="margin:6px 0"><input id="hd" type="date" style="width:170px"><input id="hn" type="text" placeholder="പേര്" style="flex:1;min-width:140px"><button onclick="addHol()">ചേർക്കുക</button></div>${HO.map(h=>`<div class="r"><span>${fmtD(h.day)}</span><span class="m">${E(h.name)}</span><button onclick="delHol('${h.day}')">നീക്കുക</button></div>`).join('')||'<span class="m">ഒന്നും ചേർത്തിട്ടില്ല</span>'}</div>`;
+}
+async function addHol(){const d=$('hd').value;if(!d){alert('തീയതി തിരഞ്ഞെടുക്കുക');return}if(await dbw(SB.from('holidays').insert({day:d,name:$('hn').value.trim()}))){await loadAll();render()}}
+async function delHol(d){if(await dbw(SB.from('holidays').delete().eq('day',d))){await loadAll();render()}}
+async function savePd(){const v=String(Math.max(1,Math.min(90,+$('pdv').value||7)));if(await dbw(SB.from('settings').update({value:v}).eq('key','pending_days'))){await loadAll();render()}}
+function nameOf(v){if(typeof v!='string')return E(JSON.stringify(v));const s=seat(v);if(s)return E(s.name);const u=usr(v);if(u)return E(u.name);return E(v)}
+function audit(){
+  const ch=AU.map(a=>{
+    const o=a.old_row||{},n=a.new_row||{},ks=a.op=='UPDATE'?Object.keys(n).filter(k=>JSON.stringify(o[k])!==JSON.stringify(n[k])):Object.keys(n.id!==undefined||a.op!='DELETE'?n:o);
+    const row=a.op=='DELETE'?o:n;
+    return `<div class="lg"><div class="m">${fmt(a.at)} · ${a.by_user?un(a.by_user):'സിസ്റ്റം'} · ${E(a.tbl)} · ${a.op}</div><div>${a.op=='UPDATE'?ks.map(k=>`${E(k)}: ${nameOf(o[k])} → ${nameOf(n[k])}`).join('; '):E(row.name||row.value||row.reason||'')}</div></div>`}).join('');
+  const lg=L.slice().reverse().slice(0,300).map(l=>`<div class="lg"><div class="m">${fmt(l.created_at)} · ${fno(l.file_id)} · ${un(l.by_user)} · ${KIND[l.kind]||l.kind}${l.to_seat?' → '+sn(l.to_seat):''}</div>${l.note?`<div>${E(l.note)}</div>`:''}</div>`).join('');
+  return `<div class="c"><b>അഡ്മിൻ മാറ്റങ്ങൾ</b> <span class="m">(ഇവ മായ്ക്കാൻ പറ്റില്ല)</span>${ch||'<p class="m">ഒന്നും ഇല്ല.</p>'}</div><div class="c"><b>ഫയൽ പ്രവർത്തനങ്ങൾ</b> <span class="m">(പുതിയ 300)</span>${lg||'<p class="m">ഒന്നും ഇല്ല.</p>'}</div>`;
+}
+
+/* ---------- അഡ്മിൻ: സീറ്റ്, ജീവനക്കാർ, ചുമതല ---------- */
+function seatsView(){
+  const intro=ST.length?'':'<div class="c"><b>തുടക്കം:</b> ആദ്യം ഏറ്റവും മുകളിലെ സീറ്റ് (ഉദാ: മാനേജിംഗ് ഡയറക്ടർ) മേലധികാരി ഇല്ലാതെ ചേർക്കുക. പിന്നെ അതിന് താഴെയുള്ള സീറ്റുകൾ. അതിന് ശേഷം "ജീവനക്കാർ" ടാബിൽ ഓരോരുത്തർക്കും സീറ്റ് നൽകുക.</div>';
+  return intro+`<div class="c"><b>പുതിയ സീറ്റ്</b><div class="g2"><div><label for="ns">സീറ്റിന്റെ പേര് (തസ്തിക)</label><input id="ns" type="text"></div><div><label for="nc">സെക്ഷൻ (ഐച്ഛികം)</label><input id="nc" type="text"></div><div><label for="nb">മേലധികാരി സീറ്റ്</label><select id="nb" class="f">${seatOpts('','— ഏറ്റവും മുകളിൽ —')}</select></div></div><p><button class="p" onclick="addSeat()">ചേർക്കുക</button></p></div>`+
+  ST.map(s=>{const ex=desc(s.id);return `<div class="c"><div class="r"><b>${E(s.name)}</b>${s.active?'':'<span class="b hi">നിർത്തി</span>'}<span class="m">${seatUsers(s.id).map(un).join(', ')||'ആരുമില്ല'}</span></div><div class="g2"><div><label for="sn_${s.id}">പേര്</label><input id="sn_${s.id}" type="text" value="${E(s.name)}"></div><div><label for="sc_${s.id}">സെക്ഷൻ</label><input id="sc_${s.id}" type="text" value="${E(s.section)}"></div><div><label for="sb_${s.id}">മേലധികാരി സീറ്റ്</label><select id="sb_${s.id}" class="f">${seatOpts(s.boss_seat,'— ഏറ്റവും മുകളിൽ —',ST.filter(x=>x.active&&!ex.has(x.id)).map(x=>x.id))}</select></div></div><label class="k"><input id="sa_${s.id}" type="checkbox" ${s.active?'checked':''}> സജീവം</label><p><button class="p" onclick="saveSeat('${s.id}')">സേവ്</button></p></div>`}).join('');
+}
+async function addSeat(){
+  const n=$('ns').value.trim();if(!n){alert('പേര് എഴുതുക');return}
+  if(await dbw(SB.from('seats').insert({name:n,section:$('nc').value.trim(),boss_seat:$('nb').value||null}))){await loadAll();render()}
+}
+async function saveSeat(id){
+  const n=$('sn_'+id).value.trim();if(!n){alert('പേര് എഴുതുക');return}
+  if(await dbw(SB.from('seats').update({name:n,section:$('sc_'+id).value.trim(),boss_seat:$('sb_'+id).value||null,active:$('sa_'+id).checked}).eq('id',id))){await loadAll();render();alert('സേവ് ചെയ്തു')}
+}
+function usersView(){
+  return `<div class="c m">പുതിയ ജീവനക്കാരന് ലോഗിൻ ഉണ്ടാക്കാൻ: Supabase → Authentication → Users → Add user → Create new user (<b>Auto Confirm User</b> ടിക്ക് ചെയ്യുക). പിന്നീട് ഇവിടെ "പുതുക്കുക" അമർത്തി ആ ആൾക്ക് പേര്, സീറ്റ്, അനുമതികൾ എന്നിവ നൽകുക. പാസ്‌വേഡ് മാറ്റുന്നതും അവിടെ നിന്ന് തന്നെ.</div>`+
+  P.map(u=>`<div class="c"><div class="r"><b>${E(u.name)}</b>${u.id==uid?'<span class="b">നിങ്ങൾ</span>':''}${u.is_admin?'<span class="b">അഡ്മിൻ</span>':''}${u.active?'':'<span class="b hi">നിർത്തി</span>'}${u.seat_id?'':'<span class="b wn">സീറ്റ് ഇല്ല</span>'}</div>
+  <div class="g2"><div><label for="un_${u.id}">പേര്</label><input id="un_${u.id}" type="text" value="${E(u.name)}"></div><div><label for="us_${u.id}">സീറ്റ്</label><select id="us_${u.id}" class="f">${seatOpts(u.seat_id,'— സീറ്റ് ഇല്ല —')}</select></div></div>
+  <div class="m" style="margin-top:6px">അനുമതികൾ</div><div>${PERMS.map(p=>`<label class="k"><input type="checkbox" id="up_${u.id}_${p[0]}" ${(u.perms||[]).includes(p[0])?'checked':''}> ${p[1]}</label>`).join('')}</div>
+  <div><label class="k"><input type="checkbox" id="ua_${u.id}" ${u.is_admin?'checked':''} ${u.id==uid?'disabled':''}> അഡ്മിൻ</label><label class="k"><input type="checkbox" id="uc_${u.id}" ${u.active?'checked':''} ${u.id==uid?'disabled':''}> ലോഗിൻ സജീവം</label></div>
+  <p><button class="p" onclick="saveUser('${u.id}')">സേവ്</button></p></div>`).join('');
+}
+async function saveUser(id){
+  const n=$('un_'+id).value.trim();if(!n){alert('പേര് എഴുതുക');return}
+  const perms=PERMS.map(p=>p[0]).filter(p=>$(`up_${id}_${p}`).checked);
+  const upd={name:n,seat_id:$('us_'+id).value||null,perms,is_admin:$('ua_'+id).checked,active:$('uc_'+id).checked};
+  if(await dbw(SB.from('profiles').update(upd).eq('id',id))){await loadAll();render();alert('സേവ് ചെയ്തു')}
+}
+function delegView(){
+  const vac=ST.filter(s=>s.active&&!seatUsers(s.id).length);
+  const act=SA.filter(covers);
+  return `${vac.length?`<div class="c"><b class="er">ആരുമില്ലാത്ത സീറ്റുകൾ:</b> ${vac.map(s=>sn(s.id)+' ('+F.filter(f=>f.status=='open'&&hold(f)==s.id).length+' ഫയൽ)').join(' · ')}<div class="m">ഇവിടെയുള്ള ഫയലുകൾ കാത്തിരിക്കും. താഴെ ചുമതല നൽകുക.</div></div>`:''}
+  <div class="c"><b>ചുമതല കൈമാറ്റം</b> <span class="m">(ഒരാൾ ലീവിലാണെങ്കിൽ അദ്ദേഹത്തിന്റെ സീറ്റിന്റെ അധികാരം മറ്റൊരാൾക്ക്, തീയതി വരെ)</span>
+  <div class="g2"><div><label for="ds1">സീറ്റ്</label><select id="ds1" class="f">${seatOpts('','— തിരഞ്ഞെടുക്കുക —')}</select></div><div><label for="du1">ചുമതല ഏൽക്കുന്ന ആൾ</label><select id="du1" class="f">${opts(P.filter(p=>p.active).map(p=>[p.id,E(p.name)+' ('+(p.seat_id?sn(p.seat_id):'സീറ്റ് ഇല്ല')+')']),'','— തിരഞ്ഞെടുക്കുക —')}</select></div><div><label for="dfr">മുതൽ</label><input id="dfr" type="date" value="${todayS()}"></div><div><label for="dto">വരെ (ഒഴിച്ചിട്ടാൽ അവസാനിപ്പിക്കുന്നത് വരെ)</label><input id="dto" type="date"></div></div>
+  <label for="drs">കാരണം</label><input id="drs" type="text" placeholder="ഉദാ: ലീവ്"><p><button class="p" onclick="addDel()">ചുമതല നൽകുക</button></p></div>
+  <div class="c sc"><b>നിലവിലെ / മുൻ ചുമതലകൾ</b><table><tr><th>സീറ്റ്</th><th>ആൾ</th><th>കാലയളവ്</th><th>കാരണം</th><th></th></tr>${SA.map(a=>`<tr><td>${sn(a.seat_id)}</td><td>${un(a.user_id)}</td><td>${fmtD(a.from_date)} – ${a.to_date?fmtD(a.to_date):'…'}</td><td>${E(a.reason)}</td><td>${!a.active?'<span class="b">അവസാനിപ്പിച്ചു</span>':covers(a)?`<button onclick="endDel(${a.id})">അവസാനിപ്പിക്കുക</button>`:'<span class="b">'+(a.from_date>todayS()?'വരാനുള്ളത്':'കഴിഞ്ഞു')+'</span>'}</td></tr>`).join('')||'<tr><td colspan="5" class="m">ഒന്നുമില്ല</td></tr>'}</table></div>`;
+}
+async function addDel(){
+  const s=$('ds1').value,u=$('du1').value;if(!s||!u){alert('സീറ്റും ആളും തിരഞ്ഞെടുക്കുക');return}
+  const row={seat_id:s,user_id:u,from_date:$('dfr').value||todayS(),to_date:$('dto').value||null,reason:$('drs').value.trim()};
+  if(await dbw(SB.from('seat_assignments').insert(row))){await loadAll();render()}
+}
+async function endDel(id){if(!confirm('ഈ ചുമതല ഇപ്പോൾ അവസാനിപ്പിക്കണോ?'))return;if(await dbw(SB.from('seat_assignments').update({active:false}).eq('id',id))){await loadAll();render()}}
+
+SB.auth.onAuthStateChange(ev=>{if(ev=='SIGNED_OUT'){me=null;uid=null;openId=null;render()}});
+document.addEventListener('visibilitychange',async()=>{if(document.visibilityState=='visible'&&me&&!openId&&!['new','treg','dreg','users','seats','deleg','srch'].includes(tab)){await loadAll();if(me)render()}});
+boot();
+</script></body></html>
