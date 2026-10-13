@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ml"><head><meta charset="utf-8">
+<title>Anatech · ഇ-ഫയൽ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{--bg:#eef1f4;--fg:#16263d;--card:#fff;--bd:#cfd6df;--ac:#0f766e;--acf:#fff;--mu:#5b6b80;--red:#b3261e;--ok:#17703f}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1722;--fg:#e6ecf4;--card:#172231;--bd:#2c3b50;--ac:#3dbdb1;--acf:#06201d;--mu:#9bb0c8;--red:#ff8a80;--ok:#6fd49a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,"Noto Sans Malayalam","Segoe UI",sans-serif}
+.w{max-width:920px;margin:0 auto;padding:12px}
+h1{font-size:18px;margin:0;letter-spacing:.2px}
+.top{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px;padding-bottom:10px;border-bottom:2px solid var(--fg)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px}
+button,select,input,textarea{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:8px 10px}
+textarea,input[type=text],input[type=email],input[type=password]{width:100%}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+button.on,button.p{background:var(--ac);color:var(--acf);border-color:var(--ac);font-weight:600}
+button:disabled{opacity:.5;cursor:wait}
+.tabs button{border-radius:6px 6px 0 0}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:12px;margin-bottom:10px}
+.r{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.m{color:var(--mu);font-size:13px}
+.b{display:inline-block;font-size:12px;padding:1px 8px;border-radius:4px;border:1px solid var(--bd)}
+.hi{color:var(--red);border-color:var(--red)}.cl{color:var(--ok);border-color:var(--ok)}
+.it{cursor:pointer;border-left:4px solid var(--ac)}.it.u{border-left-color:var(--red)}.it:hover{border-color:var(--ac)}
+.lg{border-left:3px solid var(--bd);padding:2px 0 2px 10px;margin:8px 0}
+label{display:block;margin:8px 0 3px;font-size:13px;color:var(--mu)}
+.sc{overflow-x:auto}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--bd);padding:6px;text-align:left;font-size:14px}
+.lo{max-width:380px;margin:8vh auto}
+.er{color:var(--red)}
+</style></head><body><div class="w" id="app"><p class="m">ലോഡ് ചെയ്യുന്നു…</p></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
+<script>
+const SB=supabase.createClient('https://nuhrymlefclfvtlodcwc.supabase.co','sb_publishable_OKG7B4q4Xwnr3DnnbY3xMg_V4-dwgP_');
+let me=null,uid=null,P=[],F=[],L=[],tab='in',openId=null,err='';
+const $=id=>document.getElementById(id);
+const E=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pn=id=>{const p=P.find(x=>x.id==id);return p?E(p.name||'?')+(p.post?' ('+E(p.post)+')':''):'—'};
+const fmt=t=>new Date(t).toLocaleString('ml-IN',{dateStyle:'short',timeStyle:'short'});
+const hold=f=>f.path[f.path.length-1];
+const flog=f=>L.filter(l=>l.file_id==f.id);
+const lastT=f=>{const a=flog(f);return a.length?new Date(a[a.length-1].created_at).getTime():new Date(f.created_at).getTime()};
+const days=t=>Math.floor((Date.now()-t)/864e5);
+const PR={n:'സാധാരണ',h:'അടിയന്തിരം'};
+const inbox=f=>f.status=='open'&&hold(f)==uid;
+const involved=f=>f.path.includes(uid)||L.some(l=>l.file_id==f.id&&l.by_user==uid);
+
+async function boot(){
+  const {data:{session}}=await SB.auth.getSession();
+  if(!session){uid=null;me=null;render();return}
+  uid=session.user.id;
+  await loadAll();render();
+}
+async function loadAll(){
+  const [p,f,l]=await Promise.all([
+    SB.from('profiles').select('*').order('name'),
+    SB.from('files').select('*').order('id',{ascending:false}),
+    SB.from('file_log').select('*').order('created_at',{ascending:true})]);
+  if(p.error||f.error||l.error){alert('ഡാറ്റ ലഭിച്ചില്ല: '+((p.error||f.error||l.error).message));return}
+  P=p.data;F=f.data;L=l.data;me=P.find(x=>x.id==uid)||null;
+  if(!me||!me.active){err='ഈ ലോഗിൻ പ്രവർത്തനക്ഷമമല്ല. അഡ്മിനെ സമീപിക്കുക.';await SB.auth.signOut();me=null;uid=null}
+}
+async function login(){
+  const b=$('lb');b.disabled=true;
+  const {error}=await SB.auth.signInWithPassword({email:$('lu').value.trim(),password:$('lp').value});
+  if(error){err='ഇമെയിൽ അല്ലെങ്കിൽ പാസ്‌വേഡ് ശരിയല്ല.';render();return}
+  err='';tab='in';openId=null;await boot();
+}
+async function logout(){await SB.auth.signOut();me=null;uid=null;openId=null;render()}
+
+function tabs(){
+  const n=F.filter(inbox).length;
+  const t=[['in','ഇൻബോക്സ് ('+n+')'],['sent','ഞാൻ കൈകാര്യം ചെയ്തവ'],['new','പുതിയ ഫയൽ'],['rep','എന്റെ റിപ്പോർട്ട്']];
+  if(me.is_admin)t.push(['all','എല്ലാ ഫയലുകളും'],['users','ജീവനക്കാർ'],['arep','സ്ഥാപന റിപ്പോർട്ട്'],['aud','ഓഡിറ്റ് ലോഗ്']);
+  return t;
+}
+function render(){
+  const a=$('app');
+  if(!me){
+    a.innerHTML=`<div class="lo c"><h1>📁 Anatech · ഇ-ഫയൽ</h1><form onsubmit="login();return false"><label for="lu">ഇമെയിൽ</label><input id="lu" type="email" autocomplete="username"><label for="lp">പാസ്‌വേഡ്</label><input id="lp" type="password" autocomplete="current-password"><p class="er">${E(err)}</p><button id="lb" class="p" type="submit">ലോഗിൻ</button></form><p class="m">ലോഗിൻ ലഭിക്കാൻ അഡ്മിനെ സമീപിക്കുക.</p></div>`;
+    return;
+  }
+  const T=tabs();if(!T.some(x=>x[0]==tab))tab='in';
+  a.innerHTML=`<div class="top"><h1>📁 Anatech · ഇ-ഫയൽ</h1><div class="r"><span>${E(me.name)} <span class="m">${E(me.post)}${me.is_admin?' · അഡ്മിൻ':''}</span></span><button onclick="refresh()">പുതുക്കുക</button><button onclick="logout()">ലോഗൗട്ട്</button></div></div>
+  <div class="tabs">${T.map(t=>`<button class="${tab==t[0]&&!openId?'on':''}" onclick="tab='${t[0]}';openId=null;render()">${t[1]}</button>`).join('')}</div><div id="v"></div>`;
+  const v=$('v');
+  if(openId){const f=F.find(x=>x.id==openId);v.innerHTML=f?fileView(f):'<div class="c">ഫയൽ കണ്ടെത്തിയില്ല.</div>';return}
+  if(tab=='in')v.innerHTML=list(F.filter(inbox),'ഇൻബോക്സ് ശൂന്യമാണ്.');
+  else if(tab=='sent')v.innerHTML=list(F.filter(f=>involved(f)&&!inbox(f)),'ഒന്നും ഇല്ല.');
+  else if(tab=='all')v.innerHTML=list(F,'ഫയലുകൾ ഒന്നും ഇല്ല.');
+  else if(tab=='new')v.innerHTML=`<div class="c"><label for="fs">വിഷയം</label><input id="fs" type="text"><label for="fp">പ്രയോറിറ്റി</label><select id="fp"><option value="n">സാധാരണ</option><option value="h">അടിയന്തിരം</option></select><label for="fn">ആദ്യ നോട്ട്</label><textarea id="fn" rows="4"></textarea><p><button id="mkb" class="p" onclick="mk()">ഫയൽ ഉണ്ടാക്കുക</button></p></div>`;
+  else if(tab=='rep')v.innerHTML=myRep();
+  else if(tab=='users')v.innerHTML=users();
+  else if(tab=='arep')v.innerHTML=adminRep();
+  else v.innerHTML=audit();
+}
+async function refresh(){await loadAll();if(me)render();else render()}
+document.addEventListener('visibilitychange',async()=>{if(document.visibilityState=='visible'&&me&&!openId){await loadAll();if(me)render()}});
+
+function list(a,empty){
+  if(!a.length)return `<div class="c m">${empty}</div>`;
+  return a.map(f=>`<div class="c it ${f.priority=='h'?'u':''}" onclick="openId=${f.id};render()"><div class="r"><b>${E(f.no)}</b><span>${E(f.subject)}</span>${f.priority=='h'?'<span class="b hi">അടിയന്തിരം</span>':''}<span class="b ${f.status=='closed'?'cl':''}">${f.status=='closed'?'തീർപ്പാക്കി':'തുറന്നത്'}</span></div><div class="m">ഇപ്പോൾ: ${f.status=='closed'?'—':pn(hold(f))}</div></div>`).join('');
+}
+function fileView(f){
+  const open_=f.status=='open',h=hold(f);let act='';
+  if(open_&&h==uid){
+    const bs=me.boss?P.find(x=>x.id==me.boss):null;
+    let main='';
+    if(!me.boss)main=`<button class="p" onclick="act(${f.id},'c')">അനുമതി നൽകി തീർപ്പാക്കുക</button>`;
+    else if(bs&&bs.active)main=`<button class="p" onclick="act(${f.id},'f')">ഫോർവേഡ് → ${E(bs.name)} (${E(bs.post)})</button>`;
+    else main=`<span class="er">മേലധികാരിയുടെ ലോഗിൻ ലഭ്യമല്ല. അഡ്മിനെ അറിയിക്കുക.</span>`;
+    act=`<div class="c"><b>നിങ്ങളുടെ നടപടി</b><label for="an">നോട്ട്</label><textarea id="an" rows="3"></textarea><p class="r">${main}${f.path.length>1?`<button onclick="act(${f.id},'r')">തിരിച്ചയക്കുക ← ${pn(f.path[f.path.length-2])}</button>`:''}</p><p class="m">ഫോർവേഡ് ചെയ്താൽ ഫയൽ നിങ്ങളുടെ ഇൻബോക്സിൽ നിന്ന് പോകും. ഹയറാർക്കി അനുസരിച്ച് മേലധികാരിക്ക് മാത്രമേ പോകൂ.</p></div>`;
+  }else if(open_)act=`<div class="c m">ഈ ഫയൽ ഇപ്പോൾ ${pn(h)} ന്റെ കയ്യിലാണ്. നിങ്ങൾക്ക് കാണാൻ മാത്രം പറ്റും.</div>`;
+  if(me.is_admin&&open_)act+=`<div class="c"><b>അഡ്മിൻ നിയന്ത്രണം</b><label for="ao">ഫയൽ മറ്റൊരാളുടെ കയ്യിലേക്ക് മാറ്റുക</label><select id="ao">${P.filter(u=>u.active&&u.id!=h).map(u=>`<option value="${u.id}">${E(u.name)} — ${E(u.post)}</option>`).join('')}</select> <button onclick="adminMove(${f.id})">മാറ്റുക</button></div>`;
+  return `<p><button onclick="openId=null;render()">← തിരികെ</button></p><div class="c"><div class="r"><b>${E(f.no)}</b>${f.priority=='h'?'<span class="b hi">അടിയന്തിരം</span>':''}<span class="b ${f.status=='closed'?'cl':''}">${open_?'തുറന്നത്':'തീർപ്പാക്കി'}</span></div><h3 style="margin:6px 0">${E(f.subject)}</h3><div class="m">ഇപ്പോൾ കയ്യിൽ: ${open_?pn(h):'—'}</div><div class="m">വഴി: ${f.path.map(pn).join(' → ')}</div></div>${act}<div class="c"><b>ഫയൽ ചലന രേഖ</b>${flog(f).map(l=>`<div class="lg"><div class="m">${fmt(l.created_at)} · ${pn(l.by_user)} · ${E(l.action)}${l.to_user?' → '+pn(l.to_user):''}</div>${l.note?`<div>${E(l.note)}</div>`:''}</div>`).join('')}</div>`;
+}
+async function rpc(name,args){
+  const {error}=await SB.rpc(name,args);
+  if(error){alert(error.message);return false}
+  return true;
+}
+async function mk(){
+  const s=$('fs').value.trim();if(!s){alert('വിഷയം എഴുതുക');return}
+  $('mkb').disabled=true;
+  const {data,error}=await SB.rpc('create_file',{p_subject:s,p_priority:$('fp').value,p_note:$('fn').value});
+  if(error){alert(error.message);$('mkb').disabled=false;return}
+  await loadAll();openId=data;render();
+}
+async function act(id,k){
+  const n=$('an').value.trim();
+  if(k=='r'&&!n){alert('തിരിച്ചയക്കുമ്പോൾ കാരണം നോട്ടിൽ എഴുതുക');return}
+  const fn={f:'forward_file',r:'return_file',c:'close_file'}[k];
+  if(await rpc(fn,{p_id:id,p_note:n})){await loadAll();openId=null;tab='in';render()}
+}
+async function adminMove(id){
+  const to=$('ao').value;if(!to)return;
+  if(await rpc('admin_move',{p_id:id,p_to:to,p_note:''})){await loadAll();render()}
+}
+function desc(id){const s=new Set([id]);let ch=true;while(ch){ch=false;P.forEach(p=>{if(p.boss&&s.has(p.boss)&&!s.has(p.id)){s.add(p.id);ch=true}})}return s}
+function users(){
+  return `<div class="c m">പുതിയ ജീവനക്കാരന് ലോഗിൻ ഉണ്ടാക്കാൻ: Supabase → Authentication → Users → Add user → Create new user (<b>Auto Confirm User</b> ടിക്ക് ചെയ്യുക). പിന്നീട് ഇവിടെ പുതുക്കുക അമർത്തി, ആ ആളുടെ പേര്, തസ്തിക, മേലധികാരി എന്നിവ സെറ്റ് ചെയ്യുക. പാസ്‌വേഡ് മാറ്റുന്നതും അവിടെ നിന്ന് തന്നെ.</div>`+
+  P.map(u=>{const ex=desc(u.id);return `<div class="c"><div class="r"><b>${E(u.name)}</b>${u.id==uid?'<span class="b">നിങ്ങൾ</span>':''}${u.is_admin?'<span class="b">അഡ്മിൻ</span>':''}${u.active?'':'<span class="b hi">നിർത്തി</span>'}</div>
+  <label for="n_${u.id}">പേര്</label><input id="n_${u.id}" type="text" value="${E(u.name)}">
+  <label for="p_${u.id}">തസ്തിക</label><input id="p_${u.id}" type="text" value="${E(u.post)}">
+  <label for="b_${u.id}">മേലധികാരി</label><select id="b_${u.id}"><option value="">— (ഏറ്റവും മുകളിൽ)</option>${P.filter(x=>!ex.has(x.id)).map(x=>`<option value="${x.id}" ${x.id==u.boss?'selected':''}>${E(x.name)}${x.post?' — '+E(x.post):''}</option>`).join('')}</select>
+  <label><input id="a_${u.id}" type="checkbox" ${u.active?'checked':''} ${u.id==uid?'disabled':''}> ലോഗിൻ പ്രവർത്തനക്ഷമം</label>
+  <p><button class="p" onclick="saveU('${u.id}')">സേവ് ചെയ്യുക</button></p></div>`}).join('');
+}
+async function saveU(id){
+  const name=$('n_'+id).value.trim(),post=$('p_'+id).value.trim(),boss=$('b_'+id).value||null,active=$('a_'+id).checked;
+  if(!name){alert('പേര് എഴുതുക');return}
+  if(!active&&F.some(f=>f.status=='open'&&hold(f)==id)){alert('ഇദ്ദേഹത്തിന്റെ ഇൻബോക്സിൽ ഫയലുകൾ ഉണ്ട്. ആദ്യം അവ മാറ്റി നൽകുക.');return}
+  const {error}=await SB.from('profiles').update({name,post,boss,active}).eq('id',id);
+  if(error){alert(error.message);return}
+  await loadAll();render();alert('സേവ് ചെയ്തു');
+}
+function myRep(){
+  const p=F.filter(inbox),oth=F.filter(f=>f.status=='open'&&involved(f)&&hold(f)!=uid),cl=F.filter(f=>f.status=='closed'&&involved(f));
+  return `<div class="c"><table><tr><td>എന്റെ ഇൻബോക്സിൽ (പെൻഡിംഗ്)</td><td><b>${p.length}</b></td></tr><tr><td>അടിയന്തിരം (പെൻഡിംഗ്)</td><td><b>${p.filter(f=>f.priority=='h').length}</b></td></tr><tr><td>ഞാൻ അയച്ചത്, ഇപ്പോൾ മറ്റുള്ളവരുടെ കയ്യിൽ</td><td><b>${oth.length}</b></td></tr><tr><td>എന്റെ വഴിയിലൂടെ തീർപ്പായവ</td><td><b>${cl.length}</b></td></tr></table></div>`;
+}
+function adminRep(){
+  const O=F.filter(f=>f.status=='open');
+  return `<div class="c sc"><table><tr><th>ആൾ</th><th>പെൻഡിംഗ്</th><th>ഏറ്റവും പഴയത് (ദിവസം)</th></tr>${P.map(u=>{const a=O.filter(f=>hold(f)==u.id);const o=a.length?Math.max(...a.map(f=>days(lastT(f)))):'—';return `<tr><td>${pn(u.id)}</td><td>${a.length}</td><td>${o}</td></tr>`}).join('')}</table></div><div class="c m">ആകെ ഫയൽ ${F.length} · തുറന്നത് ${O.length} · തീർപ്പാക്കിയത് ${F.length-O.length}</div>`;
+}
+function audit(){
+  const no={};F.forEach(f=>no[f.id]=f.no);
+  const A=L.slice().reverse();
+  return `<div class="c">${A.length?A.map(l=>`<div class="lg"><div class="m">${fmt(l.created_at)} · ${E(no[l.file_id]||'')} · ${pn(l.by_user)} · ${E(l.action)}${l.to_user?' → '+pn(l.to_user):''}</div>${l.note?`<div>${E(l.note)}</div>`:''}</div>`).join(''):'<span class="m">ഒന്നും ഇല്ല.</span>'}</div>`;
+}
+SB.auth.onAuthStateChange((ev)=>{if(ev=='SIGNED_OUT'){me=null;uid=null;openId=null;render()}});
+boot();
+</script></body></html>
