@@ -36,13 +36,433 @@ label.k{display:inline-flex;gap:6px;align-items:center;margin:4px 12px 4px 0;col
 </style></head><body><div class="w" id="app"><p class="m">ലോഡ് ചെയ്യുന്നു…</p></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
 <script>
+/*DICT_START*/const DICT={
+"R — സ്ഥിരമായി സൂക്ഷിക്കുക": "R — Retain permanently",
+"D — 10 വർഷത്തിന് ശേഷം നശിപ്പിക്കുക": "D — Destroy after 10 years",
+"K — 3 വർഷത്തിന് ശേഷം നശിപ്പിക്കുക": "K — Keep, destroy after 3 years",
+"L — 1 വർഷത്തിന് ശേഷം നശിപ്പിക്കുക": "L — Lodge, destroy after 1 year",
+"ഓർമ്മപ്പെടുത്തൽ": "Reminder",
+"കോൾ ബുക്ക്": "Call book",
+"ലൈ-ഓവർ": "Lie-over",
+"ഓഫീസ്": "Office",
+"നിർദ്ദേശപ്രകാരം": "On instruction",
+"തപാലിൽ നിന്ന്": "From tapal",
+"ഫയൽ തുടങ്ങി": "File opened",
+"ഫോർവേഡ്": "Forwarded",
+"തിരിച്ചയച്ചു": "Returned",
+"തീർപ്പാക്കി": "Closed",
+"അഡ്മിൻ മാറ്റി നൽകി": "Moved by admin",
+"ബന്ധിപ്പിച്ചു": "Linked",
+"തപാൽ ചേർത്തു": "Tapal added",
+"ഡെസ്പാച്ച്": "Despatch",
+"തപാൽ": "Tapal",
+"കൊറിയർ": "Courier",
+"നേരിട്ട്": "By hand",
+"ഇമെയിൽ": "Email",
+"ഫയൽ തുടങ്ങാം": "Can open files",
+"തപാൽ രജിസ്റ്റർ": "Tapal register",
+"ഡെസ്പാച്ച് രജിസ്റ്റർ": "Despatch register",
+"എല്ലാ ഫയലും കാണാം (വായന മാത്രം)": "Can view all files (read-only)",
+"അഡ്മിനിസ്ട്രേഷൻ അഭ്യർത്ഥന നൽകാം": "Can raise administration requests",
+"ഇൻബോക്സ്": "Inbox",
+"വന്ന തപാൽ": "Incoming tapal",
+"പുതിയ ഫയൽ": "New file",
+"ഞാൻ കൈകാര്യം ചെയ്തവ": "Handled by me",
+"തിരയുക": "Search",
+"എന്റെ റിപ്പോർട്ട്": "My report",
+"റെക്കോർഡ്സ്": "Records",
+"ആരുമില്ല": "Nobody",
+"ഈ ലോഗിൻ പ്രവർത്തനക്ഷമമല്ല. അഡ്മിനെ സമീപിക്കുക.": "This login is not active. Please contact the admin.",
+"ഇമെയിൽ അല്ലെങ്കിൽ പാസ്‌വേഡ് ശരിയല്ല.": "Incorrect email or password.",
+"ഇൻബോക്സ് (": "Inbox (",
+"ഓർമ്മപ്പെടുത്തൽ (": "Reminders (",
+"വന്ന തപാൽ (": "Incoming tapal (",
+"എല്ലാ ഫയലുകളും": "All files",
+"സ്ഥാപന റിപ്പോർട്ട്": "Organisation report",
+"അഡ്മിനിസ്ട്രേഷൻ": "Administration",
+"ഓഡിറ്റ്": "Audit",
+"📁 Anatech · ഇ-ഫയൽ": "📁 Anatech · e-File",
+"പാസ്‌വേഡ്": "Password",
+"ലോഗിൻ": "Log in",
+"ലോഗിൻ ലഭിക്കാൻ അഡ്മിനെ സമീപിക്കുക.": "Contact the admin to get a login.",
+"· അഡ്മിൻ": "· Admin",
+"· ചീഫ്": "· Chief",
+"പാസ്‌വേഡ് മാറ്റുക": "Change password",
+"പുതുക്കുക": "Refresh",
+"ലോഗൗട്ട്": "Log out",
+"ഫയൽ കണ്ടെത്തിയില്ല.": "File not found.",
+"ഇൻബോക്സ് ശൂന്യമാണ്.": "Your inbox is empty.",
+"ഒന്നും ഇല്ല.": "Nothing here.",
+"ഫയലുകൾ ഒന്നും ഇല്ല.": "No files.",
+"പുതിയ പാസ്‌വേഡ് (കുറഞ്ഞത് 8 അക്ഷരം)": "New password (at least 8 characters)",
+"പാസ്‌വേഡിന് കുറഞ്ഞത് 8 അക്ഷരം വേണം": "Password must be at least 8 characters",
+"പാസ്‌വേഡ് ഒന്നുകൂടി നൽകുക": "Enter the password again",
+"പാസ്‌വേഡുകൾ ഒത്തുപോകുന്നില്ല": "The passwords do not match",
+"പാസ്‌വേഡ് മാറ്റി.": "Password changed.",
+"അടിയന്തിരം": "Urgent",
+"സമയപരിധി": "Time limit",
+"— കഴിഞ്ഞു": "— overdue",
+"തീർപ്പാക്കി (": "Closed (",
+"തുറന്നത്": "Open",
+"ഇപ്പോൾ:": "With:",
+"പ്രവൃത്തി ദിവസമായി": "working days",
+"ബാക്ക് ഫയൽ": "Back file",
+"ബന്ധിപ്പിച്ചത്": "Linked",
+"നിങ്ങളുടെ നടപടി": "Your action",
+"(സീറ്റ്:": "(Seat:",
+"നോട്ട്": "Note",
+"ഫോർവേഡ് →": "Forward →",
+"മേലധികാരി സീറ്റ് സജീവമല്ല. അഡ്മിനെ അറിയിക്കുക.": "The superior seat is not active. Inform the admin.",
+"തിരിച്ചയക്കുക ←": "Return ←",
+"ആ സീറ്റിൽ ഇപ്പോൾ ആരുമില്ല. ഫയൽ അവിടെ കാത്തിരിക്കും; അഡ്മിൻ ചുമതല നൽകണം.": "Nobody is in that seat now. The file will wait there; the admin must assign someone.",
+"തീർപ്പാക്കുക": "Close the file",
+"ഡിസ്‌പോസൽ വിഭാഗം": "Disposal category",
+"നടപടി പൂർത്തിയായി, തീർപ്പാക്കുക": "Action completed, close the file",
+"അനുമതി നൽകി തീർപ്പാക്കുക": "Approve and close the file",
+"ബാക്ക് ഫയൽ / ബന്ധിപ്പിക്കൽ": "Back file / linking",
+"ഫയൽ നമ്പർ (ഉദാ: ANA/2026/001)": "File number (e.g. ANA/2026/001)",
+"ബന്ധിപ്പിക്കുക": "Link",
+"ചേർക്കുക": "Add",
+"ഓർമ്മപ്പെടുത്തൽ / കോൾ ബുക്ക് / ലൈ-ഓവർ": "Reminder / Call book / Lie-over",
+"കുറിപ്പ്": "Note",
+"കോൾ ബുക്ക്: ആ തീയതി വരെ ഫയൽ ഇൻബോക്സിൽ നിന്ന് മാറി നിൽക്കും. ലൈ-ഓവർ പരമാവധി 3 മാസം.": "Call book: the file stays out of your inbox until that date. Lie-over: maximum 3 months.",
+"വന്ന തപാൽ ഈ ഫയലിൽ ചേർക്കുക": "Add incoming tapal to this file",
+"ഈ ഫയൽ ഇപ്പോൾ": "This file is currently with",
+"ഫയൽ മറ്റൊരു സീറ്റിലേക്ക് മാറ്റാൻ അഭ്യർത്ഥന": "Request to move this file to another seat",
+"ഇതിന് ചീഫിന്റെ അനുമതി വേണം.": "This needs the Chief’s approval.",
+"പുതിയ സീറ്റ്": "New seat",
+"ഫയൽ നോട്ടിൽ ചേർക്കേണ്ട കാരണം": "Reason to record in the file note",
+"അഭ്യർത്ഥന നൽകുക": "Raise request",
+"← തിരികെ": "← Back",
+"ഉറവിടം:": "Origin:",
+"ഇപ്പോൾ കയ്യിൽ:": "Now with:",
+"തീർപ്പാക്കിയത്:": "Closed:",
+"വഴി:": "Route:",
+"(കഴിഞ്ഞു)": "(done)",
+"നോട്ട് ഫയൽ / ചലന രേഖ": "Note file / movement record",
+"തിരിച്ചയക്കുമ്പോൾ കാരണം നോട്ടിൽ എഴുതുക": "Write the reason in the note when returning a file",
+"ഡിസ്‌പോസൽ വിഭാഗം (R / D / K / L) തിരഞ്ഞെടുക്കുക": "Choose a disposal category (R / D / K / L)",
+"ഫയൽ തീർപ്പാക്കിയാൽ പിന്നീട് മാറ്റാൻ പറ്റില്ല. തുടരട്ടെ?": "A closed file cannot be changed later. Continue?",
+"ആ നമ്പറിൽ നിങ്ങൾക്ക് കാണാവുന്ന ഫയൽ ഇല്ല": "No file with that number is visible to you",
+"തീയതി തിരഞ്ഞെടുക്കുക": "Choose a date",
+"കഴിഞ്ഞു": "Overdue",
+"ഇന്ന്": "Today",
+"ചെയ്തു": "Done",
+"ഓർമ്മപ്പെടുത്തലുകൾ ഒന്നുമില്ല.": "No reminders.",
+"കോൾ ബുക്കിലുള്ള ഫയലുകൾ": "Files in the call book",
+"(തീയതിയാകുമ്പോൾ ഇൻബോക്സിൽ തിരിച്ചെത്തും)": "(they return to your inbox when the date arrives)",
+"തീർപ്പാക്കിയ ഫയലുകളുടെ റെക്കോർഡ് (ഓഫീസ് മാനുവൽ അനുസരിച്ചുള്ള സൂക്ഷിപ്പ് കാലാവധി). ഫയൽ നശിപ്പിക്കുന്നത് സ്വയം നടക്കില്ല; സമയമായവയെ അടയാളപ്പെടുത്തുക മാത്രം ചെയ്യും.": "Record of closed files with the retention period from the office manual. Files are not destroyed automatically; those that are due are only marked.",
+"ഫയൽ": "File",
+"വിഷയം": "Subject",
+"ഡിസ്‌പോസൽ": "Disposal",
+"തീർപ്പാക്കിയത്": "Closed on",
+"നശിപ്പിക്കാവുന്നത്": "Can be destroyed on",
+"സമയമായി": "Due now",
+"സ്ഥിരം": "Permanent",
+"ഒന്നുമില്ല": "Nothing",
+"സീറ്റും കാരണവും നൽകുക": "Give the seat and a reason",
+"ഫയൽ തുടങ്ങാൻ നിങ്ങൾക്ക് അനുമതിയില്ല.": "You do not have permission to open files.",
+"ഏത് സീറ്റിൽ നിന്ന്": "From which seat",
+"ഫയൽ തുടങ്ങുന്നത്": "File originates from",
+"ഓഫീസ് ആവശ്യത്തിന് (സ്വന്തം)": "Office need (own)",
+"മേലധികാരിയുടെ നിർദ്ദേശപ്രകാരം": "On instruction from a superior",
+"വന്ന തപാലിൽ നിന്ന്": "Incoming tapal",
+"നിർദ്ദേശം നൽകിയ സീറ്റ്": "Seat that gave the instruction",
+"— തിരഞ്ഞെടുക്കുക —": "— choose —",
+"പ്രയോറിറ്റി": "Priority",
+"സാധാരണ": "Normal",
+"സമയപരിധി (ടൈം-ലിമിറ്റ് പേപ്പർ ആണെങ്കിൽ മാത്രം)": "Time limit (only for time-limit papers)",
+"ആദ്യ നോട്ട്": "First note",
+"ഫയൽ തുടങ്ങുക": "Open the file",
+"ബാക്ക് ഫയൽ ചേർക്കാൻ ഫയൽ തുടങ്ങിയ ശേഷം അതിൽ തുറന്ന്": "To add a back file, open the file after creating it and use the",
+"ഭാഗം ഉപയോഗിക്കുക.": "section.",
+"വിഷയം എഴുതുക": "Enter the subject",
+"നിർദ്ദേശം നൽകിയ സീറ്റ് തിരഞ്ഞെടുക്കുക": "Choose the seat that gave the instruction",
+"തപാൽ തിരഞ്ഞെടുക്കുക": "Choose a tapal",
+"ഫയലാക്കാനുള്ള തപാൽ ഒന്നുമില്ല.": "No tapal waiting to be filed.",
+"നിർദ്ദേശം:": "Instruction:",
+"അയച്ചത്:": "From:",
+"· കത്ത് നമ്പർ:": "· Letter no.:",
+"· കത്ത് തീയതി:": "· Letter date:",
+"· ലഭിച്ചത്:": "· Received:",
+"ഈ തപാലിൽ നിന്ന് ഫയൽ തുടങ്ങുക": "Open a file from this tapal",
+"നിലവിലുള്ള ഫയലിൽ ചേർക്കാൻ: ആ ഫയൽ തുറന്ന്": "To add it to an existing file, open that file and use",
+"വന്ന തപാൽ ചേർക്കുക": "Add incoming tapal",
+"ഉപയോഗിക്കുക.": "there.",
+"പുതിയ തപാൽ രേഖപ്പെടുത്തുക": "Record a new tapal",
+"അയച്ചയാൾ / സ്ഥാപനം": "Sender / organisation",
+"കത്ത് നമ്പർ": "Letter number",
+"കത്ത് തീയതി": "Letter date",
+"എത്തിയ രീതി": "Mode of receipt",
+"തപാൽ തുറന്നപ്പോൾ ഉദ്യോഗസ്ഥൻ നൽകിയ നിർദ്ദേശം (ഉണ്ടെങ്കിൽ)": "Instruction given by the officer when the tapal was opened (if any)",
+"ഏത് സീറ്റിലേക്ക്": "To which seat",
+"രേഖപ്പെടുത്തുക": "Record",
+"നമ്പർ": "Number",
+"ലഭിച്ചത്": "Received",
+"അയച്ചയാൾ": "Sender",
+"ഇപ്പോൾ": "Now",
+"ഫയലിൽ:": "In file:",
+"മാറ്റുക": "Change",
+"സീറ്റ് മാറ്റുന്നതിന്റെ കാരണം": "Reason for changing the seat",
+"പുതിയ ഡെസ്പാച്ച് (പുറത്തേക്ക് അയച്ചത്)": "New despatch (sent out)",
+"ലഭിക്കേണ്ടയാൾ": "Addressee",
+"അയച്ച രീതി": "Mode sent",
+"ബന്ധപ്പെട്ട ഫയൽ (ഉണ്ടെങ്കിൽ)": "Related file (if any)",
+"ഫയൽ നമ്പർ": "File number",
+"തീയതി": "Date",
+"ആർക്ക്": "To",
+"ആ ഫയൽ നമ്പർ കണ്ടെത്തിയില്ല": "That file number was not found",
+"ഫയൽ നമ്പർ / വിഷയം / നോട്ടിലെ വാക്ക്": "File number / subject / word in notes",
+"അവസ്ഥ": "Status",
+"എല്ലാം": "All",
+"ഉറവിടം": "Origin",
+"ഇപ്പോൾ കയ്യിലുള്ള സീറ്റ്": "Seat currently holding the file",
+"തുടങ്ങിയത് (മുതൽ)": "Opened (from)",
+"(വരെ)": "(to)",
+"ഫയൽ കണ്ടെത്തി": "files found",
+"ഒന്നും കണ്ടെത്തിയില്ല.": "Nothing found.",
+"എന്റെ ഇൻബോക്സിൽ (പെൻഡിംഗ്)": "In my inbox (pending)",
+"പ്രവൃത്തി ദിവസത്തിലേറെ പെൻഡിംഗ് (മാനുവൽ: 5 ദിവസത്തിനുള്ളിൽ സമർപ്പിക്കണം)": "working days or more pending (manual: submit within 5 days)",
+"സമയപരിധി കഴിഞ്ഞ ഫയലുകൾ": "Files past their time limit",
+"ഇന്നത്തെ / കഴിഞ്ഞ ഓർമ്മപ്പെടുത്തലുകൾ": "Reminders due today or earlier",
+"അടിയന്തിരം (പെൻഡിംഗ്)": "Urgent (pending)",
+"വന്ന തപാൽ (ഫയലാക്കാനുള്ളത്)": "Incoming tapal (to be filed)",
+"ഞാൻ അയച്ചത്, ഇപ്പോൾ മറ്റുള്ളവരുടെ കയ്യിൽ": "Sent by me, now with others",
+"എന്റെ വഴിയിലൂടെ തീർപ്പായവ": "Closed through my seat",
+"പേഴ്സണൽ രജിസ്റ്റർ": "Personal register",
+"(എന്റെ സീറ്റിൽ വന്നതും അയച്ചതും)": "(files that came to and left my seat)",
+"അയച്ചത്": "Sent",
+"നടപടി": "Action",
+"പ്രവൃത്തി ദിവസം": "Working days",
+"പെൻഡിംഗ്": "Pending",
+"സീറ്റ്": "Seat",
+"ഇപ്പോൾ പെൻഡിംഗ്": "Pending now",
+"വൈകിയത്": "Delayed",
+"സീറ്റുകൾ ഇല്ല": "No seats",
+"ആ മാസം രേഖപ്പെടുത്തിയ തപാൽ": "Tapal recorded that month",
+"· ഡെസ്പാച്ച്": "· Despatch",
+"ആൾ": "Person",
+"ഏറ്റവും പഴയത് (പ്രവൃത്തി ദിവസം)": "Oldest (working days)",
+"ദിവസത്തിലേറെ": "days or more",
+"സമയപരിധി കഴിഞ്ഞത്": "Past time limit",
+"ആകെ ഫയൽ": "Total files",
+"· തുറന്നത്": "· Open",
+"· തീർപ്പാക്കിയത്": "· Closed",
+"· ഫയലാക്കാത്ത തപാൽ": "· Tapal not yet filed",
+"· അടിയന്തിരം (തുറന്നത്)": "· Urgent (open)",
+"മാസ ബിസിനസ് സ്റ്റേറ്റ്മെന്റ്": "Monthly business statement",
+"(മാനുവൽ പ്രകാരം ഓരോ മാസവും 5-ന് മുമ്പ് തയ്യാറാക്കണം)": "(to be prepared before the 5th of every month, as per the manual)",
+"സിസ്റ്റം": "System",
+"അഡ്മിൻ മാറ്റങ്ങൾ": "Admin changes",
+"(ഇവ മായ്ക്കാൻ പറ്റില്ല)": "(these cannot be erased)",
+"ഫയൽ പ്രവർത്തനങ്ങൾ": "File activity",
+"(പുതിയ 300)": "(latest 300)",
+"അനുമതിക്ക് കാത്തിരിക്കുന്നു": "Waiting for approval",
+"ചീഫ് അനുവദിച്ചു — അഡ്മിൻ നടപ്പാക്കണം": "Approved by Chief — admin to execute",
+"നിരസിച്ചു": "Rejected",
+"നടപ്പാക്കി": "Executed",
+"റദ്ദാക്കി": "Cancelled",
+"പുതിയ ലോഗിൻ ഉണ്ടാക്കുക:": "Create new login:",
+"· സീറ്റ്:": "· Seat:",
+"· അനുമതികൾ:": "· Rights:",
+"പേര്:": "Name:",
+"സീറ്റ്:": "Seat:",
+"അനുമതികൾ:": "Rights:",
+"മെനു:": "Menus:",
+"അഡ്മിൻ ആക്കുക": "Make admin",
+"അഡ്മിൻ അധികാരം നീക്കുക": "Remove admin power",
+"ലോഗിൻ സജീവമാക്കുക": "Activate login",
+"ലോഗിൻ നിർത്തുക": "Stop login",
+"ജീവനക്കാരന്റെ വിവരം മാറ്റുക:": "Change user details:",
+"പാസ്‌വേഡ് റീസെറ്റ് ചെയ്യുക:": "Reset password:",
+"പുതിയ സീറ്റ്:": "New seat:",
+"· മേലധികാരി:": "· Superior:",
+"· ഏറ്റവും മുകളിൽ": "· Top level",
+"സെക്ഷൻ:": "Section:",
+"മേലധികാരി:": "Superior:",
+"ഏറ്റവും മുകളിൽ": "Top level",
+"സീറ്റ് സജീവമാക്കുക": "Activate seat",
+"സീറ്റ് നിർത്തുക": "Stop seat",
+"സീറ്റ് മാറ്റുക:": "Change seat:",
+"ചീഫ് സീറ്റ് ആക്കുക:": "Make Chief seat:",
+"ചുമതല കൈമാറ്റം:": "Delegation:",
+"ചുമതല അവസാനിപ്പിക്കുക:": "End delegation:",
+"പെൻഡിംഗ് മുന്നറിയിപ്പ് ദിവസം:": "Pending-warning working days:",
+"അവധി ദിവസം ചേർക്കുക:": "Add holiday:",
+"അവധി ദിവസം നീക്കുക:": "Remove holiday:",
+"ഫയൽ മാറ്റുക:": "Move file:",
+"അനുവദിക്കുക": "Approve",
+"നിരസിക്കുക": "Reject",
+"നടപ്പാക്കുക": "Execute",
+"അഭ്യർത്ഥന റദ്ദാക്കുക": "Cancel request",
+"കാരണം:": "Reason:",
+"നിരസിച്ചത്": "Rejected by",
+"അനുവദിച്ചത്": "Approved by",
+"നടപ്പാക്കിയത്:": "Executed by:",
+"അഭ്യർത്ഥനകൾ": "Requests",
+"ജീവനക്കാർ": "Staff",
+"സീറ്റുകൾ": "Seats",
+"ചുമതല കൈമാറ്റം": "Delegation",
+"ക്രമീകരണം": "Settings",
+"സെറ്റപ്പ് ഘട്ടം:": "Setup mode:",
+"ചീഫ് സീറ്റ് ഇതുവരെ നിശ്ചയിച്ചിട്ടില്ല. അതുവരെ അഡ്മിൻ ചെയ്യുന്ന മാറ്റങ്ങൾ ഉടൻ നടപ്പിലാകും. ആദ്യം സീറ്റുകൾ ഉണ്ടാക്കി ഏറ്റവും മുകളിലെ സീറ്റ്": "The Chief seat has not been set yet. Until then, changes made by the admin take effect immediately. First create the seats and make the top seat the",
+"ചീഫ് സീറ്റ്": "Chief seat",
+"ആക്കുക; അതിന് ശേഷം എല്ലാ മാറ്റങ്ങൾക്കും ചീഫിന്റെ അനുമതി വേണം.": "; afterwards every change needs the Chief’s approval.",
+"ചീഫ് സീറ്റ്:": "Chief seat:",
+"· എല്ലാ അഡ്മിൻ മാറ്റങ്ങൾക്കും ചീഫിന്റെ അനുമതി ആവശ്യമാണ്.": "· Every admin change needs the Chief’s approval.",
+"നിങ്ങളുടെ അനുമതിക്ക് കാത്തിരിക്കുന്നവ": "Waiting for your approval",
+"നടപ്പാക്കാനുള്ളവ (ചീഫ് അനുവദിച്ചത്)": "To execute (approved by the Chief)",
+"എല്ലാ അഭ്യർത്ഥനകളും": "All requests",
+"എന്റെ അഭ്യർത്ഥനകൾ": "My requests",
+"ഒന്നുമില്ല.": "Nothing.",
+"അഭ്യർത്ഥനയുടെ കാരണം എഴുതുക": "Write the reason for this request",
+"കാരണം നിർബന്ധമാണ്": "A reason is required",
+"മാറ്റം നടപ്പിലായി.": "The change has been applied.",
+"ചീഫ് അനുവദിച്ചു. അഡ്മിൻ നടപ്പാക്കണം.": "The Chief has approved. The admin must execute it.",
+"ചീഫിന്റെ അനുമതിക്കായി അയച്ചു.": "Sent to the Chief for approval.",
+"കുറിപ്പ് (ഐച്ഛികം)": "Note (optional)",
+"നിരസിക്കാനുള്ള കാരണം": "Reason for rejecting",
+"ഈ അഭ്യർത്ഥന റദ്ദാക്കണോ?": "Cancel this request?",
+"പുതിയ ജീവനക്കാരന് നൽകേണ്ട പാസ്‌വേഡ് (കുറഞ്ഞത് 8 അക്ഷരം). ഇത് ഒരിടത്തും സൂക്ഷിക്കില്ല; ജീവനക്കാരനോട് പറയുക.": "Password for the new staff member (at least 8 characters). It is not stored anywhere; tell it to the staff member.",
+"പുതിയ പാസ്‌വേഡ് (കുറഞ്ഞത് 8 അക്ഷരം). ഇത് ഒരിടത്തും സൂക്ഷിക്കില്ല; ജീവനക്കാരനോട് പറയുക.": "New password (at least 8 characters). It is not stored anywhere; tell it to the staff member.",
+"യൂസർ സർവീസ് (admin-user) ഇതുവരെ ഡിപ്ലോയ് ചെയ്തിട്ടില്ല, അല്ലെങ്കിൽ എത്തിച്ചേരാൻ പറ്റുന്നില്ല.": "The user service (admin-user) is not deployed yet, or cannot be reached.",
+"നടപ്പിലായി.": "Done.",
+"പുതിയ ജീവനക്കാരൻ / ലോഗിൻ": "New staff member / login",
+"ഇമെയിൽ (ലോഗിൻ ഐഡി)": "Email (login ID)",
+"പേര്": "Name",
+"— സീറ്റ് ഇല്ല —": "— No seat —",
+"അനുമതികൾ": "Rights",
+"കാണേണ്ട മെനുകൾ": "Menus to show",
+"ലോഗിൻ ഉണ്ടാക്കാൻ അഭ്യർത്ഥിക്കുക": "Request to create the login",
+"പാസ്‌വേഡ് ഇവിടെ നൽകില്ല; അനുമതി കിട്ടിയ ശേഷം അഡ്മിൻ നടപ്പാക്കുമ്പോൾ നൽകും.": "The password is not entered here; the admin enters it when executing after approval.",
+"നിങ്ങൾ": "You",
+"അഡ്മിൻ": "Admin",
+"നിർത്തി": "Stopped",
+"സീറ്റ് ഇല്ല": "No seat",
+"ലോഗിൻ സജീവം": "Login active",
+"മാറ്റം സമർപ്പിക്കുക": "Submit the change",
+"പാസ്‌വേഡ് റീസെറ്റ് ചെയ്യാൻ അഭ്യർത്ഥിക്കുക": "Request a password reset",
+"ഇമെയിലും പേരും എഴുതുക": "Enter email and name",
+"പേര് എഴുതുക": "Enter the name",
+"തുടക്കം:": "Getting started:",
+"ആദ്യം ഏറ്റവും മുകളിലെ സീറ്റ് (ഉദാ: മാനേജിംഗ് ഡയറക്ടർ) മേലധികാരി ഇല്ലാതെ ചേർക്കുക. പിന്നെ അതിന് താഴെയുള്ള സീറ്റുകൾ.": "First add the topmost seat (e.g. Managing Director) with no superior. Then add the seats below it.",
+"സീറ്റിന്റെ പേര് (തസ്തിക)": "Seat name (designation)",
+"സെക്ഷൻ (ഐച്ഛികം)": "Section (optional)",
+"മേലധികാരി സീറ്റ്": "Superior seat",
+"— ഏറ്റവും മുകളിൽ —": "— Top level —",
+"ചേർക്കാൻ അഭ്യർത്ഥിക്കുക": "Request to add",
+"സെക്ഷൻ": "Section",
+"സജീവം": "Active",
+"ചീഫ് സീറ്റ് ആക്കാൻ അഭ്യർത്ഥിക്കുക": "Request to make this the Chief seat",
+"ആരുമില്ലാത്ത സീറ്റുകൾ:": "Seats with nobody:",
+"ഫയൽ)": "files)",
+"ഇവിടെയുള്ള ഫയലുകൾ കാത്തിരിക്കും. താഴെ ചുമതല നൽകാൻ അഭ്യർത്ഥിക്കുക.": "Files there will wait. Request a delegation below.",
+"(ഒരാൾ ലീവിലാണെങ്കിൽ അദ്ദേഹത്തിന്റെ സീറ്റിന്റെ അധികാരം മറ്റൊരാൾക്ക്, തീയതി വരെ)": "(when someone is on leave, give their seat’s powers to another person until a date)",
+"ചുമതല ഏൽക്കുന്ന ആൾ": "Person taking over",
+"മുതൽ": "From",
+"വരെ (ഒഴിച്ചിട്ടാൽ അവസാനിപ്പിക്കുന്നത് വരെ)": "To (leave blank to continue until ended)",
+"കാരണം": "Reason",
+"ഉദാ: ലീവ്": "e.g. leave",
+"ചുമതല നൽകാൻ അഭ്യർത്ഥിക്കുക": "Request the delegation",
+"നിലവിലെ / മുൻ ചുമതലകൾ": "Current / past delegations",
+"കാലയളവ്": "Period",
+"അവസാനിപ്പിച്ചു": "Ended",
+"അവസാനിപ്പിക്കാൻ അഭ്യർത്ഥിക്കുക": "Request to end",
+"വരാനുള്ളത്": "Upcoming",
+"സീറ്റും ആളും തിരഞ്ഞെടുക്കുക": "Choose the seat and the person",
+"മുന്നറിയിപ്പിനുള്ള പ്രവൃത്തി ദിവസം (മാനുവൽ: 5)": "warning: working days (manual: 5)",
+"മാറ്റാൻ അഭ്യർത്ഥിക്കുക": "Request the change",
+"അവധി ദിവസങ്ങൾ": "Holidays",
+"(ഞായർ സ്വയം ഒഴിവാകും; മറ്റ് അവധികൾ ഇവിടെ ചേർക്കുക)": "(Sundays are excluded automatically; add other holidays here)",
+"നീക്കാൻ അഭ്യർത്ഥിക്കുക": "Request removal",
+"ഒന്നും ചേർത്തിട്ടില്ല": "Nothing added",
+"പഴയ ഘടനയിൽ ഫയലുകൾ ഉണ്ട്. ഈ സ്ക്രിപ്റ്റ് ഓടിക്കരുത്.": "Files exist in the old structure. Do not run this script.",
+"ഈ രേഖ മാറ്റാനോ മായ്ക്കാനോ പറ്റില്ല": "This record cannot be changed or erased",
+"ഫയലിന്റെ അടിസ്ഥാന വിവരങ്ങൾ മാറ്റാൻ പറ്റില്ല": "The basic details of a file cannot be changed",
+"തീർപ്പാക്കിയ ഫയൽ മാറ്റാൻ പറ്റില്ല": "A closed file cannot be changed",
+"ഒരു സീറ്റ് സ്വയം മേലധികാരിയാകാൻ പറ്റില്ല": "A seat cannot be its own superior",
+"മേലധികാരി സീറ്റ് സജീവമല്ല": "The superior seat is not active",
+"ഹയറാർക്കിയിൽ വട്ടം (loop) ഉണ്ടാകും": "This would create a loop in the hierarchy",
+"ഹയറാർക്കി വളരെ ആഴമുള്ളതാണ്": "The hierarchy is too deep",
+"ഈ സീറ്റിൽ തുറന്ന ഫയലുകൾ ഉണ്ട്. ആദ്യം അവ മാറ്റി നൽകുക": "This seat has open files. Move them first",
+"ഈ സീറ്റിന് കീഴിൽ സജീവ സീറ്റുകൾ ഉണ്ട്. ആദ്യം അവയുടെ മേലധികാരിയെ മാറ്റുക": "Active seats exist under this seat. Change their superior first",
+"സ്വന്തം അഡ്മിൻ അധികാരമോ ലോഗിനോ നിർത്താൻ പറ്റില്ല": "You cannot stop your own admin power or login",
+"ഒരു അഡ്മിനെങ്കിലും ഉണ്ടായിരിക്കണം": "At least one admin must remain",
+"സീറ്റ് സജീവമല്ല": "The seat is not active",
+"ജീവനക്കാരന്റെ ലോഗിൻ സജീവമല്ല": "The staff member’s login is not active",
+"ചുമതലയുടെ സീറ്റ്, ആൾ, തുടക്കം എന്നിവ മാറ്റാൻ പറ്റില്ല; അവസാനിപ്പിച്ച് പുതിയത് ഉണ്ടാക്കുക": "The seat, person and start of a delegation cannot be changed; end it and create a new one",
+"ഈ സീറ്റിൽ പ്രവർത്തിക്കാൻ നിങ്ങൾക്ക് അനുമതിയില്ല": "You are not allowed to act in this seat",
+"ഈ ഫയൽ ഈ സീറ്റിന്റെ കയ്യിലല്ല": "This file is not with this seat",
+"ഫയൽ തുടങ്ങാൻ അനുമതിയില്ല": "You are not allowed to open files",
+"ഈ സീറ്റിൽ പ്രവർത്തിക്കാൻ അനുമതിയില്ല": "You are not allowed to act in this seat",
+"ഈ തപാൽ നിങ്ങളുടെ സീറ്റിലേക്കുള്ളതല്ല": "This tapal is not addressed to your seat",
+"ഈ തപാൽ ഇതിനകം ഫയലിൽ ചേർത്തു": "This tapal has already been added to a file",
+"നിർദ്ദേശം നൽകുന്ന സീറ്റ് നിങ്ങളുടെ മേലധികാരി നിരയിൽ ഉള്ളതായിരിക്കണം": "The seat giving the instruction must be among your superiors",
+"തെറ്റായ ഉറവിടം": "Invalid origin",
+"ഫോർവേഡ് ചെയ്യാൻ മേലധികാരി സീറ്റ് ഇല്ല": "There is no superior seat to forward to",
+"തിരിച്ചയക്കാൻ ആരുമില്ല": "There is nobody to return it to",
+"കാരണം നോട്ടിൽ എഴുതുക": "Write the reason in the note",
+"ഫയൽ തുടങ്ങിയ സീറ്റിനോ ഏറ്റവും മുകളിലെ സീറ്റിനോ മാത്രമേ തീർപ്പാക്കാൻ പറ്റൂ": "Only the seat that opened the file, or the topmost seat, can close it",
+"മേലധികാരിക്ക് അയച്ച് അനുമതി വാങ്ങാതെ തീർപ്പാക്കാൻ പറ്റില്ല": "A file cannot be closed without sending it to the superior for approval",
+"തെറ്റായ തരം": "Invalid type",
+"ഫയൽ കണ്ടെത്തിയില്ല": "File not found",
+"ആ ഫയൽ കാണാൻ നിങ്ങൾക്ക് അനുമതിയില്ല": "You are not allowed to see that file",
+"അഡ്മിന് മാത്രം": "Admin only",
+"കാരണം എഴുതുക": "Write the reason",
+"ഫയൽ തുറന്നതല്ല": "The file is not open",
+"സീറ്റ് ലഭ്യമല്ല": "Seat not available",
+"ഫയൽ ഇപ്പോൾ തന്നെ ആ സീറ്റിലാണ്": "The file is already in that seat",
+"തപാൽ രേഖപ്പെടുത്താൻ അനുമതിയില്ല": "You are not allowed to record tapal",
+"അയച്ചയാളും വിഷയവും എഴുതുക": "Enter the sender and the subject",
+"അനുമതിയില്ല": "Not allowed",
+"തപാൽ കണ്ടെത്തിയില്ല": "Tapal not found",
+"ഡെസ്പാച്ച് രേഖപ്പെടുത്താൻ അനുമതിയില്ല": "You are not allowed to record despatch",
+"ലഭിക്കേണ്ടയാളും വിഷയവും എഴുതുക": "Enter the addressee and the subject",
+"ഓർമ്മപ്പെടുത്തൽ മാറ്റാൻ പറ്റില്ല": "A reminder cannot be changed",
+"ഭാവിയിലെ തീയതി നൽകുക": "Enter a future date",
+"ലൈ-ഓവർ 3 മാസത്തിൽ കൂടാൻ പാടില്ല": "Lie-over cannot exceed 3 months",
+"ഓർമ്മപ്പെടുത്തൽ കണ്ടെത്തിയില്ല": "Reminder not found",
+" ന്റെ കയ്യിലാണ്. നിങ്ങൾക്ക് കാണാൻ മാത്രം പറ്റും.": ". You can only view it.",
+"തപാൽ വഴി": "By post",
+"ബാക്ക് ഫയൽ: ": "Back file: ",
+"ബന്ധിപ്പിച്ച ഫയൽ: ": "Linked file: ",
+"തപാൽ ചേർത്തു: ": "Tapal added: ",
+"ഡെസ്പാച്ച്: ": "Despatch: ",
+"ഓർമ്മപ്പെടുത്തൽ: ": "Reminder: ",
+"കോൾ ബുക്ക്: ": "Call book: ",
+"ലൈ-ഓവർ: ": "Lie-over: "
+};/*DICT_END*/
 const SB=supabase.createClient('https://nuhrymlefclfvtlodcwc.supabase.co','sb_publishable_OKG7B4q4Xwnr3DnnbY3xMg_V4-dwgP_');
-let me=null,uid=null,P=[],ST=[],SA=[],F=[],L=[],K=[],T=[],TE=[],D=[],RM=[],HO=[],AU=[],CFG={pending_days:'5'};
+let me=null,uid=null,P=[],ST=[],SA=[],F=[],L=[],K=[],T=[],TE=[],D=[],RM=[],HO=[],RQ=[],AU=[],CFG={pending_days:'5'};
+let lang='en';try{lang=localStorage.getItem('efile-lang')||'en'}catch(e){}
+let sub='req';
 let tab='',openId=null,err='',prefTapal=null;
 const $=id=>document.getElementById(id);
-const E=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const fmt=t=>t?new Date(t).toLocaleString('ml-IN',{dateStyle:'short',timeStyle:'short'}):'';
-const fmtD=t=>t?new Date(t).toLocaleDateString('ml-IN'):'';
+const M1='\uE000',M2='\uE001';
+const E=s=>M1+String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))+M2;
+let _keys=null;
+function trSeg(s){
+  if(!_keys)_keys=Object.keys(DICT).sort((a,b)=>b.length-a.length);
+  const used=new Array(s.length).fill(false),reps=[];
+  for(const k of _keys){let i=s.indexOf(k);while(i>=0){let ok=true;for(let j=i;j<i+k.length;j++)if(used[j]){ok=false;break}
+    if(ok){for(let j=i;j<i+k.length;j++)used[j]=true;reps.push([i,k])}i=s.indexOf(k,i+1)}}
+  reps.sort((a,b)=>a[0]-b[0]);let out='',p=0;for(const r of reps){out+=s.slice(p,r[0])+DICT[r[1]];p=r[0]+r[1].length}return out+s.slice(p);
+}
+function trHtml(h){
+  if(lang=='ml')return h.split(M1).join('').split(M2).join('');
+  let out='',i=0;
+  while(i<h.length){const a=h.indexOf(M1,i);if(a<0){out+=trSeg(h.slice(i));break}
+    out+=trSeg(h.slice(i,a));const b=h.indexOf(M2,a);out+=h.slice(a+1,b<0?h.length:b);i=b<0?h.length:b+1}
+  return out;
+}
+const H=(el,h)=>{el.innerHTML=trHtml(h)};
+const tx=s=>lang=='ml'?String(s):trSeg(String(s));
+const errT=m=>{m=String(m||'');if(m.includes(' | ')){const q=m.split(' | ');return lang=='ml'?q[q.length-1]:q[0]}return tx(m)};
+const A=m=>alert(errT(m));const C=m=>confirm(tx(m));const PR=(m,d)=>prompt(tx(m),d);
+function setLang(l){lang=l;try{localStorage.setItem('efile-lang',l)}catch(e){}render()}
+const LOC=()=>lang=='ml'?'ml-IN':'en-IN';
+const fmt=t=>t?new Date(t).toLocaleString(LOC(),{dateStyle:'short',timeStyle:'short'}):'';
+const fmtD=t=>t?new Date(t).toLocaleDateString(LOC()):'';
 const todayS=()=>new Date().toISOString().slice(0,10);
 const days=t=>Math.max(0,Math.floor((Date.now()-t)/864e5));
 const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
@@ -53,9 +473,14 @@ const KEEPY={R:null,D:10,K:3,L:1};
 const RK={reminder:'ഓർമ്മപ്പെടുത്തൽ',call_book:'കോൾ ബുക്ക്',lie_over:'ലൈ-ഓവർ'};
 const ORG={office:'ഓഫീസ്',instruction:'നിർദ്ദേശപ്രകാരം',tapal:'തപാലിൽ നിന്ന്'};
 const KIND={create:'ഫയൽ തുടങ്ങി',forward:'ഫോർവേഡ്',return:'തിരിച്ചയച്ചു',close:'തീർപ്പാക്കി',admin_move:'അഡ്മിൻ മാറ്റി നൽകി',link:'ബന്ധിപ്പിച്ചു',tapal_add:'തപാൽ ചേർത്തു',despatch:'ഡെസ്പാച്ച്',reminder:'ഓർമ്മപ്പെടുത്തൽ'};
-const MODE={post:'തപാൽ',courier:'കൊറിയർ',hand:'നേരിട്ട്',email:'ഇമെയിൽ'};
-const PERMS=[['originate','ഫയൽ തുടങ്ങാം'],['tapal','തപാൽ രജിസ്റ്റർ'],['despatch','ഡെസ്പാച്ച് രജിസ്റ്റർ'],['view_all','എല്ലാ ഫയലും കാണാം (വായന മാത്രം)']];
+const MODE={post:'തപാൽ വഴി',courier:'കൊറിയർ',hand:'നേരിട്ട്',email:'ഇമെയിൽ'};
+const PERMS=[['originate','ഫയൽ തുടങ്ങാം'],['tapal','തപാൽ രജിസ്റ്റർ'],['despatch','ഡെസ്പാച്ച് രജിസ്റ്റർ'],['view_all','എല്ലാ ഫയലും കാണാം (വായന മാത്രം)'],['request_admin','അഡ്മിനിസ്ട്രേഷൻ അഭ്യർത്ഥന നൽകാം']];
+const MENUS=[['in','ഇൻബോക്സ്'],['rem','ഓർമ്മപ്പെടുത്തൽ'],['tp','വന്ന തപാൽ'],['new','പുതിയ ഫയൽ'],['sent','ഞാൻ കൈകാര്യം ചെയ്തവ'],['srch','തിരയുക'],['rep','എന്റെ റിപ്പോർട്ട്'],['treg','തപാൽ രജിസ്റ്റർ'],['dreg','ഡെസ്പാച്ച് രജിസ്റ്റർ'],['rec','റെക്കോർഡ്സ്']];
+const isChief=()=>{const m=mySeats();return ST.some(s=>s.is_chief&&s.active&&m.includes(s.id))};
+const setupMode=()=>!ST.some(s=>s.is_chief&&s.active);
+const canAdm=()=>me.is_admin||isChief()||(me.perms||[]).includes('request_admin');
 
+const lnote=l=>E(lang=='en'&&['link','tapal_add','despatch','reminder'].includes(l.kind)?trSeg(l.note):l.note);
 const usr=id=>P.find(x=>x.id==id);
 const seat=id=>ST.find(x=>x.id==id);
 const covers=a=>a.active&&a.from_date<=todayS()&&(!a.to_date||a.to_date>=todayS());
@@ -90,13 +515,13 @@ async function boot(){
 async function loadAll(){
   const q=(t,o)=>{let r=SB.from(t).select('*');if(o)r=r.order(o[0],{ascending:o[1]});return r};
   const r=await Promise.all([q('profiles',['name',true]),q('seats',['name',true]),q('seat_assignments',['id',false]),q('settings'),
-    q('files',['id',false]),q('file_log',['id',true]),q('file_links',['id',true]),q('tapal',['id',false]),q('tapal_events',['id',true]),q('despatch',['id',false]),q('reminders',['remind_on',true]),q('holidays',['day',true])]);
-  const bad=r.find(x=>x.error);if(bad){alert('ഡാറ്റ ലഭിച്ചില്ല: '+bad.error.message);return}
-  [P,ST,SA,,F,L,K,T,TE,D,RM,HO]=r.map(x=>x.data);
+    q('files',['id',false]),q('file_log',['id',true]),q('file_links',['id',true]),q('tapal',['id',false]),q('tapal_events',['id',true]),q('despatch',['id',false]),q('reminders',['remind_on',true]),q('holidays',['day',true]),q('admin_requests',['id',false])]);
+  const bad=r.find(x=>x.error);if(bad){A(bad.error.message);return}
+  [P,ST,SA,,F,L,K,T,TE,D,RM,HO,RQ]=r.map(x=>x.data);
   CFG={pending_days:'5'};r[3].data.forEach(s=>CFG[s.key]=s.value);
   me=P.find(x=>x.id==uid)||null;
   if(!me||!me.active){err='ഈ ലോഗിൻ പ്രവർത്തനക്ഷമമല്ല. അഡ്മിനെ സമീപിക്കുക.';await SB.auth.signOut();me=null;uid=null;return}
-  if(me.is_admin){const a=await SB.from('admin_audit').select('*').order('id',{ascending:false}).limit(300);AU=a.data||[]}else AU=[];
+  if(me.is_admin||isChief()){const a=await SB.from('admin_audit').select('*').order('id',{ascending:false}).limit(300);AU=a.data||[]}else AU=[];
 }
 async function login(){
   $('lb').disabled=true;
@@ -106,8 +531,8 @@ async function login(){
 }
 async function logout(){await SB.auth.signOut();me=null;uid=null;openId=null;render()}
 async function refresh(){await loadAll();render()}
-async function call(fn,args){const {data,error}=await SB.rpc(fn,args);if(error){alert(error.message);return {ok:false}}return {ok:true,data}}
-async function dbw(p){const {error}=await p;if(error){alert(error.message);return false}return true}
+async function call(fn,args){const {data,error}=await SB.rpc(fn,args);if(error){A(error.message);return {ok:false}}return {ok:true,data}}
+async function dbw(p){const {error}=await p;if(error){A(error.message);return false}return true}
 
 function tabsDef(){
   const hs=mySeats().length>0,t=[];
@@ -117,22 +542,34 @@ function tabsDef(){
   if(perm('tapal'))t.push(['treg','തപാൽ രജിസ്റ്റർ']);
   if(perm('despatch'))t.push(['dreg','ഡെസ്പാച്ച് രജിസ്റ്റർ']);
   if(perm('view_all'))t.push(['rec','റെക്കോർഡ്സ്']);
-  if(me.is_admin)t.push(['all','എല്ലാ ഫയലുകളും'],['seats','സീറ്റുകൾ'],['users','ജീവനക്കാർ'],['deleg','ചുമതല കൈമാറ്റം'],['arep','സ്ഥാപന റിപ്പോർട്ട്'],['aud','ഓഡിറ്റ്']);
-  return t;
+  let u=t;
+  if(Array.isArray(me.menus)&&!me.is_admin)u=t.filter(x=>me.menus.includes(x[0]));
+  if(me.is_admin)u.push(['all','എല്ലാ ഫയലുകളും'],['arep','സ്ഥാപന റിപ്പോർട്ട്']);
+  if(canAdm()){const n=(isChief()?RQ.filter(r=>r.status=='pending'&&r.requested_by!=uid).length:0)+(me.is_admin?RQ.filter(r=>r.status=='approved').length:0);u.push(['adm','അഡ്മിനിസ്ട്രേഷൻ'+(n?' ('+n+')':'')])}
+  if(me.is_admin||isChief())u.push(['aud','ഓഡിറ്റ്']);
+  return u.length?u:[['srch','തിരയുക']];
 }
 function render(){
+  document.documentElement.lang=lang;
   const a=$('app');
-  if(!me){a.innerHTML=`<div class="lo c"><h1>📁 Anatech · ഇ-ഫയൽ</h1><form onsubmit="login();return false"><label for="lu">ഇമെയിൽ</label><input id="lu" type="email" autocomplete="username"><label for="lp">പാസ്‌വേഡ്</label><input id="lp" type="password" autocomplete="current-password"><p class="er">${E(err)}</p><button id="lb" class="p" type="submit">ലോഗിൻ</button></form><p class="m">ലോഗിൻ ലഭിക്കാൻ അഡ്മിനെ സമീപിക്കുക.</p></div>`;return}
+  const lb=`<span class="r"><button class="${lang=='en'?'on':''}" onclick="setLang('en')">English</button><button class="${lang=='ml'?'on':''}" onclick="setLang('ml')">${M1}മലയാളം${M2}</button></span>`;
+  if(!me){H(a,`<div class="lo c"><div class="r" style="justify-content:space-between"><h1>📁 Anatech · ഇ-ഫയൽ</h1>${lb}</div><form onsubmit="login();return false"><label for="lu">ഇമെയിൽ</label><input id="lu" type="email" autocomplete="username"><label for="lp">പാസ്‌വേഡ്</label><input id="lp" type="password" autocomplete="current-password"><p class="er">${err?E(errT(err)):''}</p><button id="lb" class="p" type="submit">ലോഗിൻ</button></form><p class="m">ലോഗിൻ ലഭിക്കാൻ അഡ്മിനെ സമീപിക്കുക.</p></div>`);return}
   const T_=tabsDef();if(!T_.some(x=>x[0]==tab))tab=T_[0][0];
   const ms=mySeats();
-  a.innerHTML=`<div class="top"><h1>📁 Anatech · ഇ-ഫയൽ</h1><div class="r"><span>${E(me.name)} <span class="m">${ms.map(sn).join(' / ')}${me.is_admin?' · അഡ്മിൻ':''}</span></span><button onclick="refresh()">പുതുക്കുക</button><button onclick="logout()">ലോഗൗട്ട്</button></div></div>
-  <div class="tabs">${T_.map(t=>`<button class="${tab==t[0]&&!openId?'on':''}" onclick="tab='${t[0]}';openId=null;render()">${t[1]}</button>`).join('')}</div><div id="v"></div>`;
+  H(a,`<div class="top"><h1>📁 Anatech · ഇ-ഫയൽ</h1><div class="r"><span>${E(me.name)} <span class="m">${ms.map(sn).join(' / ')}${me.is_admin?' · അഡ്മിൻ':''}${isChief()?' · ചീഫ്':''}</span></span>${lb}<button onclick="chPw()">പാസ്‌വേഡ് മാറ്റുക</button><button onclick="refresh()">പുതുക്കുക</button><button onclick="logout()">ലോഗൗട്ട്</button></div></div>
+  <div class="tabs">${T_.map(t=>`<button class="${tab==t[0]&&!openId?'on':''}" onclick="tab='${t[0]}';openId=null;render()">${t[1]}</button>`).join('')}</div><div id="v"></div>`);
   const v=$('v');
-  if(openId){const f=F.find(x=>x.id==openId);v.innerHTML=f?fileView(f):'<div class="c">ഫയൽ കണ്ടെത്തിയില്ല.</div>';return}
+  if(openId){const f=F.find(x=>x.id==openId);H(v,f?fileView(f):'<div class="c">ഫയൽ കണ്ടെത്തിയില്ല.</div>');return}
   const V={in:()=>list(inboxF(),'ഇൻബോക്സ് ശൂന്യമാണ്.'),rem:remView,rec:recView,tp:tapalMine,new:newForm,sent:()=>list(F.filter(f=>involved(f)&&!inboxF().includes(f)),'ഒന്നും ഇല്ല.'),
-    srch:searchView,rep:myRep,treg:tapalReg,dreg:desReg,all:()=>list(F,'ഫയലുകൾ ഒന്നും ഇല്ല.'),seats:seatsView,users:usersView,deleg:delegView,arep:adminRep,aud:audit};
-  v.innerHTML=V[tab]();
+    srch:searchView,rep:myRep,treg:tapalReg,dreg:desReg,all:()=>list(F,'ഫയലുകൾ ഒന്നും ഇല്ല.'),arep:adminRep,aud:audit,adm:admView};
+  H(v,V[tab]());
   if(tab=='new')nfChange();
+}
+async function chPw(){
+  const a=PR('പുതിയ പാസ്‌വേഡ് (കുറഞ്ഞത് 8 അക്ഷരം)','');if(a===null)return;
+  if(a.length<8){A('പാസ്‌വേഡിന് കുറഞ്ഞത് 8 അക്ഷരം വേണം');return}
+  const b=PR('പാസ്‌വേഡ് ഒന്നുകൂടി നൽകുക','');if(b!==a){A('പാസ്‌വേഡുകൾ ഒത്തുപോകുന്നില്ല');return}
+  const {error}=await SB.auth.updateUser({password:a});A(error?error.message:'പാസ്‌വേഡ് മാറ്റി.');
 }
 function badge(f){return `${f.priority=='h'?'<span class="b hi">അടിയന്തിരം</span>':''}${f.due_on?`<span class="b ${f.status=='open'&&f.due_on<todayL()?'hi':''}">സമയപരിധി ${fmtD(f.due_on)}${f.status=='open'&&f.due_on<todayL()?' — കഴിഞ്ഞു':''}</span>`:''}<span class="b">${ORG[f.origin]}</span><span class="b ${f.status=='closed'?'cl':''}">${f.status=='closed'?'തീർപ്പാക്കി ('+E(f.disposal||'')+')':'തുറന്നത്'}</span>`}
 function list(a,empty){
@@ -163,27 +600,27 @@ function fileView(f){
       <div class="sec"><b>ഓർമ്മപ്പെടുത്തൽ / കോൾ ബുക്ക് / ലൈ-ഓവർ</b><div class="r"><select id="rk">${opts(Object.entries(RK))}</select><input id="rd" type="date" style="width:170px"><input id="rn" type="text" placeholder="കുറിപ്പ്" style="flex:1;min-width:140px"><button onclick="addRem(${f.id},'${h}')">ചേർക്കുക</button></div><div class="m">കോൾ ബുക്ക്: ആ തീയതി വരെ ഫയൽ ഇൻബോക്സിൽ നിന്ന് മാറി നിൽക്കും. ലൈ-ഓവർ പരമാവധി 3 മാസം.</div></div>
       ${pend.length?`<div class="sec"><b>വന്ന തപാൽ ഈ ഫയലിൽ ചേർക്കുക</b><div class="r"><select id="tpa">${opts(pend.map(t=>[t.id,E(t.reg_no)+' — '+E(t.subject)]))}</select><button onclick="addTp(${f.id},'${h}')">ചേർക്കുക</button></div></div>`:''}</div>`;
   }else if(open_)act=`<div class="c m">ഈ ഫയൽ ഇപ്പോൾ ${sw(h)} ന്റെ കയ്യിലാണ്. നിങ്ങൾക്ക് കാണാൻ മാത്രം പറ്റും.</div>`;
-  if(me.is_admin&&open_)act+=`<div class="c"><b>അഡ്മിൻ നിയന്ത്രണം</b><label for="ao">ഫയൽ മറ്റൊരു സീറ്റിലേക്ക് മാറ്റുക</label><div class="r"><select id="ao">${seatOpts('',undefined,ST.filter(s=>s.id!=h).map(s=>s.id))}</select></div><label for="am">കാരണം (നിർബന്ധം)</label><input id="am" type="text"><p><button onclick="adminMove(${f.id})">മാറ്റുക</button></p></div>`;
+  if(canAdm()&&open_)act+=`<div class="c"><b>ഫയൽ മറ്റൊരു സീറ്റിലേക്ക് മാറ്റാൻ അഭ്യർത്ഥന</b><div class="m">ഇതിന് ചീഫിന്റെ അനുമതി വേണം.</div><label for="ao">പുതിയ സീറ്റ്</label><div class="r"><select id="ao">${seatOpts('',undefined,ST.filter(s=>s.id!=h).map(s=>s.id))}</select></div><label for="am">ഫയൽ നോട്ടിൽ ചേർക്കേണ്ട കാരണം</label><input id="am" type="text"><p><button onclick="moveReq(${f.id})">അഭ്യർത്ഥന നൽകുക</button></p></div>`;
   const entries=flog(f);
-  return `<p><button onclick="openId=null;render()">← തിരികെ</button></p><div class="c"><div class="r"><b>${E(f.no)}</b>${badge(f)}</div><h3>${E(f.subject)}</h3><div class="m">ഉറവിടം: ${org}</div>${f.status=='open'?`<div class="m">ഇപ്പോൾ കയ്യിൽ: ${sw(h)}</div>`:`<div class="m">തീർപ്പാക്കിയത്: ${fmt(f.closed_at)}</div>`}<div class="m">വഴി: ${f.path.map(sn).join(' → ')}</div>${lk||tps?`<p class="r">${lk} ${tps}</p>`:''}${RM.filter(r=>r.file_id==f.id).map(r=>`<div class="m">${RK[r.kind]}: ${fmtD(r.remind_on)}${r.note?' — '+E(r.note):''} ${r.done_at?'(കഴിഞ്ഞു)':''}</div>`).join('')}</div>${act}<div class="c"><b>നോട്ട് ഫയൽ / ചലന രേഖ</b>${entries.map((l,i)=>`<div class="lg"><div class="m">${i+1}. ${fmt(l.created_at)} · ${un(l.by_user)}${l.by_seat?' ('+sn(l.by_seat)+')':''} · ${KIND[l.kind]||E(l.kind)}${l.to_seat?' → '+sn(l.to_seat):''}</div>${l.note?`<div>${E(l.note)}</div>`:''}</div>`).join('')}</div>`;
+  return `<p><button onclick="openId=null;render()">← തിരികെ</button></p><div class="c"><div class="r"><b>${E(f.no)}</b>${badge(f)}</div><h3>${E(f.subject)}</h3><div class="m">ഉറവിടം: ${org}</div>${f.status=='open'?`<div class="m">ഇപ്പോൾ കയ്യിൽ: ${sw(h)}</div>`:`<div class="m">തീർപ്പാക്കിയത്: ${fmt(f.closed_at)}</div>`}<div class="m">വഴി: ${f.path.map(sn).join(' → ')}</div>${lk||tps?`<p class="r">${lk} ${tps}</p>`:''}${RM.filter(r=>r.file_id==f.id).map(r=>`<div class="m">${RK[r.kind]}: ${fmtD(r.remind_on)}${r.note?' — '+E(r.note):''} ${r.done_at?'(കഴിഞ്ഞു)':''}</div>`).join('')}</div>${act}<div class="c"><b>നോട്ട് ഫയൽ / ചലന രേഖ</b>${entries.map((l,i)=>`<div class="lg"><div class="m">${i+1}. ${fmt(l.created_at)} · ${un(l.by_user)}${l.by_seat?' ('+sn(l.by_seat)+')':''} · ${KIND[l.kind]||E(l.kind)}${l.to_seat?' → '+sn(l.to_seat):''}</div>${l.note?`<div>${lnote(l)}</div>`:''}</div>`).join('')}</div>`;
 }
 async function act(id,k,s){
   const n=($('an')||{value:''}).value.trim();
-  if(k=='r'&&!n){alert('തിരിച്ചയക്കുമ്പോൾ കാരണം നോട്ടിൽ എഴുതുക');return}
+  if(k=='r'&&!n){A('തിരിച്ചയക്കുമ്പോൾ കാരണം നോട്ടിൽ എഴുതുക');return}
   let r;
   if(k=='f')r=await call('forward_file',{p_id:id,p_note:n,p_seat:s});
   else if(k=='r')r=await call('return_file',{p_id:id,p_note:n,p_seat:s});
-  else{const d=$('ad').value;if(!d){alert('ഡിസ്‌പോസൽ വിഭാഗം (R / D / K / L) തിരഞ്ഞെടുക്കുക');return}if(!confirm('ഫയൽ തീർപ്പാക്കിയാൽ പിന്നീട് മാറ്റാൻ പറ്റില്ല. തുടരട്ടെ?'))return;r=await call('close_file',{p_id:id,p_note:n,p_seat:s,p_disposal:d})}
+  else{const d=$('ad').value;if(!d){A('ഡിസ്‌പോസൽ വിഭാഗം (R / D / K / L) തിരഞ്ഞെടുക്കുക');return}if(!C('ഫയൽ തീർപ്പാക്കിയാൽ പിന്നീട് മാറ്റാൻ പറ്റില്ല. തുടരട്ടെ?'))return;r=await call('close_file',{p_id:id,p_note:n,p_seat:s,p_disposal:d})}
   if(r.ok){await loadAll();openId=null;tab='in';render()}
 }
 async function linkF(id,s){
   const no=$('lf').value.trim(),x=F.find(y=>y.no==no);
-  if(!x){alert('ആ നമ്പറിൽ നിങ്ങൾക്ക് കാണാവുന്ന ഫയൽ ഇല്ല');return}
+  if(!x){A('ആ നമ്പറിൽ നിങ്ങൾക്ക് കാണാവുന്ന ഫയൽ ഇല്ല');return}
   const r=await call('link_file',{p_id:id,p_back:x.id,p_kind:$('lk').value,p_seat:s});
   if(r.ok){await loadAll();render()}
 }
 async function addRem(id,s){
-  const on=$('rd').value;if(!on){alert('തീയതി തിരഞ്ഞെടുക്കുക');return}
+  const on=$('rd').value;if(!on){A('തീയതി തിരഞ്ഞെടുക്കുക');return}
   const r=await call('add_reminder',{p_file:id,p_seat:s,p_kind:$('rk').value,p_on:on,p_note:$('rn').value});
   if(r.ok){await loadAll();render()}
 }
@@ -199,9 +636,9 @@ function recView(){
   return `<div class="c m">തീർപ്പാക്കിയ ഫയലുകളുടെ റെക്കോർഡ് (ഓഫീസ് മാനുവൽ അനുസരിച്ചുള്ള സൂക്ഷിപ്പ് കാലാവധി). ഫയൽ നശിപ്പിക്കുന്നത് സ്വയം നടക്കില്ല; സമയമായവയെ അടയാളപ്പെടുത്തുക മാത്രം ചെയ്യും.</div><div class="c sc"><table><tr><th>ഫയൽ</th><th>വിഷയം</th><th>ഡിസ്‌പോസൽ</th><th>തീർപ്പാക്കിയത്</th><th>നശിപ്പിക്കാവുന്നത്</th></tr>${c.map(f=>{const d=due(f);return `<tr><td><a href="#" onclick="openId=${f.id};render();return false">${E(f.no)}</a></td><td>${E(f.subject)}</td><td>${E(f.disposal||'')}</td><td>${fmtD(f.closed_at)}</td><td>${d?fmtD(d)+(d<n?' <span class="b wn">സമയമായി</span>':''):'സ്ഥിരം'}</td></tr>`}).join('')||'<tr><td colspan="5" class="m">ഒന്നുമില്ല</td></tr>'}</table></div>`;
 }
 async function addTp(id,s){const r=await call('add_tapal_to_file',{p_id:id,p_tapal:+$('tpa').value,p_seat:s,p_note:($('an')||{value:''}).value});if(r.ok){await loadAll();render()}}
-async function adminMove(id){
-  const to=$('ao').value,n=$('am').value.trim();if(!to||!n){alert('സീറ്റും കാരണവും നൽകുക');return}
-  const r=await call('admin_move',{p_id:id,p_to:to,p_note:n});if(r.ok){await loadAll();render()}
+async function moveReq(id){
+  const to=$('ao').value,n=$('am').value.trim();if(!to||!n){A('സീറ്റും കാരണവും നൽകുക');return}
+  await submitReq('move_file',{file_id:id,to_seat:to,note:n});
 }
 
 /* ---------- പുതിയ ഫയൽ ---------- */
@@ -219,14 +656,14 @@ function newForm(){
 function nfChange(){
   const o=$('nfo');if(!o)return;
   $('nfi').style.display=o.value=='instruction'?'':'none';$('nft').style.display=o.value=='tapal'?'':'none';
-  $('nfib').innerHTML=seatOpts('',undefined,anc($('nfs').value));
+  H($('nfib'),seatOpts('',undefined,anc($('nfs').value)));
   if(o.value=='tapal'&&$('nftp').value){const t=T.find(x=>x.id==$('nftp').value);if(t&&!$('fs').value)$('fs').value=t.subject}
 }
 async function mk(){
-  const s=$('fs').value.trim();if(!s){alert('വിഷയം എഴുതുക');return}
+  const s=$('fs').value.trim();if(!s){A('വിഷയം എഴുതുക');return}
   const o=$('nfo').value,args={p_subject:s,p_priority:$('fp').value,p_note:$('fn').value,p_seat:$('nfs').value,p_origin:o};
-  if(o=='instruction'){if(!$('nfib').value){alert('നിർദ്ദേശം നൽകിയ സീറ്റ് തിരഞ്ഞെടുക്കുക');return}args.p_instructed_by=$('nfib').value}
-  if(o=='tapal'){if(!$('nftp').value){alert('തപാൽ തിരഞ്ഞെടുക്കുക');return}args.p_tapal=+$('nftp').value}
+  if(o=='instruction'){if(!$('nfib').value){A('നിർദ്ദേശം നൽകിയ സീറ്റ് തിരഞ്ഞെടുക്കുക');return}args.p_instructed_by=$('nfib').value}
+  if(o=='tapal'){if(!$('nftp').value){A('തപാൽ തിരഞ്ഞെടുക്കുക');return}args.p_tapal=+$('nftp').value}
   if($('fdue').value)args.p_due_on=$('fdue').value;
   $('mkb').disabled=true;
   const r=await call('create_file',args);
@@ -249,7 +686,7 @@ async function recT(){
   if(r.ok){await loadAll();render()}
 }
 async function redT(id){
-  const n=prompt('സീറ്റ് മാറ്റുന്നതിന്റെ കാരണം');if(!n)return;
+  const n=PR('സീറ്റ് മാറ്റുന്നതിന്റെ കാരണം');if(!n)return;
   const r=await call('redirect_tapal',{p_id:id,p_to_seat:$('rd'+id).value,p_note:n});if(r.ok){await loadAll();render()}
 }
 function desReg(){
@@ -258,7 +695,7 @@ function desReg(){
 }
 async function recD(){
   const no=$('df').value.trim(),f=no?F.find(x=>x.no==no):null;
-  if(no&&!f){alert('ആ ഫയൽ നമ്പർ കണ്ടെത്തിയില്ല');return}
+  if(no&&!f){A('ആ ഫയൽ നമ്പർ കണ്ടെത്തിയില്ല');return}
   const r=await call('record_despatch',{p_to_party:$('dp').value,p_subject:$('ds').value,p_mode:$('dm').value,p_file:f?f.id:null,p_note:$('dn').value});
   if(r.ok){await loadAll();render()}
 }
@@ -282,7 +719,7 @@ function doSearch(){
     if(q&&!(f.no.toLowerCase().includes(q)||f.subject.toLowerCase().includes(q)||L.some(l=>l.file_id==f.id&&(l.note||'').toLowerCase().includes(q))))return false;
     return true;
   });
-  $('sr').innerHTML=`<p class="m">${r.length} ഫയൽ കണ്ടെത്തി</p>`+list(r,'ഒന്നും കണ്ടെത്തിയില്ല.');
+  H($('sr'),`<p class="m">${r.length} ഫയൽ കണ്ടെത്തി</p>`+list(r,'ഒന്നും കണ്ടെത്തിയില്ല.'));
 }
 
 /* ---------- റിപ്പോർട്ടുകൾ ---------- */
@@ -318,68 +755,172 @@ function adminRep(){
   const pt=T.filter(t=>!tDisp(t.id));
   return `<div class="c sc"><table><tr><th>സീറ്റ്</th><th>ആൾ</th><th>പെൻഡിംഗ്</th><th>ഏറ്റവും പഴയത് (പ്രവൃത്തി ദിവസം)</th><th>${pd} ദിവസത്തിലേറെ</th><th>സമയപരിധി കഴിഞ്ഞത്</th></tr>${rows.map(r=>`<tr><td>${sn(r.s.id)}</td><td>${r.u.length?r.u.map(un).join(', '):'<span class="b hi">ആരുമില്ല</span>'}</td><td>${r.n}</td><td>${r.old??'—'}</td><td class="${r.over?'er':''}">${r.over}</td><td class="${r.tl?'er':''}">${r.tl}</td></tr>`).join('')||'<tr><td colspan="6" class="m">സീറ്റുകൾ ഇല്ല</td></tr>'}</table></div>
   <div class="c">ആകെ ഫയൽ ${F.length} · തുറന്നത് ${O.length} · തീർപ്പാക്കിയത് ${F.length-O.length} · ഫയലാക്കാത്ത തപാൽ ${pt.length} · അടിയന്തിരം (തുറന്നത്) ${O.filter(f=>f.priority=='h').length}</div>
-  <div class="c sc"><b>മാസ ബിസിനസ് സ്റ്റേറ്റ്മെന്റ്</b> <span class="m">(മാനുവൽ പ്രകാരം ഓരോ മാസവും 5-ന് മുമ്പ് തയ്യാറാക്കണം)</span><div class="r" style="margin:6px 0"><input id="mm" type="month" value="${todayL().slice(0,7)}" style="width:170px" onchange="$('ms').innerHTML=monthly()"></div><div id="ms">${monthly()}</div></div>
-  <div class="c"><label for="pdv">"പെൻഡിംഗ്" മുന്നറിയിപ്പിനുള്ള പ്രവൃത്തി ദിവസം (മാനുവൽ: 5)</label><div class="r"><input id="pdv" type="number" min="1" max="90" value="${pd}" style="width:90px"><button onclick="savePd()">സേവ്</button></div></div>
-  <div class="c"><b>അവധി ദിവസങ്ങൾ</b> <span class="m">(ഞായർ സ്വയം ഒഴിവാകും; മറ്റ് അവധികൾ ഇവിടെ ചേർക്കുക)</span><div class="r" style="margin:6px 0"><input id="hd" type="date" style="width:170px"><input id="hn" type="text" placeholder="പേര്" style="flex:1;min-width:140px"><button onclick="addHol()">ചേർക്കുക</button></div>${HO.map(h=>`<div class="r"><span>${fmtD(h.day)}</span><span class="m">${E(h.name)}</span><button onclick="delHol('${h.day}')">നീക്കുക</button></div>`).join('')||'<span class="m">ഒന്നും ചേർത്തിട്ടില്ല</span>'}</div>`;
+  <div class="c sc"><b>മാസ ബിസിനസ് സ്റ്റേറ്റ്മെന്റ്</b> <span class="m">(മാനുവൽ പ്രകാരം ഓരോ മാസവും 5-ന് മുമ്പ് തയ്യാറാക്കണം)</span><div class="r" style="margin:6px 0"><input id="mm" type="month" value="${todayL().slice(0,7)}" style="width:170px" onchange="H($('ms'),monthly())"></div><div id="ms">${monthly()}</div></div>`;
 }
-async function addHol(){const d=$('hd').value;if(!d){alert('തീയതി തിരഞ്ഞെടുക്കുക');return}if(await dbw(SB.from('holidays').insert({day:d,name:$('hn').value.trim()}))){await loadAll();render()}}
-async function delHol(d){if(await dbw(SB.from('holidays').delete().eq('day',d))){await loadAll();render()}}
-async function savePd(){const v=String(Math.max(1,Math.min(90,+$('pdv').value||7)));if(await dbw(SB.from('settings').update({value:v}).eq('key','pending_days'))){await loadAll();render()}}
 function nameOf(v){if(typeof v!='string')return E(JSON.stringify(v));const s=seat(v);if(s)return E(s.name);const u=usr(v);if(u)return E(u.name);return E(v)}
 function audit(){
   const ch=AU.map(a=>{
     const o=a.old_row||{},n=a.new_row||{},ks=a.op=='UPDATE'?Object.keys(n).filter(k=>JSON.stringify(o[k])!==JSON.stringify(n[k])):Object.keys(n.id!==undefined||a.op!='DELETE'?n:o);
     const row=a.op=='DELETE'?o:n;
     return `<div class="lg"><div class="m">${fmt(a.at)} · ${a.by_user?un(a.by_user):'സിസ്റ്റം'} · ${E(a.tbl)} · ${a.op}</div><div>${a.op=='UPDATE'?ks.map(k=>`${E(k)}: ${nameOf(o[k])} → ${nameOf(n[k])}`).join('; '):E(row.name||row.value||row.reason||'')}</div></div>`}).join('');
-  const lg=L.slice().reverse().slice(0,300).map(l=>`<div class="lg"><div class="m">${fmt(l.created_at)} · ${fno(l.file_id)} · ${un(l.by_user)} · ${KIND[l.kind]||l.kind}${l.to_seat?' → '+sn(l.to_seat):''}</div>${l.note?`<div>${E(l.note)}</div>`:''}</div>`).join('');
+  const lg=L.slice().reverse().slice(0,300).map(l=>`<div class="lg"><div class="m">${fmt(l.created_at)} · ${fno(l.file_id)} · ${un(l.by_user)} · ${KIND[l.kind]||l.kind}${l.to_seat?' → '+sn(l.to_seat):''}</div>${l.note?`<div>${lnote(l)}</div>`:''}</div>`).join('');
   return `<div class="c"><b>അഡ്മിൻ മാറ്റങ്ങൾ</b> <span class="m">(ഇവ മായ്ക്കാൻ പറ്റില്ല)</span>${ch||'<p class="m">ഒന്നും ഇല്ല.</p>'}</div><div class="c"><b>ഫയൽ പ്രവർത്തനങ്ങൾ</b> <span class="m">(പുതിയ 300)</span>${lg||'<p class="m">ഒന്നും ഇല്ല.</p>'}</div>`;
 }
 
-/* ---------- അഡ്മിൻ: സീറ്റ്, ജീവനക്കാർ, ചുമതല ---------- */
-function seatsView(){
-  const intro=ST.length?'':'<div class="c"><b>തുടക്കം:</b> ആദ്യം ഏറ്റവും മുകളിലെ സീറ്റ് (ഉദാ: മാനേജിംഗ് ഡയറക്ടർ) മേലധികാരി ഇല്ലാതെ ചേർക്കുക. പിന്നെ അതിന് താഴെയുള്ള സീറ്റുകൾ. അതിന് ശേഷം "ജീവനക്കാർ" ടാബിൽ ഓരോരുത്തർക്കും സീറ്റ് നൽകുക.</div>';
-  return intro+`<div class="c"><b>പുതിയ സീറ്റ്</b><div class="g2"><div><label for="ns">സീറ്റിന്റെ പേര് (തസ്തിക)</label><input id="ns" type="text"></div><div><label for="nc">സെക്ഷൻ (ഐച്ഛികം)</label><input id="nc" type="text"></div><div><label for="nb">മേലധികാരി സീറ്റ്</label><select id="nb" class="f">${seatOpts('','— ഏറ്റവും മുകളിൽ —')}</select></div></div><p><button class="p" onclick="addSeat()">ചേർക്കുക</button></p></div>`+
-  ST.map(s=>{const ex=desc(s.id);return `<div class="c"><div class="r"><b>${E(s.name)}</b>${s.active?'':'<span class="b hi">നിർത്തി</span>'}<span class="m">${seatUsers(s.id).map(un).join(', ')||'ആരുമില്ല'}</span></div><div class="g2"><div><label for="sn_${s.id}">പേര്</label><input id="sn_${s.id}" type="text" value="${E(s.name)}"></div><div><label for="sc_${s.id}">സെക്ഷൻ</label><input id="sc_${s.id}" type="text" value="${E(s.section)}"></div><div><label for="sb_${s.id}">മേലധികാരി സീറ്റ്</label><select id="sb_${s.id}" class="f">${seatOpts(s.boss_seat,'— ഏറ്റവും മുകളിൽ —',ST.filter(x=>x.active&&!ex.has(x.id)).map(x=>x.id))}</select></div></div><label class="k"><input id="sa_${s.id}" type="checkbox" ${s.active?'checked':''}> സജീവം</label><p><button class="p" onclick="saveSeat('${s.id}')">സേവ്</button></p></div>`}).join('');
+/* ---------- അഡ്മിനിസ്ട്രേഷൻ (ചീഫിന്റെ അനുമതിയോടെ) ---------- */
+const EDGE=['create_user','reset_password'];
+const RS={pending:'അനുമതിക്ക് കാത്തിരിക്കുന്നു',approved:'ചീഫ് അനുവദിച്ചു — അഡ്മിൻ നടപ്പാക്കണം',rejected:'നിരസിച്ചു',executed:'നടപ്പാക്കി',cancelled:'റദ്ദാക്കി'};
+const permName=k=>(PERMS.find(x=>x[0]==k)||[k,k])[1];
+const menuName=k=>(MENUS.find(x=>x[0]==k)||[k,k])[1];
+function describe(r){
+  const p=r.payload||{};
+  switch(r.kind){
+    case 'create_user':return 'പുതിയ ലോഗിൻ ഉണ്ടാക്കുക: '+E(p.name||'')+' · '+E(p.email||'')+(p.seat_id?' · സീറ്റ്: '+sn(p.seat_id):'')+((p.perms||[]).length?' · അനുമതികൾ: '+p.perms.map(permName).join(', '):'');
+    case 'update_user':{const b=[];
+      if('name' in p)b.push('പേര്: '+E(p.name));
+      if('seat_id' in p)b.push('സീറ്റ്: '+(p.seat_id?sn(p.seat_id):'—'));
+      if('perms' in p)b.push('അനുമതികൾ: '+((p.perms||[]).map(permName).join(', ')||'—'));
+      if('menus' in p)b.push('മെനു: '+(Array.isArray(p.menus)?(p.menus.map(menuName).join(', ')||'—'):'എല്ലാം'));
+      if('is_admin' in p)b.push(p.is_admin?'അഡ്മിൻ ആക്കുക':'അഡ്മിൻ അധികാരം നീക്കുക');
+      if('active' in p)b.push(p.active?'ലോഗിൻ സജീവമാക്കുക':'ലോഗിൻ നിർത്തുക');
+      return 'ജീവനക്കാരന്റെ വിവരം മാറ്റുക: '+un(p.user_id)+' — '+b.join('; ')}
+    case 'reset_password':return 'പാസ്‌വേഡ് റീസെറ്റ് ചെയ്യുക: '+un(p.user_id);
+    case 'create_seat':return 'പുതിയ സീറ്റ്: '+E(p.name||'')+(p.section?' · '+E(p.section):'')+(p.boss_seat?' · മേലധികാരി: '+sn(p.boss_seat):' · ഏറ്റവും മുകളിൽ');
+    case 'update_seat':{const b=[];
+      if('name' in p)b.push('പേര്: '+E(p.name));
+      if('section' in p)b.push('സെക്ഷൻ: '+E(p.section||'—'));
+      if('boss_seat' in p)b.push('മേലധികാരി: '+(p.boss_seat?sn(p.boss_seat):'ഏറ്റവും മുകളിൽ'));
+      if('active' in p)b.push(p.active?'സീറ്റ് സജീവമാക്കുക':'സീറ്റ് നിർത്തുക');
+      return 'സീറ്റ് മാറ്റുക: '+sn(p.seat_id)+' — '+b.join('; ')}
+    case 'set_chief_seat':return 'ചീഫ് സീറ്റ് ആക്കുക: '+sn(p.seat_id);
+    case 'add_delegation':return 'ചുമതല കൈമാറ്റം: '+sn(p.seat_id)+' → '+un(p.user_id)+' ('+fmtD(p.from_date||r.requested_at)+' – '+(p.to_date?fmtD(p.to_date):'…')+')'+(p.reason?' · '+E(p.reason):'');
+    case 'end_delegation':{const a=SA.find(x=>x.id==p.id);return 'ചുമതല അവസാനിപ്പിക്കുക: '+(a?sn(a.seat_id)+' → '+un(a.user_id):'#'+E(p.id))}
+    case 'set_setting':return 'പെൻഡിംഗ് മുന്നറിയിപ്പ് ദിവസം: '+E(p.value);
+    case 'add_holiday':return 'അവധി ദിവസം ചേർക്കുക: '+fmtD(p.day)+' '+E(p.name||'');
+    case 'del_holiday':return 'അവധി ദിവസം നീക്കുക: '+fmtD(p.day);
+    case 'move_file':return 'ഫയൽ മാറ്റുക: '+fno(p.file_id)+' → '+sn(p.to_seat)+(p.note?' · '+E(p.note):'');
+  }
+  return E(r.kind);
 }
-async function addSeat(){
-  const n=$('ns').value.trim();if(!n){alert('പേര് എഴുതുക');return}
-  if(await dbw(SB.from('seats').insert({name:n,section:$('nc').value.trim(),boss_seat:$('nb').value||null}))){await loadAll();render()}
+function reqCard(r,mode){
+  const cls=r.status=='executed'?'cl':r.status=='rejected'||r.status=='cancelled'?'hi':'wn';
+  let act='';
+  if(mode=='approve')act=`<p class="r"><button class="p" onclick="decide(${r.id},true)">അനുവദിക്കുക</button><button onclick="decide(${r.id},false)">നിരസിക്കുക</button></p>`;
+  else if(mode=='execute')act=`<p><button class="p" onclick="execReq(${r.id})">നടപ്പാക്കുക</button></p>`;
+  else if(r.status=='pending'&&r.requested_by==uid)act=`<p><button onclick="cancelReq(${r.id})">അഭ്യർത്ഥന റദ്ദാക്കുക</button></p>`;
+  return `<div class="c"><div class="r"><b>#${r.id}</b><span class="b ${cls}">${RS[r.status]}</span><span class="m">${un(r.requested_by)} · ${fmt(r.requested_at)}</span></div><div>${describe(r)}</div>${r.reason?`<div class="m">കാരണം: ${E(r.reason)}</div>`:''}${r.decided_at?`<div class="m">${r.status=='rejected'?'നിരസിച്ചത്':'അനുവദിച്ചത്'}: ${un(r.decided_by)} · ${fmt(r.decided_at)}${r.decision_note?' — '+E(r.decision_note):''}</div>`:''}${r.executed_at?`<div class="m">നടപ്പാക്കിയത്: ${un(r.executed_by)} · ${fmt(r.executed_at)}</div>`:''}${act}</div>`;
 }
-async function saveSeat(id){
-  const n=$('sn_'+id).value.trim();if(!n){alert('പേര് എഴുതുക');return}
-  if(await dbw(SB.from('seats').update({name:n,section:$('sc_'+id).value.trim(),boss_seat:$('sb_'+id).value||null,active:$('sa_'+id).checked}).eq('id',id))){await loadAll();render();alert('സേവ് ചെയ്തു')}
+function admView(){
+  const subs=[['req','അഭ്യർത്ഥനകൾ'],['users','ജീവനക്കാർ'],['seats','സീറ്റുകൾ'],['deleg','ചുമതല കൈമാറ്റം'],['set','ക്രമീകരണം']];
+  const cs=ST.find(s=>s.is_chief&&s.active);
+  const banner=setupMode()?`<div class="c"><b class="wn">സെറ്റപ്പ് ഘട്ടം:</b> ചീഫ് സീറ്റ് ഇതുവരെ നിശ്ചയിച്ചിട്ടില്ല. അതുവരെ അഡ്മിൻ ചെയ്യുന്ന മാറ്റങ്ങൾ ഉടൻ നടപ്പിലാകും. ആദ്യം സീറ്റുകൾ ഉണ്ടാക്കി ഏറ്റവും മുകളിലെ സീറ്റ് "ചീഫ് സീറ്റ്" ആക്കുക; അതിന് ശേഷം എല്ലാ മാറ്റങ്ങൾക്കും ചീഫിന്റെ അനുമതി വേണം.</div>`:`<div class="c m">ചീഫ് സീറ്റ്: ${sw(cs.id)} · എല്ലാ അഡ്മിൻ മാറ്റങ്ങൾക്കും ചീഫിന്റെ അനുമതി ആവശ്യമാണ്.</div>`;
+  const nav=`<div class="tabs">${subs.map(x=>`<button class="${sub==x[0]?'on':''}" onclick="sub='${x[0]}';render()">${x[1]}</button>`).join('')}</div>`;
+  const body={req:reqView,users:usersView,seats:seatsView,deleg:delegView,set:setView}[sub]();
+  return banner+nav+body;
 }
+function reqView(){
+  let h='';
+  const ap=isChief()?RQ.filter(r=>r.status=='pending'&&r.requested_by!=uid):[];
+  const ex=me.is_admin?RQ.filter(r=>r.status=='approved'):[];
+  if(ap.length)h+='<h3>നിങ്ങളുടെ അനുമതിക്ക് കാത്തിരിക്കുന്നവ</h3>'+ap.map(r=>reqCard(r,'approve')).join('');
+  if(ex.length)h+='<h3>നടപ്പാക്കാനുള്ളവ (ചീഫ് അനുവദിച്ചത്)</h3>'+ex.map(r=>reqCard(r,'execute')).join('');
+  const shown=new Set([...ap,...ex].map(r=>r.id));
+  const rest=RQ.filter(r=>!shown.has(r.id)).slice(0,60);
+  h+='<h3>'+(me.is_admin||isChief()?'എല്ലാ അഭ്യർത്ഥനകളും':'എന്റെ അഭ്യർത്ഥനകൾ')+'</h3>'+(rest.map(r=>reqCard(r,'view')).join('')||'<div class="c m">ഒന്നുമില്ല.</div>');
+  return h;
+}
+async function submitReq(kind,payload){
+  let reason='';
+  if(!setupMode()&&!isChief()){
+    reason=PR('അഭ്യർത്ഥനയുടെ കാരണം എഴുതുക','');
+    if(reason===null)return false;
+    if(!reason.trim()){A('കാരണം നിർബന്ധമാണ്');return false}
+  }
+  const r=await call('submit_request',{p_kind:kind,p_payload:payload,p_reason:reason});
+  if(!r.ok)return false;
+  await loadAll();
+  const q=RQ.find(x=>x.id==r.data);
+  if(q&&q.status=='approved'&&me.is_admin&&EDGE.includes(q.kind)){await execEdge(q.id)}
+  else if(q)A(q.status=='executed'?'മാറ്റം നടപ്പിലായി.':q.status=='approved'?'ചീഫ് അനുവദിച്ചു. അഡ്മിൻ നടപ്പാക്കണം.':'ചീഫിന്റെ അനുമതിക്കായി അയച്ചു.');
+  render();return true;
+}
+async function decide(id,ok){
+  const n=PR(ok?'കുറിപ്പ് (ഐച്ഛികം)':'നിരസിക്കാനുള്ള കാരണം','');if(n===null)return;
+  const r=await call('decide_request',{p_id:id,p_approve:ok,p_note:n});if(r.ok){await loadAll();render()}
+}
+async function cancelReq(id){if(!C('ഈ അഭ്യർത്ഥന റദ്ദാക്കണോ?'))return;const r=await call('cancel_request',{p_id:id});if(r.ok){await loadAll();render()}}
+async function execReq(id){
+  const q=RQ.find(x=>x.id==id);if(!q)return;
+  if(EDGE.includes(q.kind)){await execEdge(id);return}
+  const r=await call('execute_request',{p_id:id});if(r.ok){await loadAll();render();A('മാറ്റം നടപ്പിലായി.')}
+}
+async function execEdge(id){
+  const q=RQ.find(x=>x.id==id);if(!q)return;
+  const pw=PR(q.kind=='create_user'?'പുതിയ ജീവനക്കാരന് നൽകേണ്ട പാസ്‌വേഡ് (കുറഞ്ഞത് 8 അക്ഷരം). ഇത് ഒരിടത്തും സൂക്ഷിക്കില്ല; ജീവനക്കാരനോട് പറയുക.':'പുതിയ പാസ്‌വേഡ് (കുറഞ്ഞത് 8 അക്ഷരം). ഇത് ഒരിടത്തും സൂക്ഷിക്കില്ല; ജീവനക്കാരനോട് പറയുക.','');
+  if(pw===null)return;
+  if(pw.length<8){A('പാസ്‌വേഡിന് കുറഞ്ഞത് 8 അക്ഷരം വേണം');return}
+  const {data,error}=await SB.functions.invoke('admin-user',{body:{request_id:id,password:pw}});
+  let msg=error?error.message:(data&&data.error);
+  if(error&&error.context&&error.context.json){try{const j=await error.context.json();msg=j.error||msg}catch(e){}}
+  if(msg){A(/Failed to send|Failed to fetch|not found/i.test(msg)?'യൂസർ സർവീസ് (admin-user) ഇതുവരെ ഡിപ്ലോയ് ചെയ്തിട്ടില്ല, അല്ലെങ്കിൽ എത്തിച്ചേരാൻ പറ്റുന്നില്ല.':msg);return}
+  await loadAll();render();A('നടപ്പിലായി.');
+}
+const checks=(pfx,list,sel)=>list.map(x=>`<label class="k"><input type="checkbox" id="${pfx}_${x[0]}" ${sel.includes(x[0])?'checked':''}> ${x[1]}</label>`).join('');
+const ticked=(pfx,list)=>list.map(x=>x[0]).filter(k=>$(`${pfx}_${k}`).checked);
 function usersView(){
-  return `<div class="c m">പുതിയ ജീവനക്കാരന് ലോഗിൻ ഉണ്ടാക്കാൻ: Supabase → Authentication → Users → Add user → Create new user (<b>Auto Confirm User</b> ടിക്ക് ചെയ്യുക). പിന്നീട് ഇവിടെ "പുതുക്കുക" അമർത്തി ആ ആൾക്ക് പേര്, സീറ്റ്, അനുമതികൾ എന്നിവ നൽകുക. പാസ്‌വേഡ് മാറ്റുന്നതും അവിടെ നിന്ന് തന്നെ.</div>`+
-  P.map(u=>`<div class="c"><div class="r"><b>${E(u.name)}</b>${u.id==uid?'<span class="b">നിങ്ങൾ</span>':''}${u.is_admin?'<span class="b">അഡ്മിൻ</span>':''}${u.active?'':'<span class="b hi">നിർത്തി</span>'}${u.seat_id?'':'<span class="b wn">സീറ്റ് ഇല്ല</span>'}</div>
+  const def=['originate'];
+  const nu=`<div class="c"><b>പുതിയ ജീവനക്കാരൻ / ലോഗിൻ</b><div class="g2"><div><label for="nu_e">ഇമെയിൽ (ലോഗിൻ ഐഡി)</label><input id="nu_e" type="email"></div><div><label for="nu_n">പേര്</label><input id="nu_n" type="text"></div><div><label for="nu_s">സീറ്റ്</label><select id="nu_s" class="f">${seatOpts('','— സീറ്റ് ഇല്ല —')}</select></div></div><div class="m" style="margin-top:6px">അനുമതികൾ</div><div>${checks('nu_p',PERMS,def)}</div><div class="m" style="margin-top:6px">കാണേണ്ട മെനുകൾ</div><div>${checks('nu_m',MENUS,MENUS.map(x=>x[0]))}</div><p><button class="p" onclick="newUser()">ലോഗിൻ ഉണ്ടാക്കാൻ അഭ്യർത്ഥിക്കുക</button></p><div class="m">പാസ്‌വേഡ് ഇവിടെ നൽകില്ല; അനുമതി കിട്ടിയ ശേഷം അഡ്മിൻ നടപ്പാക്കുമ്പോൾ നൽകും.</div></div>`;
+  return nu+P.map(u=>`<div class="c"><div class="r"><b>${E(u.name)}</b>${u.id==uid?'<span class="b">നിങ്ങൾ</span>':''}${u.is_admin?'<span class="b">അഡ്മിൻ</span>':''}${u.active?'':'<span class="b hi">നിർത്തി</span>'}${u.seat_id?'':'<span class="b wn">സീറ്റ് ഇല്ല</span>'}</div>
   <div class="g2"><div><label for="un_${u.id}">പേര്</label><input id="un_${u.id}" type="text" value="${E(u.name)}"></div><div><label for="us_${u.id}">സീറ്റ്</label><select id="us_${u.id}" class="f">${seatOpts(u.seat_id,'— സീറ്റ് ഇല്ല —')}</select></div></div>
-  <div class="m" style="margin-top:6px">അനുമതികൾ</div><div>${PERMS.map(p=>`<label class="k"><input type="checkbox" id="up_${u.id}_${p[0]}" ${(u.perms||[]).includes(p[0])?'checked':''}> ${p[1]}</label>`).join('')}</div>
+  <div class="m" style="margin-top:6px">അനുമതികൾ</div><div>${checks('up_'+u.id,PERMS,u.perms||[])}</div>
+  <div class="m" style="margin-top:6px">കാണേണ്ട മെനുകൾ</div><div>${checks('um_'+u.id,MENUS,u.menus||MENUS.map(x=>x[0]))}</div>
   <div><label class="k"><input type="checkbox" id="ua_${u.id}" ${u.is_admin?'checked':''} ${u.id==uid?'disabled':''}> അഡ്മിൻ</label><label class="k"><input type="checkbox" id="uc_${u.id}" ${u.active?'checked':''} ${u.id==uid?'disabled':''}> ലോഗിൻ സജീവം</label></div>
-  <p><button class="p" onclick="saveUser('${u.id}')">സേവ്</button></p></div>`).join('');
+  <p class="r"><button class="p" onclick="saveUser('${u.id}')">മാറ്റം സമർപ്പിക്കുക</button><button onclick="submitReq('reset_password',{user_id:'${u.id}'})">പാസ്‌വേഡ് റീസെറ്റ് ചെയ്യാൻ അഭ്യർത്ഥിക്കുക</button></p></div>`).join('');
+}
+async function newUser(){
+  const e=$('nu_e').value.trim(),n=$('nu_n').value.trim();
+  if(!e||!n){A('ഇമെയിലും പേരും എഴുതുക');return}
+  const ms=ticked('nu_m',MENUS);
+  await submitReq('create_user',{email:e,name:n,seat_id:$('nu_s').value||null,perms:ticked('nu_p',PERMS),menus:ms.length==MENUS.length?null:ms});
 }
 async function saveUser(id){
-  const n=$('un_'+id).value.trim();if(!n){alert('പേര് എഴുതുക');return}
-  const perms=PERMS.map(p=>p[0]).filter(p=>$(`up_${id}_${p}`).checked);
-  const upd={name:n,seat_id:$('us_'+id).value||null,perms,is_admin:$('ua_'+id).checked,active:$('uc_'+id).checked};
-  if(await dbw(SB.from('profiles').update(upd).eq('id',id))){await loadAll();render();alert('സേവ് ചെയ്തു')}
+  const n=$('un_'+id).value.trim();if(!n){A('പേര് എഴുതുക');return}
+  const ms=ticked('um_'+id,MENUS);
+  await submitReq('update_user',{user_id:id,name:n,seat_id:$('us_'+id).value||null,perms:ticked('up_'+id,PERMS),menus:ms.length==MENUS.length?null:ms,is_admin:$('ua_'+id).checked,active:$('uc_'+id).checked});
+}
+function seatsView(){
+  const intro=ST.length?'':'<div class="c"><b>തുടക്കം:</b> ആദ്യം ഏറ്റവും മുകളിലെ സീറ്റ് (ഉദാ: മാനേജിംഗ് ഡയറക്ടർ) മേലധികാരി ഇല്ലാതെ ചേർക്കുക. പിന്നെ അതിന് താഴെയുള്ള സീറ്റുകൾ.</div>';
+  return intro+`<div class="c"><b>പുതിയ സീറ്റ്</b><div class="g2"><div><label for="ns">സീറ്റിന്റെ പേര് (തസ്തിക)</label><input id="ns" type="text"></div><div><label for="nc">സെക്ഷൻ (ഐച്ഛികം)</label><input id="nc" type="text"></div><div><label for="nb">മേലധികാരി സീറ്റ്</label><select id="nb" class="f">${seatOpts('','— ഏറ്റവും മുകളിൽ —')}</select></div></div><p><button class="p" onclick="addSeat()">ചേർക്കാൻ അഭ്യർത്ഥിക്കുക</button></p></div>`+
+  ST.map(s=>{const ex=desc(s.id);return `<div class="c"><div class="r"><b>${E(s.name)}</b>${s.is_chief?'<span class="b cl">ചീഫ് സീറ്റ്</span>':''}${s.active?'':'<span class="b hi">നിർത്തി</span>'}<span class="m">${seatUsers(s.id).map(un).join(', ')||'ആരുമില്ല'}</span></div><div class="g2"><div><label for="sn_${s.id}">പേര്</label><input id="sn_${s.id}" type="text" value="${E(s.name)}"></div><div><label for="sc_${s.id}">സെക്ഷൻ</label><input id="sc_${s.id}" type="text" value="${E(s.section)}"></div><div><label for="sb_${s.id}">മേലധികാരി സീറ്റ്</label><select id="sb_${s.id}" class="f">${seatOpts(s.boss_seat,'— ഏറ്റവും മുകളിൽ —',ST.filter(x=>x.active&&!ex.has(x.id)).map(x=>x.id))}</select></div></div><label class="k"><input id="sa_${s.id}" type="checkbox" ${s.active?'checked':''}> സജീവം</label><p class="r"><button class="p" onclick="saveSeat('${s.id}')">മാറ്റം സമർപ്പിക്കുക</button>${!s.boss_seat&&s.active&&!s.is_chief?`<button onclick="submitReq('set_chief_seat',{seat_id:'${s.id}'})">ചീഫ് സീറ്റ് ആക്കാൻ അഭ്യർത്ഥിക്കുക</button>`:''}</p></div>`}).join('');
+}
+async function addSeat(){
+  const n=$('ns').value.trim();if(!n){A('പേര് എഴുതുക');return}
+  await submitReq('create_seat',{name:n,section:$('nc').value.trim(),boss_seat:$('nb').value||null});
+}
+async function saveSeat(id){
+  const n=$('sn_'+id).value.trim();if(!n){A('പേര് എഴുതുക');return}
+  await submitReq('update_seat',{seat_id:id,name:n,section:$('sc_'+id).value.trim(),boss_seat:$('sb_'+id).value||null,active:$('sa_'+id).checked});
 }
 function delegView(){
   const vac=ST.filter(s=>s.active&&!seatUsers(s.id).length);
-  const act=SA.filter(covers);
-  return `${vac.length?`<div class="c"><b class="er">ആരുമില്ലാത്ത സീറ്റുകൾ:</b> ${vac.map(s=>sn(s.id)+' ('+F.filter(f=>f.status=='open'&&hold(f)==s.id).length+' ഫയൽ)').join(' · ')}<div class="m">ഇവിടെയുള്ള ഫയലുകൾ കാത്തിരിക്കും. താഴെ ചുമതല നൽകുക.</div></div>`:''}
+  return `${vac.length?`<div class="c"><b class="er">ആരുമില്ലാത്ത സീറ്റുകൾ:</b> ${vac.map(s=>sn(s.id)+' ('+F.filter(f=>f.status=='open'&&hold(f)==s.id).length+' ഫയൽ)').join(' · ')}<div class="m">ഇവിടെയുള്ള ഫയലുകൾ കാത്തിരിക്കും. താഴെ ചുമതല നൽകാൻ അഭ്യർത്ഥിക്കുക.</div></div>`:''}
   <div class="c"><b>ചുമതല കൈമാറ്റം</b> <span class="m">(ഒരാൾ ലീവിലാണെങ്കിൽ അദ്ദേഹത്തിന്റെ സീറ്റിന്റെ അധികാരം മറ്റൊരാൾക്ക്, തീയതി വരെ)</span>
   <div class="g2"><div><label for="ds1">സീറ്റ്</label><select id="ds1" class="f">${seatOpts('','— തിരഞ്ഞെടുക്കുക —')}</select></div><div><label for="du1">ചുമതല ഏൽക്കുന്ന ആൾ</label><select id="du1" class="f">${opts(P.filter(p=>p.active).map(p=>[p.id,E(p.name)+' ('+(p.seat_id?sn(p.seat_id):'സീറ്റ് ഇല്ല')+')']),'','— തിരഞ്ഞെടുക്കുക —')}</select></div><div><label for="dfr">മുതൽ</label><input id="dfr" type="date" value="${todayS()}"></div><div><label for="dto">വരെ (ഒഴിച്ചിട്ടാൽ അവസാനിപ്പിക്കുന്നത് വരെ)</label><input id="dto" type="date"></div></div>
-  <label for="drs">കാരണം</label><input id="drs" type="text" placeholder="ഉദാ: ലീവ്"><p><button class="p" onclick="addDel()">ചുമതല നൽകുക</button></p></div>
-  <div class="c sc"><b>നിലവിലെ / മുൻ ചുമതലകൾ</b><table><tr><th>സീറ്റ്</th><th>ആൾ</th><th>കാലയളവ്</th><th>കാരണം</th><th></th></tr>${SA.map(a=>`<tr><td>${sn(a.seat_id)}</td><td>${un(a.user_id)}</td><td>${fmtD(a.from_date)} – ${a.to_date?fmtD(a.to_date):'…'}</td><td>${E(a.reason)}</td><td>${!a.active?'<span class="b">അവസാനിപ്പിച്ചു</span>':covers(a)?`<button onclick="endDel(${a.id})">അവസാനിപ്പിക്കുക</button>`:'<span class="b">'+(a.from_date>todayS()?'വരാനുള്ളത്':'കഴിഞ്ഞു')+'</span>'}</td></tr>`).join('')||'<tr><td colspan="5" class="m">ഒന്നുമില്ല</td></tr>'}</table></div>`;
+  <label for="drs">കാരണം</label><input id="drs" type="text" placeholder="ഉദാ: ലീവ്"><p><button class="p" onclick="addDel()">ചുമതല നൽകാൻ അഭ്യർത്ഥിക്കുക</button></p></div>
+  <div class="c sc"><b>നിലവിലെ / മുൻ ചുമതലകൾ</b><table><tr><th>സീറ്റ്</th><th>ആൾ</th><th>കാലയളവ്</th><th>കാരണം</th><th></th></tr>${SA.map(a=>`<tr><td>${sn(a.seat_id)}</td><td>${un(a.user_id)}</td><td>${fmtD(a.from_date)} – ${a.to_date?fmtD(a.to_date):'…'}</td><td>${E(a.reason)}</td><td>${!a.active?'<span class="b">അവസാനിപ്പിച്ചു</span>':covers(a)?`<button onclick="submitReq('end_delegation',{id:${a.id}})">അവസാനിപ്പിക്കാൻ അഭ്യർത്ഥിക്കുക</button>`:'<span class="b">'+(a.from_date>todayS()?'വരാനുള്ളത്':'കഴിഞ്ഞു')+'</span>'}</td></tr>`).join('')||'<tr><td colspan="5" class="m">ഒന്നുമില്ല</td></tr>'}</table></div>`;
 }
 async function addDel(){
-  const s=$('ds1').value,u=$('du1').value;if(!s||!u){alert('സീറ്റും ആളും തിരഞ്ഞെടുക്കുക');return}
-  const row={seat_id:s,user_id:u,from_date:$('dfr').value||todayS(),to_date:$('dto').value||null,reason:$('drs').value.trim()};
-  if(await dbw(SB.from('seat_assignments').insert(row))){await loadAll();render()}
+  const s=$('ds1').value,u=$('du1').value;if(!s||!u){A('സീറ്റും ആളും തിരഞ്ഞെടുക്കുക');return}
+  await submitReq('add_delegation',{seat_id:s,user_id:u,from_date:$('dfr').value||todayS(),to_date:$('dto').value||null,reason:$('drs').value.trim()});
 }
-async function endDel(id){if(!confirm('ഈ ചുമതല ഇപ്പോൾ അവസാനിപ്പിക്കണോ?'))return;if(await dbw(SB.from('seat_assignments').update({active:false}).eq('id',id))){await loadAll();render()}}
+function setView(){
+  const pd=+CFG.pending_days||5;
+  return `<div class="c"><label for="pdv">"പെൻഡിംഗ്" മുന്നറിയിപ്പിനുള്ള പ്രവൃത്തി ദിവസം (മാനുവൽ: 5)</label><div class="r"><input id="pdv" type="number" min="1" max="90" value="${pd}" style="width:90px"><button class="p" onclick="submitReq('set_setting',{key:'pending_days',value:String(Math.max(1,Math.min(90,+$('pdv').value||5)))})">മാറ്റാൻ അഭ്യർത്ഥിക്കുക</button></div></div>
+  <div class="c"><b>അവധി ദിവസങ്ങൾ</b> <span class="m">(ഞായർ സ്വയം ഒഴിവാകും; മറ്റ് അവധികൾ ഇവിടെ ചേർക്കുക)</span><div class="r" style="margin:6px 0"><input id="hd" type="date" style="width:170px"><input id="hn" type="text" placeholder="പേര്" style="flex:1;min-width:140px"><button class="p" onclick="addHol()">ചേർക്കാൻ അഭ്യർത്ഥിക്കുക</button></div>${HO.map(h=>`<div class="r"><span>${fmtD(h.day)}</span><span class="m">${E(h.name)}</span><button onclick="submitReq('del_holiday',{day:'${h.day}'})">നീക്കാൻ അഭ്യർത്ഥിക്കുക</button></div>`).join('')||'<span class="m">ഒന്നും ചേർത്തിട്ടില്ല</span>'}</div>`;
+}
+async function addHol(){const d=$('hd').value;if(!d){A('തീയതി തിരഞ്ഞെടുക്കുക');return}await submitReq('add_holiday',{day:d,name:$('hn').value.trim()})}
 
 SB.auth.onAuthStateChange(ev=>{if(ev=='SIGNED_OUT'){me=null;uid=null;openId=null;render()}});
-document.addEventListener('visibilitychange',async()=>{if(document.visibilityState=='visible'&&me&&!openId&&!['new','treg','dreg','users','seats','deleg','srch'].includes(tab)){await loadAll();if(me)render()}});
+document.addEventListener('visibilitychange',async()=>{if(document.visibilityState=='visible'&&me&&!openId&&!['new','treg','dreg','adm','srch'].includes(tab)){await loadAll();if(me)render()}});
 boot();
 </script></body></html>
