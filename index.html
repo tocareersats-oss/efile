@@ -1,439 +1,98 @@
 <!DOCTYPE html>
 <html lang="ml"><head><meta charset="utf-8">
-<title>Anatech · ഇ-ഫയൽ</title>
+<title>e-File</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-:root{--bg:#eef1f4;--fg:#16263d;--card:#fff;--bd:#cfd6df;--ac:#0f766e;--acf:#fff;--mu:#5b6b80;--red:#b3261e;--ok:#17703f;--wn:#9a5b00}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1722;--fg:#e6ecf4;--card:#172231;--bd:#2c3b50;--ac:#3dbdb1;--acf:#06201d;--mu:#9bb0c8;--red:#ff8a80;--ok:#6fd49a;--wn:#f0b45a}}
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+Malayalam:wght@400;600;700&display=swap"><style>
+:root{--bg:#eef2f7;--fg:#15233b;--card:#fff;--bd:#d9e1ec;--ac:#14508f;--acf:#fff;--mu:#5b6b82;--red:#b3261e;--ok:#17703f;--wn:#9a5b00;--gold:#c8962e;--side:#0f2a4a;--side2:#16365d;--sidefg:#cfe0f5;--note:#fff8dc;--notebd:#ecd98a;--cur:#eaf3ff;--curbd:#b9d4f5;--sh:0 1px 2px rgba(15,42,74,.06),0 4px 14px rgba(15,42,74,.06)}
+@media (prefers-color-scheme:dark){:root{--bg:#0b1320;--fg:#e5ecf6;--card:#142034;--bd:#27384f;--ac:#5aa2f0;--acf:#06182c;--mu:#93a7c2;--red:#ff8a80;--ok:#6fd49a;--wn:#f0b45a;--gold:#e0b04e;--side:#08111f;--side2:#0e1b30;--sidefg:#aec4e0;--note:#2a2512;--notebd:#5a4d1c;--cur:#10233d;--curbd:#2a4b78;--sh:0 1px 2px rgba(0,0,0,.4)}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,"Noto Sans Malayalam","Segoe UI",sans-serif}
-.w{max-width:960px;margin:0 auto;padding:12px}
-h1{font-size:18px;margin:0}
-h3{margin:10px 0 6px;font-size:16px}
-.top{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px;padding-bottom:10px;border-bottom:2px solid var(--fg)}
-.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px}
-button,select,input,textarea{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:7px 10px}
-textarea,input[type=text],input[type=email],input[type=password],input[type=date],input[type=number],select.f{width:100%}
-button{cursor:pointer}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 "Inter","Noto Sans Malayalam",system-ui,"Segoe UI",sans-serif}
+.w{max-width:none;margin:0;padding:0}
+h1{font-size:18px;margin:0}h2{margin:4px 0 6px;font-size:21px;line-height:1.3}h3{margin:10px 0 6px;font-size:16px}
+a{color:var(--ac)}
+button,select,input,textarea{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:8px 11px}
+textarea,input[type=text],input[type=email],input[type=password],input[type=date],input[type=number],input[type=month],select.f{width:100%}
+button{cursor:pointer;transition:background .15s,border-color .15s,transform .05s}
+button:hover{border-color:var(--ac)}button:active{transform:translateY(1px)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
 button.on,button.p{background:var(--ac);color:var(--acf);border-color:var(--ac);font-weight:600}
 button:disabled{opacity:.5;cursor:wait}
-.tabs button{border-radius:6px 6px 0 0;padding:6px 9px;font-size:14px}
-.c{background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:12px;margin-bottom:10px}
+.shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+.side{background:linear-gradient(180deg,var(--side),var(--side2));color:var(--sidefg);padding:14px 10px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;gap:10px;align-items:center;padding:6px 8px 14px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:8px}
+.brand b{display:block;color:#fff;font-size:15px;line-height:1.25}.brand span{font-size:12px;color:var(--gold);letter-spacing:.4px}
+.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#f3d98a);display:grid;place-items:center;font-size:22px;flex:none;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.ng{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#7f9bbd;margin:14px 10px 4px}
+.side button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;border:0;border-radius:9px;color:var(--sidefg);padding:9px 11px;margin:1px 0}
+.side button:hover{background:rgba(255,255,255,.08)}
+.side button.on{background:rgba(255,255,255,.16);color:#fff;font-weight:600;box-shadow:inset 3px 0 0 var(--gold)}
+.side .ic{width:22px;text-align:center;font-size:17px}
+.side .nb{margin-left:auto;background:var(--gold);color:#1b2a40;border-radius:99px;font-size:12px;font-weight:700;padding:0 8px;min-width:22px;text-align:center}
+.main{min-width:0}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--card);border-bottom:1px solid var(--bd);padding:10px 18px;position:sticky;top:0;z-index:5;box-shadow:var(--sh)}
+.bar .ttl{font-size:18px;font-weight:700}
+.who{display:flex;gap:9px;align-items:center}
+.av{width:34px;height:34px;border-radius:50%;background:var(--ac);color:var(--acf);display:grid;place-items:center;font-weight:700}
+#v{padding:18px;max-width:1180px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:var(--sh)}
 .r{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .m{color:var(--mu);font-size:13px}
-.b{display:inline-block;font-size:12px;padding:1px 8px;border-radius:4px;border:1px solid var(--bd)}
+.b{display:inline-block;font-size:12px;padding:1px 9px;border-radius:99px;border:1px solid var(--bd);background:var(--bg)}
 .hi{color:var(--red);border-color:var(--red)}.cl{color:var(--ok);border-color:var(--ok)}.wn{color:var(--wn);border-color:var(--wn)}
-.it{cursor:pointer;border-left:4px solid var(--ac)}.it.u{border-left-color:var(--red)}.it:hover{border-color:var(--ac)}
+.it{cursor:pointer;border-left:5px solid var(--ac)}.it.u{border-left-color:var(--red)}.it:hover{border-color:var(--ac);transform:translateY(-1px)}
 .lg{border-left:3px solid var(--bd);padding:2px 0 2px 10px;margin:8px 0}
-label{display:block;margin:8px 0 3px;font-size:13px;color:var(--mu)}
+label{display:block;margin:9px 0 3px;font-size:13px;color:var(--mu)}
 label.k{display:inline-flex;gap:6px;align-items:center;margin:4px 12px 4px 0;color:var(--fg);font-size:14px}
-.sc{overflow-x:auto}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--bd);padding:6px;text-align:left;font-size:14px;vertical-align:top}
-.lo{max-width:380px;margin:8vh auto}
+.sc{overflow-x:auto}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--bd);padding:7px;text-align:left;font-size:14px;vertical-align:top}th{color:var(--mu);font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.lo{max-width:400px;margin:7vh auto}
+.lobg{min-height:100vh;display:grid;align-items:center;background:radial-gradient(1000px 500px at 80% -10%,#1d4f8c33,transparent),linear-gradient(160deg,var(--side),var(--side2));padding:16px}
+.lobg .c{box-shadow:0 20px 60px rgba(0,0,0,.35)}
 .er{color:var(--red)}
-.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 12px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 14px}
 .sec{margin-top:14px;padding-top:10px;border-top:1px dashed var(--bd)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:14px}
+.kpi{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;cursor:pointer;box-shadow:var(--sh);border-top:4px solid var(--ac)}
+.kpi:hover{transform:translateY(-2px)}.kpi .n{font-size:30px;font-weight:800;line-height:1.1}.kpi .e{font-size:22px}.kpi.red{border-top-color:var(--red)}.kpi.gold{border-top-color:var(--gold)}.kpi.ok{border-top-color:var(--ok)}
+.hero{background:linear-gradient(120deg,var(--side),var(--ac));color:#fff;border-radius:16px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--sh)}
+.hero h2{color:#fff;margin:0}.hero .m{color:#d6e6fb}
+.cover{background:var(--card);border:1px solid var(--bd);border-top:8px solid var(--ok);border-radius:14px;padding:16px 18px;margin-bottom:12px;box-shadow:var(--sh);position:relative}
+.cover.closed{border-top-color:var(--ac)}.cover.conf{border-top-color:var(--red)}
+.fno{font:700 15px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:1px;background:var(--bg);border:1px dashed var(--mu);padding:5px 9px;border-radius:6px}
+.stamp{position:absolute;right:16px;top:14px;border:2px solid var(--ok);color:var(--ok);padding:2px 12px;border-radius:6px;font-weight:800;letter-spacing:2px;transform:rotate(-5deg);font-size:13px;opacity:.85}
+.cover.closed .stamp{border-color:var(--ac);color:var(--ac)}.stamp.cf{border-color:var(--red);color:var(--red);right:auto;left:auto;position:static;display:inline-block;transform:none;margin-left:8px}
+.route{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:8px 0}
+.chip{background:var(--bg);border:1px solid var(--bd);border-radius:99px;padding:2px 11px;font-size:13px}.chip.cur{background:var(--ac);color:var(--acf);border-color:var(--ac);font-weight:600}.arr{color:var(--mu)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sheet{border-radius:10px;padding:12px 14px;border:1px solid}
+.sheet.note{background:var(--note);border-color:var(--notebd)}.sheet.cur{background:var(--cur);border-color:var(--curbd)}
+.sheet h3{margin-top:0}
+.para{display:flex;gap:10px;margin:9px 0;padding-bottom:9px;border-bottom:1px dotted var(--notebd)}.para:last-child{border-bottom:0}
+.pn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#1b2a40;font-weight:800;font-size:12px;display:grid;place-items:center}
+.pb{min-width:0;overflow-wrap:anywhere}.ph{font-size:12.5px;color:var(--mu)}
+.doc{background:var(--card);border:1px solid var(--curbd);border-radius:8px;padding:9px 11px;margin:8px 0}
+details.tool{border:1px solid var(--bd);border-radius:10px;margin:8px 0;background:var(--bg)}
+details.tool summary{cursor:pointer;padding:9px 12px;font-weight:600}
+details.tool>div{padding:2px 12px 12px}
+.tl{margin:6px 0}
+@media (max-width:900px){
+ .shell{grid-template-columns:1fr}
+ .side{position:static;height:auto;display:flex;flex-wrap:nowrap;overflow-x:auto;padding:8px;gap:2px}
+ .side .brand,.side .ng{display:none}
+ .side button{white-space:nowrap;width:auto;padding:8px 11px}
+ .two{grid-template-columns:1fr}
+ #v{padding:12px}
+ .bar{position:static}
+ .stamp{position:static;display:inline-block;transform:none;margin:6px 0}
+}
+@media print{.side,.bar{display:none}.shell{display:block}}
 </style></head><body><div class="w" id="app"><p class="m">ലോഡ് ചെയ്യുന്നു…</p></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
 <script>
-/*DICT_START*/const DICT={
-"R — സ്ഥിരമായി സൂക്ഷിക്കുക": "R — Retain permanently",
-"D — 10 വർഷത്തിന് ശേഷം നശിപ്പിക്കുക": "D — Destroy after 10 years",
-"K — 3 വർഷത്തിന് ശേഷം നശിപ്പിക്കുക": "K — Keep, destroy after 3 years",
-"L — 1 വർഷത്തിന് ശേഷം നശിപ്പിക്കുക": "L — Lodge, destroy after 1 year",
-"ഓർമ്മപ്പെടുത്തൽ": "Reminder",
-"കോൾ ബുക്ക്": "Call book",
-"ലൈ-ഓവർ": "Lie-over",
-"ഓഫീസ്": "Office",
-"നിർദ്ദേശപ്രകാരം": "On instruction",
-"തപാലിൽ നിന്ന്": "From tapal",
-"ഫയൽ തുടങ്ങി": "File opened",
-"ഫോർവേഡ്": "Forwarded",
-"തിരിച്ചയച്ചു": "Returned",
-"തീർപ്പാക്കി": "Closed",
-"അഡ്മിൻ മാറ്റി നൽകി": "Moved by admin",
-"ബന്ധിപ്പിച്ചു": "Linked",
-"തപാൽ ചേർത്തു": "Tapal added",
-"ഡെസ്പാച്ച്": "Despatch",
-"തപാൽ": "Tapal",
-"കൊറിയർ": "Courier",
-"നേരിട്ട്": "By hand",
-"ഇമെയിൽ": "Email",
-"ഫയൽ തുടങ്ങാം": "Can open files",
-"തപാൽ രജിസ്റ്റർ": "Tapal register",
-"ഡെസ്പാച്ച് രജിസ്റ്റർ": "Despatch register",
-"എല്ലാ ഫയലും കാണാം (വായന മാത്രം)": "Can view all files (read-only)",
-"അഡ്മിനിസ്ട്രേഷൻ അഭ്യർത്ഥന നൽകാം": "Can raise administration requests",
-"ഇൻബോക്സ്": "Inbox",
-"വന്ന തപാൽ": "Incoming tapal",
-"പുതിയ ഫയൽ": "New file",
-"ഞാൻ കൈകാര്യം ചെയ്തവ": "Handled by me",
-"തിരയുക": "Search",
-"എന്റെ റിപ്പോർട്ട്": "My report",
-"റെക്കോർഡ്സ്": "Records",
-"ആരുമില്ല": "Nobody",
-"ഈ ലോഗിൻ പ്രവർത്തനക്ഷമമല്ല. അഡ്മിനെ സമീപിക്കുക.": "This login is not active. Please contact the admin.",
-"ഇമെയിൽ അല്ലെങ്കിൽ പാസ്‌വേഡ് ശരിയല്ല.": "Incorrect email or password.",
-"ഇൻബോക്സ് (": "Inbox (",
-"ഓർമ്മപ്പെടുത്തൽ (": "Reminders (",
-"വന്ന തപാൽ (": "Incoming tapal (",
-"എല്ലാ ഫയലുകളും": "All files",
-"സ്ഥാപന റിപ്പോർട്ട്": "Organisation report",
-"അഡ്മിനിസ്ട്രേഷൻ": "Administration",
-"ഓഡിറ്റ്": "Audit",
-"📁 Anatech · ഇ-ഫയൽ": "📁 Anatech · e-File",
-"പാസ്‌വേഡ്": "Password",
-"ലോഗിൻ": "Log in",
-"ലോഗിൻ ലഭിക്കാൻ അഡ്മിനെ സമീപിക്കുക.": "Contact the admin to get a login.",
-"· അഡ്മിൻ": "· Admin",
-"· ചീഫ്": "· Chief",
-"പാസ്‌വേഡ് മാറ്റുക": "Change password",
-"പുതുക്കുക": "Refresh",
-"ലോഗൗട്ട്": "Log out",
-"ഫയൽ കണ്ടെത്തിയില്ല.": "File not found.",
-"ഇൻബോക്സ് ശൂന്യമാണ്.": "Your inbox is empty.",
-"ഒന്നും ഇല്ല.": "Nothing here.",
-"ഫയലുകൾ ഒന്നും ഇല്ല.": "No files.",
-"പുതിയ പാസ്‌വേഡ് (കുറഞ്ഞത് 8 അക്ഷരം)": "New password (at least 8 characters)",
-"പാസ്‌വേഡിന് കുറഞ്ഞത് 8 അക്ഷരം വേണം": "Password must be at least 8 characters",
-"പാസ്‌വേഡ് ഒന്നുകൂടി നൽകുക": "Enter the password again",
-"പാസ്‌വേഡുകൾ ഒത്തുപോകുന്നില്ല": "The passwords do not match",
-"പാസ്‌വേഡ് മാറ്റി.": "Password changed.",
-"അടിയന്തിരം": "Urgent",
-"സമയപരിധി": "Time limit",
-"— കഴിഞ്ഞു": "— overdue",
-"തീർപ്പാക്കി (": "Closed (",
-"തുറന്നത്": "Open",
-"ഇപ്പോൾ:": "With:",
-"പ്രവൃത്തി ദിവസമായി": "working days",
-"ബാക്ക് ഫയൽ": "Back file",
-"ബന്ധിപ്പിച്ചത്": "Linked",
-"നിങ്ങളുടെ നടപടി": "Your action",
-"(സീറ്റ്:": "(Seat:",
-"നോട്ട്": "Note",
-"ഫോർവേഡ് →": "Forward →",
-"മേലധികാരി സീറ്റ് സജീവമല്ല. അഡ്മിനെ അറിയിക്കുക.": "The superior seat is not active. Inform the admin.",
-"തിരിച്ചയക്കുക ←": "Return ←",
-"ആ സീറ്റിൽ ഇപ്പോൾ ആരുമില്ല. ഫയൽ അവിടെ കാത്തിരിക്കും; അഡ്മിൻ ചുമതല നൽകണം.": "Nobody is in that seat now. The file will wait there; the admin must assign someone.",
-"തീർപ്പാക്കുക": "Close the file",
-"ഡിസ്‌പോസൽ വിഭാഗം": "Disposal category",
-"നടപടി പൂർത്തിയായി, തീർപ്പാക്കുക": "Action completed, close the file",
-"അനുമതി നൽകി തീർപ്പാക്കുക": "Approve and close the file",
-"ബാക്ക് ഫയൽ / ബന്ധിപ്പിക്കൽ": "Back file / linking",
-"ഫയൽ നമ്പർ (ഉദാ: ANA/2026/001)": "File number (e.g. ANA/2026/001)",
-"ബന്ധിപ്പിക്കുക": "Link",
-"ചേർക്കുക": "Add",
-"ഓർമ്മപ്പെടുത്തൽ / കോൾ ബുക്ക് / ലൈ-ഓവർ": "Reminder / Call book / Lie-over",
-"കുറിപ്പ്": "Note",
-"കോൾ ബുക്ക്: ആ തീയതി വരെ ഫയൽ ഇൻബോക്സിൽ നിന്ന് മാറി നിൽക്കും. ലൈ-ഓവർ പരമാവധി 3 മാസം.": "Call book: the file stays out of your inbox until that date. Lie-over: maximum 3 months.",
-"വന്ന തപാൽ ഈ ഫയലിൽ ചേർക്കുക": "Add incoming tapal to this file",
-"ഈ ഫയൽ ഇപ്പോൾ": "This file is currently with",
-"ഫയൽ മറ്റൊരു സീറ്റിലേക്ക് മാറ്റാൻ അഭ്യർത്ഥന": "Request to move this file to another seat",
-"ഇതിന് ചീഫിന്റെ അനുമതി വേണം.": "This needs the Chief’s approval.",
-"പുതിയ സീറ്റ്": "New seat",
-"ഫയൽ നോട്ടിൽ ചേർക്കേണ്ട കാരണം": "Reason to record in the file note",
-"അഭ്യർത്ഥന നൽകുക": "Raise request",
-"← തിരികെ": "← Back",
-"ഉറവിടം:": "Origin:",
-"ഇപ്പോൾ കയ്യിൽ:": "Now with:",
-"തീർപ്പാക്കിയത്:": "Closed:",
-"വഴി:": "Route:",
-"(കഴിഞ്ഞു)": "(done)",
-"നോട്ട് ഫയൽ / ചലന രേഖ": "Note file / movement record",
-"തിരിച്ചയക്കുമ്പോൾ കാരണം നോട്ടിൽ എഴുതുക": "Write the reason in the note when returning a file",
-"ഡിസ്‌പോസൽ വിഭാഗം (R / D / K / L) തിരഞ്ഞെടുക്കുക": "Choose a disposal category (R / D / K / L)",
-"ഫയൽ തീർപ്പാക്കിയാൽ പിന്നീട് മാറ്റാൻ പറ്റില്ല. തുടരട്ടെ?": "A closed file cannot be changed later. Continue?",
-"ആ നമ്പറിൽ നിങ്ങൾക്ക് കാണാവുന്ന ഫയൽ ഇല്ല": "No file with that number is visible to you",
-"തീയതി തിരഞ്ഞെടുക്കുക": "Choose a date",
-"കഴിഞ്ഞു": "Overdue",
-"ഇന്ന്": "Today",
-"ചെയ്തു": "Done",
-"ഓർമ്മപ്പെടുത്തലുകൾ ഒന്നുമില്ല.": "No reminders.",
-"കോൾ ബുക്കിലുള്ള ഫയലുകൾ": "Files in the call book",
-"(തീയതിയാകുമ്പോൾ ഇൻബോക്സിൽ തിരിച്ചെത്തും)": "(they return to your inbox when the date arrives)",
-"തീർപ്പാക്കിയ ഫയലുകളുടെ റെക്കോർഡ് (ഓഫീസ് മാനുവൽ അനുസരിച്ചുള്ള സൂക്ഷിപ്പ് കാലാവധി). ഫയൽ നശിപ്പിക്കുന്നത് സ്വയം നടക്കില്ല; സമയമായവയെ അടയാളപ്പെടുത്തുക മാത്രം ചെയ്യും.": "Record of closed files with the retention period from the office manual. Files are not destroyed automatically; those that are due are only marked.",
-"ഫയൽ": "File",
-"വിഷയം": "Subject",
-"ഡിസ്‌പോസൽ": "Disposal",
-"തീർപ്പാക്കിയത്": "Closed on",
-"നശിപ്പിക്കാവുന്നത്": "Can be destroyed on",
-"സമയമായി": "Due now",
-"സ്ഥിരം": "Permanent",
-"ഒന്നുമില്ല": "Nothing",
-"സീറ്റും കാരണവും നൽകുക": "Give the seat and a reason",
-"ഫയൽ തുടങ്ങാൻ നിങ്ങൾക്ക് അനുമതിയില്ല.": "You do not have permission to open files.",
-"ഏത് സീറ്റിൽ നിന്ന്": "From which seat",
-"ഫയൽ തുടങ്ങുന്നത്": "File originates from",
-"ഓഫീസ് ആവശ്യത്തിന് (സ്വന്തം)": "Office need (own)",
-"മേലധികാരിയുടെ നിർദ്ദേശപ്രകാരം": "On instruction from a superior",
-"വന്ന തപാലിൽ നിന്ന്": "Incoming tapal",
-"നിർദ്ദേശം നൽകിയ സീറ്റ്": "Seat that gave the instruction",
-"— തിരഞ്ഞെടുക്കുക —": "— choose —",
-"പ്രയോറിറ്റി": "Priority",
-"സാധാരണ": "Normal",
-"സമയപരിധി (ടൈം-ലിമിറ്റ് പേപ്പർ ആണെങ്കിൽ മാത്രം)": "Time limit (only for time-limit papers)",
-"ആദ്യ നോട്ട്": "First note",
-"ഫയൽ തുടങ്ങുക": "Open the file",
-"ബാക്ക് ഫയൽ ചേർക്കാൻ ഫയൽ തുടങ്ങിയ ശേഷം അതിൽ തുറന്ന്": "To add a back file, open the file after creating it and use the",
-"ഭാഗം ഉപയോഗിക്കുക.": "section.",
-"വിഷയം എഴുതുക": "Enter the subject",
-"നിർദ്ദേശം നൽകിയ സീറ്റ് തിരഞ്ഞെടുക്കുക": "Choose the seat that gave the instruction",
-"തപാൽ തിരഞ്ഞെടുക്കുക": "Choose a tapal",
-"ഫയലാക്കാനുള്ള തപാൽ ഒന്നുമില്ല.": "No tapal waiting to be filed.",
-"നിർദ്ദേശം:": "Instruction:",
-"അയച്ചത്:": "From:",
-"· കത്ത് നമ്പർ:": "· Letter no.:",
-"· കത്ത് തീയതി:": "· Letter date:",
-"· ലഭിച്ചത്:": "· Received:",
-"ഈ തപാലിൽ നിന്ന് ഫയൽ തുടങ്ങുക": "Open a file from this tapal",
-"നിലവിലുള്ള ഫയലിൽ ചേർക്കാൻ: ആ ഫയൽ തുറന്ന്": "To add it to an existing file, open that file and use",
-"വന്ന തപാൽ ചേർക്കുക": "Add incoming tapal",
-"ഉപയോഗിക്കുക.": "there.",
-"പുതിയ തപാൽ രേഖപ്പെടുത്തുക": "Record a new tapal",
-"അയച്ചയാൾ / സ്ഥാപനം": "Sender / organisation",
-"കത്ത് നമ്പർ": "Letter number",
-"കത്ത് തീയതി": "Letter date",
-"എത്തിയ രീതി": "Mode of receipt",
-"തപാൽ തുറന്നപ്പോൾ ഉദ്യോഗസ്ഥൻ നൽകിയ നിർദ്ദേശം (ഉണ്ടെങ്കിൽ)": "Instruction given by the officer when the tapal was opened (if any)",
-"ഏത് സീറ്റിലേക്ക്": "To which seat",
-"രേഖപ്പെടുത്തുക": "Record",
-"നമ്പർ": "Number",
-"ലഭിച്ചത്": "Received",
-"അയച്ചയാൾ": "Sender",
-"ഇപ്പോൾ": "Now",
-"ഫയലിൽ:": "In file:",
-"മാറ്റുക": "Change",
-"സീറ്റ് മാറ്റുന്നതിന്റെ കാരണം": "Reason for changing the seat",
-"പുതിയ ഡെസ്പാച്ച് (പുറത്തേക്ക് അയച്ചത്)": "New despatch (sent out)",
-"ലഭിക്കേണ്ടയാൾ": "Addressee",
-"അയച്ച രീതി": "Mode sent",
-"ബന്ധപ്പെട്ട ഫയൽ (ഉണ്ടെങ്കിൽ)": "Related file (if any)",
-"ഫയൽ നമ്പർ": "File number",
-"തീയതി": "Date",
-"ആർക്ക്": "To",
-"ആ ഫയൽ നമ്പർ കണ്ടെത്തിയില്ല": "That file number was not found",
-"ഫയൽ നമ്പർ / വിഷയം / നോട്ടിലെ വാക്ക്": "File number / subject / word in notes",
-"അവസ്ഥ": "Status",
-"എല്ലാം": "All",
-"ഉറവിടം": "Origin",
-"ഇപ്പോൾ കയ്യിലുള്ള സീറ്റ്": "Seat currently holding the file",
-"തുടങ്ങിയത് (മുതൽ)": "Opened (from)",
-"(വരെ)": "(to)",
-"ഫയൽ കണ്ടെത്തി": "files found",
-"ഒന്നും കണ്ടെത്തിയില്ല.": "Nothing found.",
-"എന്റെ ഇൻബോക്സിൽ (പെൻഡിംഗ്)": "In my inbox (pending)",
-"പ്രവൃത്തി ദിവസത്തിലേറെ പെൻഡിംഗ് (മാനുവൽ: 5 ദിവസത്തിനുള്ളിൽ സമർപ്പിക്കണം)": "working days or more pending (manual: submit within 5 days)",
-"സമയപരിധി കഴിഞ്ഞ ഫയലുകൾ": "Files past their time limit",
-"ഇന്നത്തെ / കഴിഞ്ഞ ഓർമ്മപ്പെടുത്തലുകൾ": "Reminders due today or earlier",
-"അടിയന്തിരം (പെൻഡിംഗ്)": "Urgent (pending)",
-"വന്ന തപാൽ (ഫയലാക്കാനുള്ളത്)": "Incoming tapal (to be filed)",
-"ഞാൻ അയച്ചത്, ഇപ്പോൾ മറ്റുള്ളവരുടെ കയ്യിൽ": "Sent by me, now with others",
-"എന്റെ വഴിയിലൂടെ തീർപ്പായവ": "Closed through my seat",
-"പേഴ്സണൽ രജിസ്റ്റർ": "Personal register",
-"(എന്റെ സീറ്റിൽ വന്നതും അയച്ചതും)": "(files that came to and left my seat)",
-"അയച്ചത്": "Sent",
-"നടപടി": "Action",
-"പ്രവൃത്തി ദിവസം": "Working days",
-"പെൻഡിംഗ്": "Pending",
-"സീറ്റ്": "Seat",
-"ഇപ്പോൾ പെൻഡിംഗ്": "Pending now",
-"വൈകിയത്": "Delayed",
-"സീറ്റുകൾ ഇല്ല": "No seats",
-"ആ മാസം രേഖപ്പെടുത്തിയ തപാൽ": "Tapal recorded that month",
-"· ഡെസ്പാച്ച്": "· Despatch",
-"ആൾ": "Person",
-"ഏറ്റവും പഴയത് (പ്രവൃത്തി ദിവസം)": "Oldest (working days)",
-"ദിവസത്തിലേറെ": "days or more",
-"സമയപരിധി കഴിഞ്ഞത്": "Past time limit",
-"ആകെ ഫയൽ": "Total files",
-"· തുറന്നത്": "· Open",
-"· തീർപ്പാക്കിയത്": "· Closed",
-"· ഫയലാക്കാത്ത തപാൽ": "· Tapal not yet filed",
-"· അടിയന്തിരം (തുറന്നത്)": "· Urgent (open)",
-"മാസ ബിസിനസ് സ്റ്റേറ്റ്മെന്റ്": "Monthly business statement",
-"(മാനുവൽ പ്രകാരം ഓരോ മാസവും 5-ന് മുമ്പ് തയ്യാറാക്കണം)": "(to be prepared before the 5th of every month, as per the manual)",
-"സിസ്റ്റം": "System",
-"അഡ്മിൻ മാറ്റങ്ങൾ": "Admin changes",
-"(ഇവ മായ്ക്കാൻ പറ്റില്ല)": "(these cannot be erased)",
-"ഫയൽ പ്രവർത്തനങ്ങൾ": "File activity",
-"(പുതിയ 300)": "(latest 300)",
-"അനുമതിക്ക് കാത്തിരിക്കുന്നു": "Waiting for approval",
-"ചീഫ് അനുവദിച്ചു — അഡ്മിൻ നടപ്പാക്കണം": "Approved by Chief — admin to execute",
-"നിരസിച്ചു": "Rejected",
-"നടപ്പാക്കി": "Executed",
-"റദ്ദാക്കി": "Cancelled",
-"പുതിയ ലോഗിൻ ഉണ്ടാക്കുക:": "Create new login:",
-"· സീറ്റ്:": "· Seat:",
-"· അനുമതികൾ:": "· Rights:",
-"പേര്:": "Name:",
-"സീറ്റ്:": "Seat:",
-"അനുമതികൾ:": "Rights:",
-"മെനു:": "Menus:",
-"അഡ്മിൻ ആക്കുക": "Make admin",
-"അഡ്മിൻ അധികാരം നീക്കുക": "Remove admin power",
-"ലോഗിൻ സജീവമാക്കുക": "Activate login",
-"ലോഗിൻ നിർത്തുക": "Stop login",
-"ജീവനക്കാരന്റെ വിവരം മാറ്റുക:": "Change user details:",
-"പാസ്‌വേഡ് റീസെറ്റ് ചെയ്യുക:": "Reset password:",
-"പുതിയ സീറ്റ്:": "New seat:",
-"· മേലധികാരി:": "· Superior:",
-"· ഏറ്റവും മുകളിൽ": "· Top level",
-"സെക്ഷൻ:": "Section:",
-"മേലധികാരി:": "Superior:",
-"ഏറ്റവും മുകളിൽ": "Top level",
-"സീറ്റ് സജീവമാക്കുക": "Activate seat",
-"സീറ്റ് നിർത്തുക": "Stop seat",
-"സീറ്റ് മാറ്റുക:": "Change seat:",
-"ചീഫ് സീറ്റ് ആക്കുക:": "Make Chief seat:",
-"ചുമതല കൈമാറ്റം:": "Delegation:",
-"ചുമതല അവസാനിപ്പിക്കുക:": "End delegation:",
-"പെൻഡിംഗ് മുന്നറിയിപ്പ് ദിവസം:": "Pending-warning working days:",
-"അവധി ദിവസം ചേർക്കുക:": "Add holiday:",
-"അവധി ദിവസം നീക്കുക:": "Remove holiday:",
-"ഫയൽ മാറ്റുക:": "Move file:",
-"അനുവദിക്കുക": "Approve",
-"നിരസിക്കുക": "Reject",
-"നടപ്പാക്കുക": "Execute",
-"അഭ്യർത്ഥന റദ്ദാക്കുക": "Cancel request",
-"കാരണം:": "Reason:",
-"നിരസിച്ചത്": "Rejected by",
-"അനുവദിച്ചത്": "Approved by",
-"നടപ്പാക്കിയത്:": "Executed by:",
-"അഭ്യർത്ഥനകൾ": "Requests",
-"ജീവനക്കാർ": "Staff",
-"സീറ്റുകൾ": "Seats",
-"ചുമതല കൈമാറ്റം": "Delegation",
-"ക്രമീകരണം": "Settings",
-"സെറ്റപ്പ് ഘട്ടം:": "Setup mode:",
-"ചീഫ് സീറ്റ് ഇതുവരെ നിശ്ചയിച്ചിട്ടില്ല. അതുവരെ അഡ്മിൻ ചെയ്യുന്ന മാറ്റങ്ങൾ ഉടൻ നടപ്പിലാകും. ആദ്യം സീറ്റുകൾ ഉണ്ടാക്കി ഏറ്റവും മുകളിലെ സീറ്റ്": "The Chief seat has not been set yet. Until then, changes made by the admin take effect immediately. First create the seats and make the top seat the",
-"ചീഫ് സീറ്റ്": "Chief seat",
-"ആക്കുക; അതിന് ശേഷം എല്ലാ മാറ്റങ്ങൾക്കും ചീഫിന്റെ അനുമതി വേണം.": "; afterwards every change needs the Chief’s approval.",
-"ചീഫ് സീറ്റ്:": "Chief seat:",
-"· എല്ലാ അഡ്മിൻ മാറ്റങ്ങൾക്കും ചീഫിന്റെ അനുമതി ആവശ്യമാണ്.": "· Every admin change needs the Chief’s approval.",
-"നിങ്ങളുടെ അനുമതിക്ക് കാത്തിരിക്കുന്നവ": "Waiting for your approval",
-"നടപ്പാക്കാനുള്ളവ (ചീഫ് അനുവദിച്ചത്)": "To execute (approved by the Chief)",
-"എല്ലാ അഭ്യർത്ഥനകളും": "All requests",
-"എന്റെ അഭ്യർത്ഥനകൾ": "My requests",
-"ഒന്നുമില്ല.": "Nothing.",
-"അഭ്യർത്ഥനയുടെ കാരണം എഴുതുക": "Write the reason for this request",
-"കാരണം നിർബന്ധമാണ്": "A reason is required",
-"മാറ്റം നടപ്പിലായി.": "The change has been applied.",
-"ചീഫ് അനുവദിച്ചു. അഡ്മിൻ നടപ്പാക്കണം.": "The Chief has approved. The admin must execute it.",
-"ചീഫിന്റെ അനുമതിക്കായി അയച്ചു.": "Sent to the Chief for approval.",
-"കുറിപ്പ് (ഐച്ഛികം)": "Note (optional)",
-"നിരസിക്കാനുള്ള കാരണം": "Reason for rejecting",
-"ഈ അഭ്യർത്ഥന റദ്ദാക്കണോ?": "Cancel this request?",
-"പുതിയ ജീവനക്കാരന് നൽകേണ്ട പാസ്‌വേഡ് (കുറഞ്ഞത് 8 അക്ഷരം). ഇത് ഒരിടത്തും സൂക്ഷിക്കില്ല; ജീവനക്കാരനോട് പറയുക.": "Password for the new staff member (at least 8 characters). It is not stored anywhere; tell it to the staff member.",
-"പുതിയ പാസ്‌വേഡ് (കുറഞ്ഞത് 8 അക്ഷരം). ഇത് ഒരിടത്തും സൂക്ഷിക്കില്ല; ജീവനക്കാരനോട് പറയുക.": "New password (at least 8 characters). It is not stored anywhere; tell it to the staff member.",
-"യൂസർ സർവീസ് (admin-user) ഇതുവരെ ഡിപ്ലോയ് ചെയ്തിട്ടില്ല, അല്ലെങ്കിൽ എത്തിച്ചേരാൻ പറ്റുന്നില്ല.": "The user service (admin-user) is not deployed yet, or cannot be reached.",
-"നടപ്പിലായി.": "Done.",
-"പുതിയ ജീവനക്കാരൻ / ലോഗിൻ": "New staff member / login",
-"ഇമെയിൽ (ലോഗിൻ ഐഡി)": "Email (login ID)",
-"പേര്": "Name",
-"— സീറ്റ് ഇല്ല —": "— No seat —",
-"അനുമതികൾ": "Rights",
-"കാണേണ്ട മെനുകൾ": "Menus to show",
-"ലോഗിൻ ഉണ്ടാക്കാൻ അഭ്യർത്ഥിക്കുക": "Request to create the login",
-"പാസ്‌വേഡ് ഇവിടെ നൽകില്ല; അനുമതി കിട്ടിയ ശേഷം അഡ്മിൻ നടപ്പാക്കുമ്പോൾ നൽകും.": "The password is not entered here; the admin enters it when executing after approval.",
-"നിങ്ങൾ": "You",
-"അഡ്മിൻ": "Admin",
-"നിർത്തി": "Stopped",
-"സീറ്റ് ഇല്ല": "No seat",
-"ലോഗിൻ സജീവം": "Login active",
-"മാറ്റം സമർപ്പിക്കുക": "Submit the change",
-"പാസ്‌വേഡ് റീസെറ്റ് ചെയ്യാൻ അഭ്യർത്ഥിക്കുക": "Request a password reset",
-"ഇമെയിലും പേരും എഴുതുക": "Enter email and name",
-"പേര് എഴുതുക": "Enter the name",
-"തുടക്കം:": "Getting started:",
-"ആദ്യം ഏറ്റവും മുകളിലെ സീറ്റ് (ഉദാ: മാനേജിംഗ് ഡയറക്ടർ) മേലധികാരി ഇല്ലാതെ ചേർക്കുക. പിന്നെ അതിന് താഴെയുള്ള സീറ്റുകൾ.": "First add the topmost seat (e.g. Managing Director) with no superior. Then add the seats below it.",
-"സീറ്റിന്റെ പേര് (തസ്തിക)": "Seat name (designation)",
-"സെക്ഷൻ (ഐച്ഛികം)": "Section (optional)",
-"മേലധികാരി സീറ്റ്": "Superior seat",
-"— ഏറ്റവും മുകളിൽ —": "— Top level —",
-"ചേർക്കാൻ അഭ്യർത്ഥിക്കുക": "Request to add",
-"സെക്ഷൻ": "Section",
-"സജീവം": "Active",
-"ചീഫ് സീറ്റ് ആക്കാൻ അഭ്യർത്ഥിക്കുക": "Request to make this the Chief seat",
-"ആരുമില്ലാത്ത സീറ്റുകൾ:": "Seats with nobody:",
-"ഫയൽ)": "files)",
-"ഇവിടെയുള്ള ഫയലുകൾ കാത്തിരിക്കും. താഴെ ചുമതല നൽകാൻ അഭ്യർത്ഥിക്കുക.": "Files there will wait. Request a delegation below.",
-"(ഒരാൾ ലീവിലാണെങ്കിൽ അദ്ദേഹത്തിന്റെ സീറ്റിന്റെ അധികാരം മറ്റൊരാൾക്ക്, തീയതി വരെ)": "(when someone is on leave, give their seat’s powers to another person until a date)",
-"ചുമതല ഏൽക്കുന്ന ആൾ": "Person taking over",
-"മുതൽ": "From",
-"വരെ (ഒഴിച്ചിട്ടാൽ അവസാനിപ്പിക്കുന്നത് വരെ)": "To (leave blank to continue until ended)",
-"കാരണം": "Reason",
-"ഉദാ: ലീവ്": "e.g. leave",
-"ചുമതല നൽകാൻ അഭ്യർത്ഥിക്കുക": "Request the delegation",
-"നിലവിലെ / മുൻ ചുമതലകൾ": "Current / past delegations",
-"കാലയളവ്": "Period",
-"അവസാനിപ്പിച്ചു": "Ended",
-"അവസാനിപ്പിക്കാൻ അഭ്യർത്ഥിക്കുക": "Request to end",
-"വരാനുള്ളത്": "Upcoming",
-"സീറ്റും ആളും തിരഞ്ഞെടുക്കുക": "Choose the seat and the person",
-"മുന്നറിയിപ്പിനുള്ള പ്രവൃത്തി ദിവസം (മാനുവൽ: 5)": "warning: working days (manual: 5)",
-"മാറ്റാൻ അഭ്യർത്ഥിക്കുക": "Request the change",
-"അവധി ദിവസങ്ങൾ": "Holidays",
-"(ഞായർ സ്വയം ഒഴിവാകും; മറ്റ് അവധികൾ ഇവിടെ ചേർക്കുക)": "(Sundays are excluded automatically; add other holidays here)",
-"നീക്കാൻ അഭ്യർത്ഥിക്കുക": "Request removal",
-"ഒന്നും ചേർത്തിട്ടില്ല": "Nothing added",
-"പഴയ ഘടനയിൽ ഫയലുകൾ ഉണ്ട്. ഈ സ്ക്രിപ്റ്റ് ഓടിക്കരുത്.": "Files exist in the old structure. Do not run this script.",
-"ഈ രേഖ മാറ്റാനോ മായ്ക്കാനോ പറ്റില്ല": "This record cannot be changed or erased",
-"ഫയലിന്റെ അടിസ്ഥാന വിവരങ്ങൾ മാറ്റാൻ പറ്റില്ല": "The basic details of a file cannot be changed",
-"തീർപ്പാക്കിയ ഫയൽ മാറ്റാൻ പറ്റില്ല": "A closed file cannot be changed",
-"ഒരു സീറ്റ് സ്വയം മേലധികാരിയാകാൻ പറ്റില്ല": "A seat cannot be its own superior",
-"മേലധികാരി സീറ്റ് സജീവമല്ല": "The superior seat is not active",
-"ഹയറാർക്കിയിൽ വട്ടം (loop) ഉണ്ടാകും": "This would create a loop in the hierarchy",
-"ഹയറാർക്കി വളരെ ആഴമുള്ളതാണ്": "The hierarchy is too deep",
-"ഈ സീറ്റിൽ തുറന്ന ഫയലുകൾ ഉണ്ട്. ആദ്യം അവ മാറ്റി നൽകുക": "This seat has open files. Move them first",
-"ഈ സീറ്റിന് കീഴിൽ സജീവ സീറ്റുകൾ ഉണ്ട്. ആദ്യം അവയുടെ മേലധികാരിയെ മാറ്റുക": "Active seats exist under this seat. Change their superior first",
-"സ്വന്തം അഡ്മിൻ അധികാരമോ ലോഗിനോ നിർത്താൻ പറ്റില്ല": "You cannot stop your own admin power or login",
-"ഒരു അഡ്മിനെങ്കിലും ഉണ്ടായിരിക്കണം": "At least one admin must remain",
-"സീറ്റ് സജീവമല്ല": "The seat is not active",
-"ജീവനക്കാരന്റെ ലോഗിൻ സജീവമല്ല": "The staff member’s login is not active",
-"ചുമതലയുടെ സീറ്റ്, ആൾ, തുടക്കം എന്നിവ മാറ്റാൻ പറ്റില്ല; അവസാനിപ്പിച്ച് പുതിയത് ഉണ്ടാക്കുക": "The seat, person and start of a delegation cannot be changed; end it and create a new one",
-"ഈ സീറ്റിൽ പ്രവർത്തിക്കാൻ നിങ്ങൾക്ക് അനുമതിയില്ല": "You are not allowed to act in this seat",
-"ഈ ഫയൽ ഈ സീറ്റിന്റെ കയ്യിലല്ല": "This file is not with this seat",
-"ഫയൽ തുടങ്ങാൻ അനുമതിയില്ല": "You are not allowed to open files",
-"ഈ സീറ്റിൽ പ്രവർത്തിക്കാൻ അനുമതിയില്ല": "You are not allowed to act in this seat",
-"ഈ തപാൽ നിങ്ങളുടെ സീറ്റിലേക്കുള്ളതല്ല": "This tapal is not addressed to your seat",
-"ഈ തപാൽ ഇതിനകം ഫയലിൽ ചേർത്തു": "This tapal has already been added to a file",
-"നിർദ്ദേശം നൽകുന്ന സീറ്റ് നിങ്ങളുടെ മേലധികാരി നിരയിൽ ഉള്ളതായിരിക്കണം": "The seat giving the instruction must be among your superiors",
-"തെറ്റായ ഉറവിടം": "Invalid origin",
-"ഫോർവേഡ് ചെയ്യാൻ മേലധികാരി സീറ്റ് ഇല്ല": "There is no superior seat to forward to",
-"തിരിച്ചയക്കാൻ ആരുമില്ല": "There is nobody to return it to",
-"കാരണം നോട്ടിൽ എഴുതുക": "Write the reason in the note",
-"ഫയൽ തുടങ്ങിയ സീറ്റിനോ ഏറ്റവും മുകളിലെ സീറ്റിനോ മാത്രമേ തീർപ്പാക്കാൻ പറ്റൂ": "Only the seat that opened the file, or the topmost seat, can close it",
-"മേലധികാരിക്ക് അയച്ച് അനുമതി വാങ്ങാതെ തീർപ്പാക്കാൻ പറ്റില്ല": "A file cannot be closed without sending it to the superior for approval",
-"തെറ്റായ തരം": "Invalid type",
-"ഫയൽ കണ്ടെത്തിയില്ല": "File not found",
-"ആ ഫയൽ കാണാൻ നിങ്ങൾക്ക് അനുമതിയില്ല": "You are not allowed to see that file",
-"അഡ്മിന് മാത്രം": "Admin only",
-"കാരണം എഴുതുക": "Write the reason",
-"ഫയൽ തുറന്നതല്ല": "The file is not open",
-"സീറ്റ് ലഭ്യമല്ല": "Seat not available",
-"ഫയൽ ഇപ്പോൾ തന്നെ ആ സീറ്റിലാണ്": "The file is already in that seat",
-"തപാൽ രേഖപ്പെടുത്താൻ അനുമതിയില്ല": "You are not allowed to record tapal",
-"അയച്ചയാളും വിഷയവും എഴുതുക": "Enter the sender and the subject",
-"അനുമതിയില്ല": "Not allowed",
-"തപാൽ കണ്ടെത്തിയില്ല": "Tapal not found",
-"ഡെസ്പാച്ച് രേഖപ്പെടുത്താൻ അനുമതിയില്ല": "You are not allowed to record despatch",
-"ലഭിക്കേണ്ടയാളും വിഷയവും എഴുതുക": "Enter the addressee and the subject",
-"ഓർമ്മപ്പെടുത്തൽ മാറ്റാൻ പറ്റില്ല": "A reminder cannot be changed",
-"ഭാവിയിലെ തീയതി നൽകുക": "Enter a future date",
-"ലൈ-ഓവർ 3 മാസത്തിൽ കൂടാൻ പാടില്ല": "Lie-over cannot exceed 3 months",
-"ഓർമ്മപ്പെടുത്തൽ കണ്ടെത്തിയില്ല": "Reminder not found",
-" ന്റെ കയ്യിലാണ്. നിങ്ങൾക്ക് കാണാൻ മാത്രം പറ്റും.": ". You can only view it.",
-"തപാൽ വഴി": "By post",
-"ബാക്ക് ഫയൽ: ": "Back file: ",
-"ബന്ധിപ്പിച്ച ഫയൽ: ": "Linked file: ",
-"തപാൽ ചേർത്തു: ": "Tapal added: ",
-"ഡെസ്പാച്ച്: ": "Despatch: ",
-"ഓർമ്മപ്പെടുത്തൽ: ": "Reminder: ",
-"കോൾ ബുക്ക്: ": "Call book: ",
-"ലൈ-ഓവർ: ": "Lie-over: "
-};/*DICT_END*/
+/*DICT_START*/const DICT={"R — സ്ഥിരമായി സൂക്ഷിക്കുക": "R — Retain permanently", "D — 10 വർഷത്തിന് ശേഷം നശിപ്പിക്കുക": "D — Destroy after 10 years", "K — 3 വർഷത്തിന് ശേഷം നശിപ്പിക്കുക": "K — Keep, destroy after 3 years", "L — 1 വർഷത്തിന് ശേഷം നശിപ്പിക്കുക": "L — Lodge, destroy after 1 year", "ഓർമ്മപ്പെടുത്തൽ": "Reminder", "കോൾ ബുക്ക്": "Call book", "ലൈ-ഓവർ": "Lie-over", "ഓഫീസ്": "Office", "നിർദ്ദേശപ്രകാരം": "On instruction", "തപാലിൽ നിന്ന്": "From tapal", "ഫയൽ തുടങ്ങി": "File opened", "ഫോർവേഡ്": "Forwarded", "തിരിച്ചയച്ചു": "Returned", "തീർപ്പാക്കി": "Closed", "അഡ്മിൻ മാറ്റി നൽകി": "Moved by admin", "ബന്ധിപ്പിച്ചു": "Linked", "തപാൽ ചേർത്തു": "Tapal added", "ഡെസ്പാച്ച്": "Despatch", "തപാൽ": "Tapal", "കൊറിയർ": "Courier", "നേരിട്ട്": "By hand", "ഇമെയിൽ": "Email", "ഫയൽ തുടങ്ങാം": "Can open files", "തപാൽ രജിസ്റ്റർ": "Tapal register", "ഡെസ്പാച്ച് രജിസ്റ്റർ": "Despatch register", "എല്ലാ ഫയലും കാണാം (വായന മാത്രം)": "Can view all files (read-only)", "അഡ്മിനിസ്ട്രേഷൻ അഭ്യർത്ഥന നൽകാം": "Can raise administration requests", "ഇൻബോക്സ്": "Inbox", "വന്ന തപാൽ": "Incoming tapal", "പുതിയ ഫയൽ": "New file", "ഞാൻ കൈകാര്യം ചെയ്തവ": "Handled by me", "തിരയുക": "Search", "എന്റെ റിപ്പോർട്ട്": "My report", "റെക്കോർഡ്സ്": "Records", "ആരുമില്ല": "Nobody", "ഈ ലോഗിൻ പ്രവർത്തനക്ഷമമല്ല. അഡ്മിനെ സമീപിക്കുക.": "This login is not active. Please contact the admin.", "ഇമെയിൽ അല്ലെങ്കിൽ പാസ്‌വേഡ് ശരിയല്ല.": "Incorrect email or password.", "ഇൻബോക്സ് (": "Inbox (", "ഓർമ്മപ്പെടുത്തൽ (": "Reminders (", "വന്ന തപാൽ (": "Incoming tapal (", "എല്ലാ ഫയലുകളും": "All files", "സ്ഥാപന റിപ്പോർട്ട്": "Organisation report", "അഡ്മിനിസ്ട്രേഷൻ": "Administration", "ഓഡിറ്റ്": "Audit", "📁 Anatech · ഇ-ഫയൽ": "📁 Anatech · e-File", "പാസ്‌വേഡ്": "Password", "ലോഗിൻ": "Log in", "ലോഗിൻ ലഭിക്കാൻ അഡ്മിനെ സമീപിക്കുക.": "Contact the admin to get a login.", "· അഡ്മിൻ": "· Admin", "· ചീഫ്": "· Chief", "പാസ്‌വേഡ് മാറ്റുക": "Change password", "പുതുക്കുക": "Refresh", "ലോഗൗട്ട്": "Log out", "ഫയൽ കണ്ടെത്തിയില്ല.": "File not found.", "ഇൻബോക്സ് ശൂന്യമാണ്.": "Your inbox is empty.", "ഒന്നും ഇല്ല.": "Nothing here.", "ഫയലുകൾ ഒന്നും ഇല്ല.": "No files.", "പുതിയ പാസ്‌വേഡ് (കുറഞ്ഞത് 8 അക്ഷരം)": "New password (at least 8 characters)", "പാസ്‌വേഡിന് കുറഞ്ഞത് 8 അക്ഷരം വേണം": "Password must be at least 8 characters", "പാസ്‌വേഡ് ഒന്നുകൂടി നൽകുക": "Enter the password again", "പാസ്‌വേഡുകൾ ഒത്തുപോകുന്നില്ല": "The passwords do not match", "പാസ്‌വേഡ് മാറ്റി.": "Password changed.", "അടിയന്തിരം": "Urgent", "സമയപരിധി": "Time limit", "— കഴിഞ്ഞു": "— overdue", "തീർപ്പാക്കി (": "Closed (", "തുറന്നത്": "Open", "ഇപ്പോൾ:": "With:", "പ്രവൃത്തി ദിവസമായി": "working days", "ബാക്ക് ഫയൽ": "Back file", "ബന്ധിപ്പിച്ചത്": "Linked", "നിങ്ങളുടെ നടപടി": "Your action", "(സീറ്റ്:": "(Seat:", "നോട്ട്": "Note", "ഫോർവേഡ് →": "Forward →", "മേലധികാരി സീറ്റ് സജീവമല്ല. അഡ്മിനെ അറിയിക്കുക.": "The superior seat is not active. Inform the admin.", "തിരിച്ചയക്കുക ←": "Return ←", "ആ സീറ്റിൽ ഇപ്പോൾ ആരുമില്ല. ഫയൽ അവിടെ കാത്തിരിക്കും; അഡ്മിൻ ചുമതല നൽകണം.": "Nobody is in that seat now. The file will wait there; the admin must assign someone.", "തീർപ്പാക്കുക": "Close the file", "ഡിസ്‌പോസൽ വിഭാഗം": "Disposal category", "നടപടി പൂർത്തിയായി, തീർപ്പാക്കുക": "Action completed, close the file", "അനുമതി നൽകി തീർപ്പാക്കുക": "Approve and close the file", "ബാക്ക് ഫയൽ / ബന്ധിപ്പിക്കൽ": "Back file / linking", "ഫയൽ നമ്പർ (ഉദാ: ANA/2026/001)": "File number (e.g. ANA/2026/001)", "ബന്ധിപ്പിക്കുക": "Link", "ചേർക്കുക": "Add", "ഓർമ്മപ്പെടുത്തൽ / കോൾ ബുക്ക് / ലൈ-ഓവർ": "Reminder / Call book / Lie-over", "കുറിപ്പ്": "Note", "കോൾ ബുക്ക്: ആ തീയതി വരെ ഫയൽ ഇൻബോക്സിൽ നിന്ന് മാറി നിൽക്കും. ലൈ-ഓവർ പരമാവധി 3 മാസം.": "Call book: the file stays out of your inbox until that date. Lie-over: maximum 3 months.", "വന്ന തപാൽ ഈ ഫയലിൽ ചേർക്കുക": "Add incoming tapal to this file", "ഈ ഫയൽ ഇപ്പോൾ": "This file is currently with", "ഫയൽ മറ്റൊരു സീറ്റിലേക്ക് മാറ്റാൻ അഭ്യർത്ഥന": "Request to move this file to another seat", "ഇതിന് ചീഫിന്റെ അനുമതി വേണം.": "This needs the Chief’s approval.", "പുതിയ സീറ്റ്": "New seat", "ഫയൽ നോട്ടിൽ ചേർക്കേണ്ട കാരണം": "Reason to record in the file note", "അഭ്യർത്ഥന നൽകുക": "Raise request", "← തിരികെ": "← Back", "ഉറവിടം:": "Origin:", "ഇപ്പോൾ കയ്യിൽ:": "Now with:", "തീർപ്പാക്കിയത്:": "Closed:", "വഴി:": "Route:", "(കഴിഞ്ഞു)": "(done)", "നോട്ട് ഫയൽ / ചലന രേഖ": "Note file / movement record", "തിരിച്ചയക്കുമ്പോൾ കാരണം നോട്ടിൽ എഴുതുക": "Write the reason in the note when returning a file", "ഡിസ്‌പോസൽ വിഭാഗം (R / D / K / L) തിരഞ്ഞെടുക്കുക": "Choose a disposal category (R / D / K / L)", "ഫയൽ തീർപ്പാക്കിയാൽ പിന്നീട് മാറ്റാൻ പറ്റില്ല. തുടരട്ടെ?": "A closed file cannot be changed later. Continue?", "ആ നമ്പറിൽ നിങ്ങൾക്ക് കാണാവുന്ന ഫയൽ ഇല്ല": "No file with that number is visible to you", "തീയതി തിരഞ്ഞെടുക്കുക": "Choose a date", "കഴിഞ്ഞു": "Overdue", "ഇന്ന്": "Today", "ചെയ്തു": "Done", "ഓർമ്മപ്പെടുത്തലുകൾ ഒന്നുമില്ല.": "No reminders.", "കോൾ ബുക്കിലുള്ള ഫയലുകൾ": "Files in the call book", "(തീയതിയാകുമ്പോൾ ഇൻബോക്സിൽ തിരിച്ചെത്തും)": "(they return to your inbox when the date arrives)", "തീർപ്പാക്കിയ ഫയലുകളുടെ റെക്കോർഡ് (ഓഫീസ് മാനുവൽ അനുസരിച്ചുള്ള സൂക്ഷിപ്പ് കാലാവധി). ഫയൽ നശിപ്പിക്കുന്നത് സ്വയം നടക്കില്ല; സമയമായവയെ അടയാളപ്പെടുത്തുക മാത്രം ചെയ്യും.": "Record of closed files with the retention period from the office manual. Files are not destroyed automatically; those that are due are only marked.", "ഫയൽ": "File", "വിഷയം": "Subject", "ഡിസ്‌പോസൽ": "Disposal", "തീർപ്പാക്കിയത്": "Closed on", "നശിപ്പിക്കാവുന്നത്": "Can be destroyed on", "സമയമായി": "Due now", "സ്ഥിരം": "Permanent", "ഒന്നുമില്ല": "Nothing", "സീറ്റും കാരണവും നൽകുക": "Give the seat and a reason", "ഫയൽ തുടങ്ങാൻ നിങ്ങൾക്ക് അനുമതിയില്ല.": "You do not have permission to open files.", "ഏത് സീറ്റിൽ നിന്ന്": "From which seat", "ഫയൽ തുടങ്ങുന്നത്": "File originates from", "ഓഫീസ് ആവശ്യത്തിന് (സ്വന്തം)": "Office need (own)", "മേലധികാരിയുടെ നിർദ്ദേശപ്രകാരം": "On instruction from a superior", "വന്ന തപാലിൽ നിന്ന്": "Incoming tapal", "നിർദ്ദേശം നൽകിയ സീറ്റ്": "Seat that gave the instruction", "— തിരഞ്ഞെടുക്കുക —": "— choose —", "പ്രയോറിറ്റി": "Priority", "സാധാരണ": "Normal", "സമയപരിധി (ടൈം-ലിമിറ്റ് പേപ്പർ ആണെങ്കിൽ മാത്രം)": "Time limit (only for time-limit papers)", "ആദ്യ നോട്ട്": "First note", "ഫയൽ തുടങ്ങുക": "Open the file", "ബാക്ക് ഫയൽ ചേർക്കാൻ ഫയൽ തുടങ്ങിയ ശേഷം അതിൽ തുറന്ന്": "To add a back file, open the file after creating it and use the", "ഭാഗം ഉപയോഗിക്കുക.": "section.", "വിഷയം എഴുതുക": "Enter the subject", "നിർദ്ദേശം നൽകിയ സീറ്റ് തിരഞ്ഞെടുക്കുക": "Choose the seat that gave the instruction", "തപാൽ തിരഞ്ഞെടുക്കുക": "Choose a tapal", "ഫയലാക്കാനുള്ള തപാൽ ഒന്നുമില്ല.": "No tapal waiting to be filed.", "നിർദ്ദേശം:": "Instruction:", "അയച്ചത്:": "From:", "· കത്ത് നമ്പർ:": "· Letter no.:", "· കത്ത് തീയതി:": "· Letter date:", "· ലഭിച്ചത്:": "· Received:", "ഈ തപാലിൽ നിന്ന് ഫയൽ തുടങ്ങുക": "Open a file from this tapal", "നിലവിലുള്ള ഫയലിൽ ചേർക്കാൻ: ആ ഫയൽ തുറന്ന്": "To add it to an existing file, open that file and use", "വന്ന തപാൽ ചേർക്കുക": "Add incoming tapal", "ഉപയോഗിക്കുക.": "there.", "പുതിയ തപാൽ രേഖപ്പെടുത്തുക": "Record a new tapal", "അയച്ചയാൾ / സ്ഥാപനം": "Sender / organisation", "കത്ത് നമ്പർ": "Letter number", "കത്ത് തീയതി": "Letter date", "എത്തിയ രീതി": "Mode of receipt", "തപാൽ തുറന്നപ്പോൾ ഉദ്യോഗസ്ഥൻ നൽകിയ നിർദ്ദേശം (ഉണ്ടെങ്കിൽ)": "Instruction given by the officer when the tapal was opened (if any)", "ഏത് സീറ്റിലേക്ക്": "To which seat", "രേഖപ്പെടുത്തുക": "Record", "നമ്പർ": "Number", "ലഭിച്ചത്": "Received", "അയച്ചയാൾ": "Sender", "ഇപ്പോൾ": "Now", "ഫയലിൽ:": "In file:", "മാറ്റുക": "Change", "സീറ്റ് മാറ്റുന്നതിന്റെ കാരണം": "Reason for changing the seat", "പുതിയ ഡെസ്പാച്ച് (പുറത്തേക്ക് അയച്ചത്)": "New despatch (sent out)", "ലഭിക്കേണ്ടയാൾ": "Addressee", "അയച്ച രീതി": "Mode sent", "ബന്ധപ്പെട്ട ഫയൽ (ഉണ്ടെങ്കിൽ)": "Related file (if any)", "ഫയൽ നമ്പർ": "File number", "തീയതി": "Date", "ആർക്ക്": "To", "ആ ഫയൽ നമ്പർ കണ്ടെത്തിയില്ല": "That file number was not found", "ഫയൽ നമ്പർ / വിഷയം / നോട്ടിലെ വാക്ക്": "File number / subject / word in notes", "അവസ്ഥ": "Status", "എല്ലാം": "All", "ഉറവിടം": "Origin", "ഇപ്പോൾ കയ്യിലുള്ള സീറ്റ്": "Seat currently holding the file", "തുടങ്ങിയത് (മുതൽ)": "Opened (from)", "(വരെ)": "(to)", "ഫയൽ കണ്ടെത്തി": "files found", "ഒന്നും കണ്ടെത്തിയില്ല.": "Nothing found.", "എന്റെ ഇൻബോക്സിൽ (പെൻഡിംഗ്)": "In my inbox (pending)", "പ്രവൃത്തി ദിവസത്തിലേറെ പെൻഡിംഗ് (മാനുവൽ: 5 ദിവസത്തിനുള്ളിൽ സമർപ്പിക്കണം)": "working days or more pending (manual: submit within 5 days)", "സമയപരിധി കഴിഞ്ഞ ഫയലുകൾ": "Files past their time limit", "ഇന്നത്തെ / കഴിഞ്ഞ ഓർമ്മപ്പെടുത്തലുകൾ": "Reminders due today or earlier", "അടിയന്തിരം (പെൻഡിംഗ്)": "Urgent (pending)", "വന്ന തപാൽ (ഫയലാക്കാനുള്ളത്)": "Incoming tapal (to be filed)", "ഞാൻ അയച്ചത്, ഇപ്പോൾ മറ്റുള്ളവരുടെ കയ്യിൽ": "Sent by me, now with others", "എന്റെ വഴിയിലൂടെ തീർപ്പായവ": "Closed through my seat", "പേഴ്സണൽ രജിസ്റ്റർ": "Personal register", "(എന്റെ സീറ്റിൽ വന്നതും അയച്ചതും)": "(files that came to and left my seat)", "അയച്ചത്": "Sent", "നടപടി": "Action", "പ്രവൃത്തി ദിവസം": "Working days", "പെൻഡിംഗ്": "Pending", "സീറ്റ്": "Seat", "ഇപ്പോൾ പെൻഡിംഗ്": "Pending now", "വൈകിയത്": "Delayed", "സീറ്റുകൾ ഇല്ല": "No seats", "ആ മാസം രേഖപ്പെടുത്തിയ തപാൽ": "Tapal recorded that month", "· ഡെസ്പാച്ച്": "· Despatch", "ആൾ": "Person", "ഏറ്റവും പഴയത് (പ്രവൃത്തി ദിവസം)": "Oldest (working days)", "ദിവസത്തിലേറെ": "days or more", "സമയപരിധി കഴിഞ്ഞത്": "Past time limit", "ആകെ ഫയൽ": "Total files", "· തുറന്നത്": "· Open", "· തീർപ്പാക്കിയത്": "· Closed", "· ഫയലാക്കാത്ത തപാൽ": "· Tapal not yet filed", "· അടിയന്തിരം (തുറന്നത്)": "· Urgent (open)", "മാസ ബിസിനസ് സ്റ്റേറ്റ്മെന്റ്": "Monthly business statement", "(മാനുവൽ പ്രകാരം ഓരോ മാസവും 5-ന് മുമ്പ് തയ്യാറാക്കണം)": "(to be prepared before the 5th of every month, as per the manual)", "സിസ്റ്റം": "System", "അഡ്മിൻ മാറ്റങ്ങൾ": "Admin changes", "(ഇവ മായ്ക്കാൻ പറ്റില്ല)": "(these cannot be erased)", "ഫയൽ പ്രവർത്തനങ്ങൾ": "File activity", "(പുതിയ 300)": "(latest 300)", "അനുമതിക്ക് കാത്തിരിക്കുന്നു": "Waiting for approval", "ചീഫ് അനുവദിച്ചു — അഡ്മിൻ നടപ്പാക്കണം": "Approved by Chief — admin to execute", "നിരസിച്ചു": "Rejected", "നടപ്പാക്കി": "Executed", "റദ്ദാക്കി": "Cancelled", "പുതിയ ലോഗിൻ ഉണ്ടാക്കുക:": "Create new login:", "· സീറ്റ്:": "· Seat:", "· അനുമതികൾ:": "· Rights:", "പേര്:": "Name:", "സീറ്റ്:": "Seat:", "അനുമതികൾ:": "Rights:", "മെനു:": "Menus:", "അഡ്മിൻ ആക്കുക": "Make admin", "അഡ്മിൻ അധികാരം നീക്കുക": "Remove admin power", "ലോഗിൻ സജീവമാക്കുക": "Activate login", "ലോഗിൻ നിർത്തുക": "Stop login", "ജീവനക്കാരന്റെ വിവരം മാറ്റുക:": "Change user details:", "പാസ്‌വേഡ് റീസെറ്റ് ചെയ്യുക:": "Reset password:", "പുതിയ സീറ്റ്:": "New seat:", "· മേലധികാരി:": "· Superior:", "· ഏറ്റവും മുകളിൽ": "· Top level", "സെക്ഷൻ:": "Section:", "മേലധികാരി:": "Superior:", "ഏറ്റവും മുകളിൽ": "Top level", "സീറ്റ് സജീവമാക്കുക": "Activate seat", "സീറ്റ് നിർത്തുക": "Stop seat", "സീറ്റ് മാറ്റുക:": "Change seat:", "ചീഫ് സീറ്റ് ആക്കുക:": "Make Chief seat:", "ചുമതല കൈമാറ്റം:": "Delegation:", "ചുമതല അവസാനിപ്പിക്കുക:": "End delegation:", "പെൻഡിംഗ് മുന്നറിയിപ്പ് ദിവസം:": "Pending-warning working days:", "അവധി ദിവസം ചേർക്കുക:": "Add holiday:", "അവധി ദിവസം നീക്കുക:": "Remove holiday:", "ഫയൽ മാറ്റുക:": "Move file:", "അനുവദിക്കുക": "Approve", "നിരസിക്കുക": "Reject", "നടപ്പാക്കുക": "Execute", "അഭ്യർത്ഥന റദ്ദാക്കുക": "Cancel request", "കാരണം:": "Reason:", "നിരസിച്ചത്": "Rejected by", "അനുവദിച്ചത്": "Approved by", "നടപ്പാക്കിയത്:": "Executed by:", "അഭ്യർത്ഥനകൾ": "Requests", "ജീവനക്കാർ": "Staff", "സീറ്റുകൾ": "Seats", "ചുമതല കൈമാറ്റം": "Delegation", "ക്രമീകരണം": "Settings", "സെറ്റപ്പ് ഘട്ടം:": "Setup mode:", "ചീഫ് സീറ്റ് ഇതുവരെ നിശ്ചയിച്ചിട്ടില്ല. അതുവരെ അഡ്മിൻ ചെയ്യുന്ന മാറ്റങ്ങൾ ഉടൻ നടപ്പിലാകും. ആദ്യം സീറ്റുകൾ ഉണ്ടാക്കി ഏറ്റവും മുകളിലെ സീറ്റ്": "The Chief seat has not been set yet. Until then, changes made by the admin take effect immediately. First create the seats and make the top seat the", "ചീഫ് സീറ്റ്": "Chief seat", "ആക്കുക; അതിന് ശേഷം എല്ലാ മാറ്റങ്ങൾക്കും ചീഫിന്റെ അനുമതി വേണം.": "; afterwards every change needs the Chief’s approval.", "ചീഫ് സീറ്റ്:": "Chief seat:", "· എല്ലാ അഡ്മിൻ മാറ്റങ്ങൾക്കും ചീഫിന്റെ അനുമതി ആവശ്യമാണ്.": "· Every admin change needs the Chief’s approval.", "നിങ്ങളുടെ അനുമതിക്ക് കാത്തിരിക്കുന്നവ": "Waiting for your approval", "നടപ്പാക്കാനുള്ളവ (ചീഫ് അനുവദിച്ചത്)": "To execute (approved by the Chief)", "എല്ലാ അഭ്യർത്ഥനകളും": "All requests", "എന്റെ അഭ്യർത്ഥനകൾ": "My requests", "ഒന്നുമില്ല.": "Nothing.", "അഭ്യർത്ഥനയുടെ കാരണം എഴുതുക": "Write the reason for this request", "കാരണം നിർബന്ധമാണ്": "A reason is required", "മാറ്റം നടപ്പിലായി.": "The change has been applied.", "ചീഫ് അനുവദിച്ചു. അഡ്മിൻ നടപ്പാക്കണം.": "The Chief has approved. The admin must execute it.", "ചീഫിന്റെ അനുമതിക്കായി അയച്ചു.": "Sent to the Chief for approval.", "കുറിപ്പ് (ഐച്ഛികം)": "Note (optional)", "നിരസിക്കാനുള്ള കാരണം": "Reason for rejecting", "ഈ അഭ്യർത്ഥന റദ്ദാക്കണോ?": "Cancel this request?", "പുതിയ ജീവനക്കാരന് നൽകേണ്ട പാസ്‌വേഡ് (കുറഞ്ഞത് 8 അക്ഷരം). ഇത് ഒരിടത്തും സൂക്ഷിക്കില്ല; ജീവനക്കാരനോട് പറയുക.": "Password for the new staff member (at least 8 characters). It is not stored anywhere; tell it to the staff member.", "പുതിയ പാസ്‌വേഡ് (കുറഞ്ഞത് 8 അക്ഷരം). ഇത് ഒരിടത്തും സൂക്ഷിക്കില്ല; ജീവനക്കാരനോട് പറയുക.": "New password (at least 8 characters). It is not stored anywhere; tell it to the staff member.", "യൂസർ സർവീസ് (admin-user) ഇതുവരെ ഡിപ്ലോയ് ചെയ്തിട്ടില്ല, അല്ലെങ്കിൽ എത്തിച്ചേരാൻ പറ്റുന്നില്ല.": "The user service (admin-user) is not deployed yet, or cannot be reached.", "നടപ്പിലായി.": "Done.", "പുതിയ ജീവനക്കാരൻ / ലോഗിൻ": "New staff member / login", "ഇമെയിൽ (ലോഗിൻ ഐഡി)": "Email (login ID)", "പേര്": "Name", "— സീറ്റ് ഇല്ല —": "— No seat —", "അനുമതികൾ": "Rights", "കാണേണ്ട മെനുകൾ": "Menus to show", "ലോഗിൻ ഉണ്ടാക്കാൻ അഭ്യർത്ഥിക്കുക": "Request to create the login", "പാസ്‌വേഡ് ഇവിടെ നൽകില്ല; അനുമതി കിട്ടിയ ശേഷം അഡ്മിൻ നടപ്പാക്കുമ്പോൾ നൽകും.": "The password is not entered here; the admin enters it when executing after approval.", "നിങ്ങൾ": "You", "അഡ്മിൻ": "Admin", "നിർത്തി": "Stopped", "സീറ്റ് ഇല്ല": "No seat", "ലോഗിൻ സജീവം": "Login active", "മാറ്റം സമർപ്പിക്കുക": "Submit the change", "പാസ്‌വേഡ് റീസെറ്റ് ചെയ്യാൻ അഭ്യർത്ഥിക്കുക": "Request a password reset", "ഇമെയിലും പേരും എഴുതുക": "Enter email and name", "പേര് എഴുതുക": "Enter the name", "തുടക്കം:": "Getting started:", "ആദ്യം ഏറ്റവും മുകളിലെ സീറ്റ് (ഉദാ: മാനേജിംഗ് ഡയറക്ടർ) മേലധികാരി ഇല്ലാതെ ചേർക്കുക. പിന്നെ അതിന് താഴെയുള്ള സീറ്റുകൾ.": "First add the topmost seat (e.g. Managing Director) with no superior. Then add the seats below it.", "സീറ്റിന്റെ പേര് (തസ്തിക)": "Seat name (designation)", "സെക്ഷൻ (ഐച്ഛികം)": "Section (optional)", "മേലധികാരി സീറ്റ്": "Superior seat", "— ഏറ്റവും മുകളിൽ —": "— Top level —", "ചേർക്കാൻ അഭ്യർത്ഥിക്കുക": "Request to add", "സെക്ഷൻ": "Section", "സജീവം": "Active", "ചീഫ് സീറ്റ് ആക്കാൻ അഭ്യർത്ഥിക്കുക": "Request to make this the Chief seat", "ആരുമില്ലാത്ത സീറ്റുകൾ:": "Seats with nobody:", "ഫയൽ)": "files)", "ഇവിടെയുള്ള ഫയലുകൾ കാത്തിരിക്കും. താഴെ ചുമതല നൽകാൻ അഭ്യർത്ഥിക്കുക.": "Files there will wait. Request a delegation below.", "(ഒരാൾ ലീവിലാണെങ്കിൽ അദ്ദേഹത്തിന്റെ സീറ്റിന്റെ അധികാരം മറ്റൊരാൾക്ക്, തീയതി വരെ)": "(when someone is on leave, give their seat’s powers to another person until a date)", "ചുമതല ഏൽക്കുന്ന ആൾ": "Person taking over", "മുതൽ": "From", "വരെ (ഒഴിച്ചിട്ടാൽ അവസാനിപ്പിക്കുന്നത് വരെ)": "To (leave blank to continue until ended)", "കാരണം": "Reason", "ഉദാ: ലീവ്": "e.g. leave", "ചുമതല നൽകാൻ അഭ്യർത്ഥിക്കുക": "Request the delegation", "നിലവിലെ / മുൻ ചുമതലകൾ": "Current / past delegations", "കാലയളവ്": "Period", "അവസാനിപ്പിച്ചു": "Ended", "അവസാനിപ്പിക്കാൻ അഭ്യർത്ഥിക്കുക": "Request to end", "വരാനുള്ളത്": "Upcoming", "സീറ്റും ആളും തിരഞ്ഞെടുക്കുക": "Choose the seat and the person", "മുന്നറിയിപ്പിനുള്ള പ്രവൃത്തി ദിവസം (മാനുവൽ: 5)": "warning: working days (manual: 5)", "മാറ്റാൻ അഭ്യർത്ഥിക്കുക": "Request the change", "അവധി ദിവസങ്ങൾ": "Holidays", "(ഞായർ സ്വയം ഒഴിവാകും; മറ്റ് അവധികൾ ഇവിടെ ചേർക്കുക)": "(Sundays are excluded automatically; add other holidays here)", "നീക്കാൻ അഭ്യർത്ഥിക്കുക": "Request removal", "ഒന്നും ചേർത്തിട്ടില്ല": "Nothing added", "പഴയ ഘടനയിൽ ഫയലുകൾ ഉണ്ട്. ഈ സ്ക്രിപ്റ്റ് ഓടിക്കരുത്.": "Files exist in the old structure. Do not run this script.", "ഈ രേഖ മാറ്റാനോ മായ്ക്കാനോ പറ്റില്ല": "This record cannot be changed or erased", "ഫയലിന്റെ അടിസ്ഥാന വിവരങ്ങൾ മാറ്റാൻ പറ്റില്ല": "The basic details of a file cannot be changed", "തീർപ്പാക്കിയ ഫയൽ മാറ്റാൻ പറ്റില്ല": "A closed file cannot be changed", "ഒരു സീറ്റ് സ്വയം മേലധികാരിയാകാൻ പറ്റില്ല": "A seat cannot be its own superior", "മേലധികാരി സീറ്റ് സജീവമല്ല": "The superior seat is not active", "ഹയറാർക്കിയിൽ വട്ടം (loop) ഉണ്ടാകും": "This would create a loop in the hierarchy", "ഹയറാർക്കി വളരെ ആഴമുള്ളതാണ്": "The hierarchy is too deep", "ഈ സീറ്റിൽ തുറന്ന ഫയലുകൾ ഉണ്ട്. ആദ്യം അവ മാറ്റി നൽകുക": "This seat has open files. Move them first", "ഈ സീറ്റിന് കീഴിൽ സജീവ സീറ്റുകൾ ഉണ്ട്. ആദ്യം അവയുടെ മേലധികാരിയെ മാറ്റുക": "Active seats exist under this seat. Change their superior first", "സ്വന്തം അഡ്മിൻ അധികാരമോ ലോഗിനോ നിർത്താൻ പറ്റില്ല": "You cannot stop your own admin power or login", "ഒരു അഡ്മിനെങ്കിലും ഉണ്ടായിരിക്കണം": "At least one admin must remain", "സീറ്റ് സജീവമല്ല": "The seat is not active", "ജീവനക്കാരന്റെ ലോഗിൻ സജീവമല്ല": "The staff member’s login is not active", "ചുമതലയുടെ സീറ്റ്, ആൾ, തുടക്കം എന്നിവ മാറ്റാൻ പറ്റില്ല; അവസാനിപ്പിച്ച് പുതിയത് ഉണ്ടാക്കുക": "The seat, person and start of a delegation cannot be changed; end it and create a new one", "ഈ സീറ്റിൽ പ്രവർത്തിക്കാൻ നിങ്ങൾക്ക് അനുമതിയില്ല": "You are not allowed to act in this seat", "ഈ ഫയൽ ഈ സീറ്റിന്റെ കയ്യിലല്ല": "This file is not with this seat", "ഫയൽ തുടങ്ങാൻ അനുമതിയില്ല": "You are not allowed to open files", "ഈ സീറ്റിൽ പ്രവർത്തിക്കാൻ അനുമതിയില്ല": "You are not allowed to act in this seat", "ഈ തപാൽ നിങ്ങളുടെ സീറ്റിലേക്കുള്ളതല്ല": "This tapal is not addressed to your seat", "ഈ തപാൽ ഇതിനകം ഫയലിൽ ചേർത്തു": "This tapal has already been added to a file", "നിർദ്ദേശം നൽകുന്ന സീറ്റ് നിങ്ങളുടെ മേലധികാരി നിരയിൽ ഉള്ളതായിരിക്കണം": "The seat giving the instruction must be among your superiors", "തെറ്റായ ഉറവിടം": "Invalid origin", "ഫോർവേഡ് ചെയ്യാൻ മേലധികാരി സീറ്റ് ഇല്ല": "There is no superior seat to forward to", "തിരിച്ചയക്കാൻ ആരുമില്ല": "There is nobody to return it to", "കാരണം നോട്ടിൽ എഴുതുക": "Write the reason in the note", "ഫയൽ തുടങ്ങിയ സീറ്റിനോ ഏറ്റവും മുകളിലെ സീറ്റിനോ മാത്രമേ തീർപ്പാക്കാൻ പറ്റൂ": "Only the seat that opened the file, or the topmost seat, can close it", "മേലധികാരിക്ക് അയച്ച് അനുമതി വാങ്ങാതെ തീർപ്പാക്കാൻ പറ്റില്ല": "A file cannot be closed without sending it to the superior for approval", "തെറ്റായ തരം": "Invalid type", "ഫയൽ കണ്ടെത്തിയില്ല": "File not found", "ആ ഫയൽ കാണാൻ നിങ്ങൾക്ക് അനുമതിയില്ല": "You are not allowed to see that file", "അഡ്മിന് മാത്രം": "Admin only", "കാരണം എഴുതുക": "Write the reason", "ഫയൽ തുറന്നതല്ല": "The file is not open", "സീറ്റ് ലഭ്യമല്ല": "Seat not available", "ഫയൽ ഇപ്പോൾ തന്നെ ആ സീറ്റിലാണ്": "The file is already in that seat", "തപാൽ രേഖപ്പെടുത്താൻ അനുമതിയില്ല": "You are not allowed to record tapal", "അയച്ചയാളും വിഷയവും എഴുതുക": "Enter the sender and the subject", "അനുമതിയില്ല": "Not allowed", "തപാൽ കണ്ടെത്തിയില്ല": "Tapal not found", "ഡെസ്പാച്ച് രേഖപ്പെടുത്താൻ അനുമതിയില്ല": "You are not allowed to record despatch", "ലഭിക്കേണ്ടയാളും വിഷയവും എഴുതുക": "Enter the addressee and the subject", "ഓർമ്മപ്പെടുത്തൽ മാറ്റാൻ പറ്റില്ല": "A reminder cannot be changed", "ഭാവിയിലെ തീയതി നൽകുക": "Enter a future date", "ലൈ-ഓവർ 3 മാസത്തിൽ കൂടാൻ പാടില്ല": "Lie-over cannot exceed 3 months", "ഓർമ്മപ്പെടുത്തൽ കണ്ടെത്തിയില്ല": "Reminder not found", " ന്റെ കയ്യിലാണ്. നിങ്ങൾക്ക് കാണാൻ മാത്രം പറ്റും.": ". You can only view it.", "തപാൽ വഴി": "By post", "ബാക്ക് ഫയൽ: ": "Back file: ", "ബന്ധിപ്പിച്ച ഫയൽ: ": "Linked file: ", "തപാൽ ചേർത്തു: ": "Tapal added: ", "ഡെസ്പാച്ച്: ": "Despatch: ", "ഓർമ്മപ്പെടുത്തൽ: ": "Reminder: ", "കോൾ ബുക്ക്: ": "Call book: ", "ലൈ-ഓവർ: ": "Lie-over: ", "സെക്യൂരിറ്റി രജിസ്റ്റർ": "Security register", "കീഴിലുള്ള സീറ്റുകളുടെ ഫയലുകൾ പരിശോധിക്കാം (ഇൻസ്പെക്ഷൻ)": "Can inspect files of seats below (inspection)", "ഡാഷ്ബോർഡ്": "Dashboard", "ആനുകാലിക രജിസ്റ്റർ": "Periodical register", "ഇൻഡക്സ്": "Index", "ഇൻസ്പെക്ഷൻ": "Inspection"};const ML={"Workspace": "പ്രവർത്തനമേഖല", "Registers": "രജിസ്റ്ററുകൾ", "Records": "രേഖകൾ", "Management": "നിയന്ത്രണം", "Dashboard": "ഡാഷ്ബോർഡ്", "Inbox": "ഇൻബോക്സ്", "Reminders": "ഓർമ്മപ്പെടുത്തൽ", "Incoming tapal": "വന്ന തപാൽ", "New file": "പുതിയ ഫയൽ", "Handled by me": "ഞാൻ കൈകാര്യം ചെയ്തവ", "Search": "തിരയുക", "My report": "എന്റെ റിപ്പോർട്ട്", "Tapal register": "തപാൽ രജിസ്റ്റർ", "Despatch register": "ഡെസ്പാച്ച് രജിസ്റ്റർ", "Security register": "സെക്യൂരിറ്റി രജിസ്റ്റർ", "Periodicals": "ആനുകാലിക രജിസ്റ്റർ", "Index": "ഇൻഡക്സ്", "Inspection": "ഇൻസ്പെക്ഷൻ", "All files": "എല്ലാ ഫയലുകളും", "Organisation report": "സ്ഥാപന റിപ്പോർട്ട്", "Administration": "അഡ്മിനിസ്ട്രേഷൻ", "Audit": "ഓഡിറ്റ്", "e-File System": "ഇ-ഫയൽ സംവിധാനം", "Sign in": "ലോഗിൻ", "Email": "ഇമെയിൽ", "Password": "പാസ്‌വേഡ്", "Log in": "ലോഗിൻ ചെയ്യുക", "Contact the administrator to get a login.": "ലോഗിൻ ലഭിക്കാൻ അഡ്മിനിസ്ട്രേറ്ററെ സമീപിക്കുക.", "File": "ഫയൽ", "No seat": "സീറ്റ് ഇല്ല", "Admin": "അഡ്മിൻ", "Chief": "ചീഫ്", "Change password": "പാസ്‌വേഡ് മാറ്റുക", "Refresh": "പുതുക്കുക", "Log out": "ലോഗൗട്ട്", "File not found.": "ഫയൽ കണ്ടെത്തിയില്ല.", "Your inbox is empty.": "നിങ്ങളുടെ ഇൻബോക്സ് ശൂന്യമാണ്.", "Nothing here.": "ഇവിടെ ഒന്നുമില്ല.", "No files.": "ഫയലുകൾ ഇല്ല.", "In my inbox": "എന്റെ ഇൻബോക്സിൽ", "Urgent": "അടിയന്തിരം", "Pending beyond limit": "സമയപരിധി കഴിഞ്ഞ പെൻഡിംഗ്", "Past time limit": "സമയപരിധി കഴിഞ്ഞവ", "Reminders due": "ഓർമ്മപ്പെടുത്തൽ സമയമായവ", "Periodicals due": "ആനുകാലിക രജിസ്റ്റർ സമയമായവ", "Awaiting my approval": "എന്റെ അനുമതിക്ക് കാത്തിരിക്കുന്നവ", "To execute": "നടപ്പാക്കാനുള്ളവ", "Good morning": "സുപ്രഭാതം", "Good afternoon": "ശുഭ മധ്യാഹ്നം", "Good evening": "ശുഭ സായാഹ്നം", "Needs attention": "ശ്രദ്ധിക്കേണ്ടവ", "Nothing is pending. Well done!": "ഒന്നും പെൻഡിംഗ് ഇല്ല. നന്നായി!", "Recent activity": "സമീപകാല പ്രവർത്തനങ്ങൾ", "Attachment added": "രേഖ അറ്റാച്ച് ചെയ്തു", "Draft": "ഡ്രാഫ്റ്റ്", "No attachments.": "അറ്റാച്ച്മെന്റുകൾ ഇല്ല.", "Download": "ഡൗൺലോഡ്", "Choose a file first": "ആദ്യം ഒരു ഫയൽ തിരഞ്ഞെടുക്കുക", "The file is larger than 10 MB": "ഫയൽ 10 MB-ൽ കൂടുതലാണ്", "Upload": "അപ്‌ലോഡ്", "Up to 10 MB per file. Uploaded documents cannot be changed or deleted.": "ഒരു ഫയലിന് പരമാവധി 10 MB. അപ്‌ലോഡ് ചെയ്ത രേഖകൾ മാറ്റാനോ മായ്ക്കാനോ പറ്റില്ല.", "Approve draft": "ഡ്രാഫ്റ്റ് അനുവദിക്കുക", "Return draft": "ഡ്രാഫ്റ്റ് തിരിച്ചയക്കുക", "Issue (send to despatch)": "പുറത്തേക്ക് അയക്കുക (ഡെസ്പാച്ചിലേക്ക്)", "Revise": "തിരുത്തുക", "To": "ലഭിക്കേണ്ടയാൾ", "Show text": "ടെക്സ്റ്റ് കാണുക", "Print / fair copy": "പ്രിന്റ് / ഫെയർ കോപ്പി", "On instruction of": "നിർദ്ദേശപ്രകാരം", "From tapal": "തപാലിൽ നിന്ന്", "Office initiated": "ഓഫീസിൽ നിന്ന് തുടങ്ങിയത്", "Time limit": "സമയപരിധി", "Confidential": "രഹസ്യം", "OPEN": "തുറന്നത്", "CLOSED": "തീർപ്പാക്കി", "Now with": "ഇപ്പോൾ കയ്യിൽ", "working days": "പ്രവൃത്തി ദിവസം", "Closed": "തീർപ്പാക്കിയത്", "Your action": "നിങ്ങളുടെ നടപടി", "Seat": "സീറ്റ്", "Note": "നോട്ട്", "Write your note for the file here": "ഫയലിലേക്കുള്ള നിങ്ങളുടെ നോട്ട് ഇവിടെ എഴുതുക", "Forward to": "ഫോർവേഡ് ചെയ്യുക →", "The superior seat is not active. Inform the admin.": "മേലധികാരി സീറ്റ് സജീവമല്ല. അഡ്മിനെ അറിയിക്കുക.", "Return to": "തിരിച്ചയക്കുക ←", "Nobody is in the superior seat now. The file will wait there; the admin must assign someone.": "മേലധികാരി സീറ്റിൽ ഇപ്പോൾ ആരുമില്ല. ഫയൽ അവിടെ കാത്തിരിക്കും; അഡ്മിൻ ആരെയെങ്കിലും ചുമതലപ്പെടുത്തണം.", "After forwarding, the file leaves your inbox. It can only go to your superior seat.": "ഫോർവേഡ് ചെയ്താൽ ഫയൽ നിങ്ങളുടെ ഇൻബോക്സിൽ നിന്ന് പോകും. മേലധികാരി സീറ്റിലേക്ക് മാത്രമേ പോകൂ.", "Close the file": "ഫയൽ തീർപ്പാക്കുക", "Disposal category": "ഡിസ്‌പോസൽ വിഭാഗം", "Index head": "ഇൻഡക്സ് ഹെഡ്", "Index sub head": "ഇൻഡക്സ് സബ് ഹെഡ്", "Index title": "ഇൻഡക്സ് ടൈറ്റിൽ", "Action completed, close the file": "നടപടി പൂർത്തിയായി, ഫയൽ തീർപ്പാക്കുക", "Approve and close the file": "അനുമതി നൽകി ഫയൽ തീർപ്പാക്കുക", "Prepare a draft (letter, memo, order…)": "ഡ്രാഫ്റ്റ് തയ്യാറാക്കുക (കത്ത്, മെമ്മോ, ഉത്തരവ്…)", "Form": "രൂപം", "Addressee": "ലഭിക്കേണ്ടയാൾ / വിലാസം", "Subject": "വിഷയം", "Text of the draft": "ഡ്രാഫ്റ്റിന്റെ ഉള്ളടക്കം", "Put up for approval": "അനുമതിക്കായി സമർപ്പിക്കുക", "Attach a document": "രേഖ അറ്റാച്ച് ചെയ്യുക", "Back file / linking": "ബാക്ക് ഫയൽ / ബന്ധിപ്പിക്കൽ", "File number": "ഫയൽ നമ്പർ", "Back file": "ബാക്ക് ഫയൽ", "Link": "ബന്ധിപ്പിക്കുക", "Page / para reference": "പേജ് / പാര സൂചിക", "Add": "ചേർക്കുക", "Reminder / Call book / Lie-over": "ഓർമ്മപ്പെടുത്തൽ / കോൾ ബുക്ക് / ലൈ-ഓവർ", "Call book: the file stays out of your inbox until that date. Lie-over: maximum 3 months.": "കോൾ ബുക്ക്: ആ തീയതി വരെ ഫയൽ ഇൻബോക്സിൽ നിന്ന് മാറി നിൽക്കും. ലൈ-ഓവർ പരമാവധി 3 മാസം.", "Add incoming tapal to this file": "വന്ന തപാൽ ഈ ഫയലിൽ ചേർക്കുക", "This file is currently with": "ഈ ഫയൽ ഇപ്പോൾ ഇവരുടെ കയ്യിലാണ്:", "You have view-only access.": "നിങ്ങൾക്ക് കാണാൻ മാത്രം പറ്റും.", "Request to move this file to another seat": "ഈ ഫയൽ മറ്റൊരു സീറ്റിലേക്ക് മാറ്റാൻ അഭ്യർത്ഥന", "This needs the Chief’s approval.": "ഇതിന് ചീഫിന്റെ അനുമതി വേണം.", "New seat": "പുതിയ സീറ്റ്", "Reason to record in the file note": "ഫയൽ നോട്ടിൽ ചേർക്കേണ്ട കാരണം", "Raise request": "അഭ്യർത്ഥന നൽകുക", "From": "അയച്ചത്", "Letter no.": "കത്ത് നമ്പർ", "Received": "ലഭിച്ചത്", "Instruction": "നിർദ്ദേശം", "Drafts": "ഡ്രാഫ്റ്റുകൾ", "No drafts yet.": "ഡ്രാഫ്റ്റുകൾ ഒന്നുമില്ല.", "Attachments": "അറ്റാച്ച്മെന്റുകൾ", "Issued (despatch)": "അയച്ചവ (ഡെസ്പാച്ച്)", "Back files and links": "ബാക്ക് ഫയലുകളും ബന്ധങ്ങളും", "Flag": "ഫ്ലാഗ്", "Linked": "ബന്ധിപ്പിച്ചത്", "done": "കഴിഞ്ഞു", "Back": "തിരികെ", "Note file": "നോട്ട് ഫയൽ", "Current file": "കറന്റ് ഫയൽ", "Write the reason in the note box first": "ആദ്യം നോട്ട് പെട്ടിയിൽ കാരണം എഴുതുക", "Allow pop-ups to print": "പ്രിന്റ് ചെയ്യാൻ പോപ്പ്-അപ്പ് അനുവദിക്കുക", "Record a valuable received": "വിലപ്പെട്ട വസ്തു ലഭിച്ചത് രേഖപ്പെടുത്തുക", "Received from": "ആരിൽ നിന്ന്", "Description (e.g. DD, cheque, cash)": "വിവരണം (ഉദാ: ഡിഡി, ചെക്ക്, പണം)", "Value / amount": "മൂല്യം / തുക", "Related tapal (optional)": "ബന്ധപ്പെട്ട തപാൽ (ഐച്ഛികം)", "Record": "രേഖപ്പെടുത്തുക", "Number": "നമ്പർ", "Date": "തീയതി", "Description": "വിവരണം", "Status": "നില", "In custody": "സൂക്ഷിപ്പിൽ", "Returned": "തിരിച്ചു നൽകി", "Encashed": "പണമാക്കി", "Destroyed": "നശിപ്പിച്ചു", "Update": "പുതുക്കുക", "New periodical (return / report)": "പുതിയ ആനുകാലിക രജിസ്റ്റർ (റിട്ടേൺ / റിപ്പോർട്ട്)", "Title": "പേര്", "Type": "തരം", "To receive": "സ്വീകരിക്കേണ്ടത്", "To send": "അയക്കേണ്ടത്", "From / to": "ആരിൽ നിന്ന് / ആർക്ക്", "Frequency": "ഇടവേള", "Next due date": "അടുത്ത അവസാന തീയതി", "Done": "ചെയ്തു", "Stop": "നിർത്തുക", "Index of orders and decisions (head › sub head › title), prepared when files are closed.": "ഉത്തരവുകളുടെയും തീരുമാനങ്ങളുടെയും ഇൻഡക്സ് (ഹെഡ് › സബ് ഹെഡ് › ടൈറ്റിൽ); ഫയൽ തീർപ്പാക്കുമ്പോൾ തയ്യാറാക്കുന്നത്.", "closed files are not indexed": "തീർപ്പാക്കിയ ഫയലുകൾ ഇൻഡക്സ് ചെയ്തിട്ടില്ല", "Files pending in the seats below yours (read-only). The manual asks superiors to inspect the personal registers regularly.": "നിങ്ങൾക്ക് താഴെയുള്ള സീറ്റുകളിൽ പെൻഡിംഗ് ഉള്ള ഫയലുകൾ (വായന മാത്രം). പേഴ്സണൽ രജിസ്റ്ററുകൾ മേലുദ്യോഗസ്ഥർ പതിവായി പരിശോധിക്കണമെന്ന് മാനുവൽ നിർദ്ദേശിക്കുന്നു.", "Person": "ആൾ", "Pending": "പെൻഡിംഗ്", "Oldest (working days)": "ഏറ്റവും പഴയത് (പ്രവൃത്തി ദിവസം)", "Delayed": "വൈകിയത്", "Attach a document to a tapal": "തപാലിൽ രേഖ അറ്റാച്ച് ചെയ്യുക", "Organisation name (shown in the header and on printed drafts)": "സ്ഥാപനത്തിന്റെ പേര് (ഹെഡറിലും പ്രിന്റ് ചെയ്യുന്ന ഡ്രാഫ്റ്റിലും കാണിക്കും)", "Request the change": "മാറ്റത്തിന് അഭ്യർത്ഥിക്കുക", "Confidential file (visible only to those who handle it)": "രഹസ്യ ഫയൽ (കൈകാര്യം ചെയ്യുന്നവർക്ക് മാത്രം കാണാം)", "Organisation name": "സ്ഥാപനത്തിന്റെ പേര്", "Letter": "കത്ത്", "Memorandum": "മെമ്മോറാണ്ടം", "Proceedings": "പ്രൊസീഡിങ്സ്", "Endorsement": "എൻഡോഴ്സ്മെന്റ്", "D.O. Letter": "ഡി.ഒ. കത്ത്", "Circular": "സർക്കുലർ", "Office Order": "ഓഫീസ് ഉത്തരവ്", "U.O. Note": "യു.ഒ. നോട്ട്", "Waiting for approval": "അനുമതിക്ക് കാത്തിരിക്കുന്നു", "Approved": "അനുവദിച്ചു", "Returned for revision": "തിരുത്താൻ തിരിച്ചയച്ചു", "Issued": "അയച്ചു", "Weekly": "പ്രതിവാരം", "Monthly": "പ്രതിമാസം", "Quarterly": "ത്രൈമാസം", "Half-yearly": "അർധവാർഷികം", "Yearly": "വാർഷികം"};/*DICT_END*/
 const SB=supabase.createClient('https://nuhrymlefclfvtlodcwc.supabase.co','sb_publishable_OKG7B4q4Xwnr3DnnbY3xMg_V4-dwgP_');
-let me=null,uid=null,P=[],ST=[],SA=[],F=[],L=[],K=[],T=[],TE=[],D=[],RM=[],HO=[],RQ=[],AU=[],CFG={pending_days:'5'};
+let me=null,uid=null,P=[],ST=[],SA=[],F=[],L=[],K=[],T=[],TE=[],D=[],RM=[],HO=[],RQ=[],AT=[],DR=[],DE=[],SI=[],SE=[],PE=[],AU=[],CFG={pending_days:'5'};
 let lang='en';try{lang=localStorage.getItem('efile-lang')||'en'}catch(e){}
 let sub='req';
 let tab='',openId=null,err='',prefTapal=null;
@@ -456,6 +115,7 @@ function trHtml(h){
   return out;
 }
 const H=(el,h)=>{el.innerHTML=trHtml(h)};
+const tt=s=>lang=='ml'&&ML[s]?ML[s]:s;
 const tx=s=>lang=='ml'?String(s):trSeg(String(s));
 const errT=m=>{m=String(m||'');if(m.includes(' | ')){const q=m.split(' | ');return lang=='ml'?q[q.length-1]:q[0]}return tx(m)};
 const A=m=>alert(errT(m));const C=m=>confirm(tx(m));const PR=(m,d)=>prompt(tx(m),d);
@@ -474,8 +134,8 @@ const RK={reminder:'ഓർമ്മപ്പെടുത്തൽ',call_book:'�
 const ORG={office:'ഓഫീസ്',instruction:'നിർദ്ദേശപ്രകാരം',tapal:'തപാലിൽ നിന്ന്'};
 const KIND={create:'ഫയൽ തുടങ്ങി',forward:'ഫോർവേഡ്',return:'തിരിച്ചയച്ചു',close:'തീർപ്പാക്കി',admin_move:'അഡ്മിൻ മാറ്റി നൽകി',link:'ബന്ധിപ്പിച്ചു',tapal_add:'തപാൽ ചേർത്തു',despatch:'ഡെസ്പാച്ച്',reminder:'ഓർമ്മപ്പെടുത്തൽ'};
 const MODE={post:'തപാൽ വഴി',courier:'കൊറിയർ',hand:'നേരിട്ട്',email:'ഇമെയിൽ'};
-const PERMS=[['originate','ഫയൽ തുടങ്ങാം'],['tapal','തപാൽ രജിസ്റ്റർ'],['despatch','ഡെസ്പാച്ച് രജിസ്റ്റർ'],['view_all','എല്ലാ ഫയലും കാണാം (വായന മാത്രം)'],['request_admin','അഡ്മിനിസ്ട്രേഷൻ അഭ്യർത്ഥന നൽകാം']];
-const MENUS=[['in','ഇൻബോക്സ്'],['rem','ഓർമ്മപ്പെടുത്തൽ'],['tp','വന്ന തപാൽ'],['new','പുതിയ ഫയൽ'],['sent','ഞാൻ കൈകാര്യം ചെയ്തവ'],['srch','തിരയുക'],['rep','എന്റെ റിപ്പോർട്ട്'],['treg','തപാൽ രജിസ്റ്റർ'],['dreg','ഡെസ്പാച്ച് രജിസ്റ്റർ'],['rec','റെക്കോർഡ്സ്']];
+const PERMS=[['originate','ഫയൽ തുടങ്ങാം'],['tapal','തപാൽ രജിസ്റ്റർ'],['despatch','ഡെസ്പാച്ച് രജിസ്റ്റർ'],['view_all','എല്ലാ ഫയലും കാണാം (വായന മാത്രം)'],['request_admin','അഡ്മിനിസ്ട്രേഷൻ അഭ്യർത്ഥന നൽകാം'],['security','സെക്യൂരിറ്റി രജിസ്റ്റർ'],['inspect','കീഴിലുള്ള സീറ്റുകളുടെ ഫയലുകൾ പരിശോധിക്കാം (ഇൻസ്പെക്ഷൻ)']];
+const MENUS=[['dash','ഡാഷ്ബോർഡ്'],['in','ഇൻബോക്സ്'],['rem','ഓർമ്മപ്പെടുത്തൽ'],['tp','വന്ന തപാൽ'],['new','പുതിയ ഫയൽ'],['sent','ഞാൻ കൈകാര്യം ചെയ്തവ'],['srch','തിരയുക'],['rep','എന്റെ റിപ്പോർട്ട്'],['treg','തപാൽ രജിസ്റ്റർ'],['dreg','ഡെസ്പാച്ച് രജിസ്റ്റർ'],['sec','സെക്യൂരിറ്റി രജിസ്റ്റർ'],['per','ആനുകാലിക രജിസ്റ്റർ'],['rec','റെക്കോർഡ്സ്'],['idx','ഇൻഡക്സ്'],['insp','ഇൻസ്പെക്ഷൻ']];
 const isChief=()=>{const m=mySeats();return ST.some(s=>s.is_chief&&s.active&&m.includes(s.id))};
 const setupMode=()=>!ST.some(s=>s.is_chief&&s.active);
 const canAdm=()=>me.is_admin||isChief()||(me.perms||[]).includes('request_admin');
@@ -515,9 +175,9 @@ async function boot(){
 async function loadAll(){
   const q=(t,o)=>{let r=SB.from(t).select('*');if(o)r=r.order(o[0],{ascending:o[1]});return r};
   const r=await Promise.all([q('profiles',['name',true]),q('seats',['name',true]),q('seat_assignments',['id',false]),q('settings'),
-    q('files',['id',false]),q('file_log',['id',true]),q('file_links',['id',true]),q('tapal',['id',false]),q('tapal_events',['id',true]),q('despatch',['id',false]),q('reminders',['remind_on',true]),q('holidays',['day',true]),q('admin_requests',['id',false])]);
+    q('files',['id',false]),q('file_log',['id',true]),q('file_links',['id',true]),q('tapal',['id',false]),q('tapal_events',['id',true]),q('despatch',['id',false]),q('reminders',['remind_on',true]),q('holidays',['day',true]),q('admin_requests',['id',false]),q('attachments',['id',true]),q('drafts',['id',true]),q('draft_events',['id',true]),q('security_items',['id',false]),q('security_events',['id',true]),q('periodicals',['next_due',true])]);
   const bad=r.find(x=>x.error);if(bad){A(bad.error.message);return}
-  [P,ST,SA,,F,L,K,T,TE,D,RM,HO,RQ]=r.map(x=>x.data);
+  [P,ST,SA,,F,L,K,T,TE,D,RM,HO,RQ,AT,DR,DE,SI,SE,PE]=r.map(x=>x.data);
   CFG={pending_days:'5'};r[3].data.forEach(s=>CFG[s.key]=s.value);
   me=P.find(x=>x.id==uid)||null;
   if(!me||!me.active){err='ഈ ലോഗിൻ പ്രവർത്തനക്ഷമമല്ല. അഡ്മിനെ സമീപിക്കുക.';await SB.auth.signOut();me=null;uid=null;return}
@@ -534,36 +194,59 @@ async function refresh(){await loadAll();render()}
 async function call(fn,args){const {data,error}=await SB.rpc(fn,args);if(error){A(error.message);return {ok:false}}return {ok:true,data}}
 async function dbw(p){const {error}=await p;if(error){A(error.message);return false}return true}
 
+const NAVKEYS=['dash','in','rem','tp','new','sent','srch','rep','treg','dreg','sec','per','rec','idx','insp'];
+function subSeats(){const m=mySeats(),s=new Set();ST.forEach(x=>{if(!m.includes(x.id)&&anc(x.id).some(a=>m.includes(a)))s.add(x.id)});return [...s]}
 function tabsDef(){
   const hs=mySeats().length>0,t=[];
-  if(hs)t.push(['in','ഇൻബോക്സ് ('+inboxF().length+')'],['rem','ഓർമ്മപ്പെടുത്തൽ ('+dueRems().length+')'],['tp','വന്ന തപാൽ ('+myTapals().length+')'],['new','പുതിയ ഫയൽ'],['sent','ഞാൻ കൈകാര്യം ചെയ്തവ']);
-  t.push(['srch','തിരയുക']);
-  if(hs)t.push(['rep','എന്റെ റിപ്പോർട്ട്']);
-  if(perm('tapal'))t.push(['treg','തപാൽ രജിസ്റ്റർ']);
-  if(perm('despatch'))t.push(['dreg','ഡെസ്പാച്ച് രജിസ്റ്റർ']);
-  if(perm('view_all'))t.push(['rec','റെക്കോർഡ്സ്']);
+  const add=(k,ic,lb,g,n)=>t.push({k,ic,lb,g,n});
+  const W=tt('Workspace'),R=tt('Registers'),C=tt('Records'),M=tt('Management');
+  if(hs){add('dash','🏠',tt('Dashboard'),W);add('in','📥',tt('Inbox'),W,inboxF().length);add('rem','⏰',tt('Reminders'),W,dueRems().length);add('tp','📨',tt('Incoming tapal'),W,myTapals().length);add('new','✍️',tt('New file'),W);add('sent','🗂️',tt('Handled by me'),W)}
+  add('srch','🔍',tt('Search'),W);
+  if(hs)add('rep','📊',tt('My report'),W);
+  if(perm('tapal'))add('treg','📮',tt('Tapal register'),R);
+  if(perm('despatch'))add('dreg','📤',tt('Despatch register'),R);
+  if(perm('security')||perm('view_all'))add('sec','🔐',tt('Security register'),R);
+  if(hs)add('per','🔁',tt('Periodicals'),R);
+  if(perm('view_all'))add('rec','🗄️',tt('Records'),C),add('idx','🧾',tt('Index'),C);
+  if(perm('inspect')&&subSeats().length)add('insp','🔎',tt('Inspection'),C);
   let u=t;
-  if(Array.isArray(me.menus)&&!me.is_admin)u=t.filter(x=>me.menus.includes(x[0]));
-  if(me.is_admin)u.push(['all','എല്ലാ ഫയലുകളും'],['arep','സ്ഥാപന റിപ്പോർട്ട്']);
-  if(canAdm()){const n=(isChief()?RQ.filter(r=>r.status=='pending'&&r.requested_by!=uid).length:0)+(me.is_admin?RQ.filter(r=>r.status=='approved').length:0);u.push(['adm','അഡ്മിനിസ്ട്രേഷൻ'+(n?' ('+n+')':'')])}
-  if(me.is_admin||isChief())u.push(['aud','ഓഡിറ്റ്']);
-  return u.length?u:[['srch','തിരയുക']];
+  if(Array.isArray(me.menus)&&!me.is_admin)u=t.filter(x=>!NAVKEYS.includes(x.k)||me.menus.includes(x.k));
+  if(me.is_admin){u.push({k:'all',ic:'📁',lb:tt('All files'),g:M});u.push({k:'arep',ic:'🏢',lb:tt('Organisation report'),g:M})}
+  if(canAdm()){const n=(isChief()?RQ.filter(r=>r.status=='pending'&&r.requested_by!=uid).length:0)+(me.is_admin?RQ.filter(r=>r.status=='approved').length:0);u.push({k:'adm',ic:'🛡️',lb:tt('Administration'),g:M,n})}
+  if(me.is_admin||isChief())u.push({k:'aud',ic:'📜',lb:tt('Audit'),g:M});
+  return u.length?u:[{k:'srch',ic:'🔍',lb:tt('Search'),g:W}];
 }
 function render(){
   document.documentElement.lang=lang;
-  const a=$('app');
+  const a=$('app'),org=CFG.org_name||'Anatech Technology Solutions';
   const lb=`<span class="r"><button class="${lang=='en'?'on':''}" onclick="setLang('en')">English</button><button class="${lang=='ml'?'on':''}" onclick="setLang('ml')">${M1}മലയാളം${M2}</button></span>`;
-  if(!me){H(a,`<div class="lo c"><div class="r" style="justify-content:space-between"><h1>📁 Anatech · ഇ-ഫയൽ</h1>${lb}</div><form onsubmit="login();return false"><label for="lu">ഇമെയിൽ</label><input id="lu" type="email" autocomplete="username"><label for="lp">പാസ്‌വേഡ്</label><input id="lp" type="password" autocomplete="current-password"><p class="er">${err?E(errT(err)):''}</p><button id="lb" class="p" type="submit">ലോഗിൻ</button></form><p class="m">ലോഗിൻ ലഭിക്കാൻ അഡ്മിനെ സമീപിക്കുക.</p></div>`);return}
-  const T_=tabsDef();if(!T_.some(x=>x[0]==tab))tab=T_[0][0];
-  const ms=mySeats();
-  H(a,`<div class="top"><h1>📁 Anatech · ഇ-ഫയൽ</h1><div class="r"><span>${E(me.name)} <span class="m">${ms.map(sn).join(' / ')}${me.is_admin?' · അഡ്മിൻ':''}${isChief()?' · ചീഫ്':''}</span></span>${lb}<button onclick="chPw()">പാസ്‌വേഡ് മാറ്റുക</button><button onclick="refresh()">പുതുക്കുക</button><button onclick="logout()">ലോഗൗട്ട്</button></div></div>
-  <div class="tabs">${T_.map(t=>`<button class="${tab==t[0]&&!openId?'on':''}" onclick="tab='${t[0]}';openId=null;render()">${t[1]}</button>`).join('')}</div><div id="v"></div>`);
+  if(!me){H(a,`<div class="lobg"><div class="lo c"><div class="r" style="justify-content:space-between"><div class="r"><div class="logo">🗂️</div><div><b>${E(org)}</b><div class="m">${tt('e-File System')}</div></div></div>${lb}</div><h3>${tt('Sign in')}</h3><form onsubmit="login();return false"><label for="lu">${tt('Email')}</label><input id="lu" type="email" autocomplete="username"><label for="lp">${tt('Password')}</label><input id="lp" type="password" autocomplete="current-password"><p class="er">${err?E(errT(err)):''}</p><button id="lb" class="p" type="submit" style="width:100%">${tt('Log in')}</button></form><p class="m">${tt('Contact the administrator to get a login.')}</p></div></div>`);return}
+  const T_=tabsDef();if(!T_.some(x=>x.k==tab))tab=T_[0].k;
+  const ms=mySeats(),cur=T_.find(x=>x.k==tab);
+  let nav='',lastG='';
+  T_.forEach(x=>{if(x.g!=lastG){nav+=`<div class="ng">${x.g}</div>`;lastG=x.g}nav+=`<button class="${tab==x.k&&!openId?'on':''}" onclick="tab='${x.k}';openId=null;render()"><span class="ic">${x.ic}</span><span>${x.lb}</span>${x.n?`<span class="nb">${x.n}</span>`:''}</button>`});
+  H(a,`<div class="shell"><aside class="side"><div class="brand"><div class="logo">🗂️</div><div><b>${E(org)}</b><span>${tt('e-File System')}</span></div></div>${nav}</aside>
+  <main class="main"><header class="bar"><div class="ttl">${openId?'📄 '+tt('File'):cur.ic+' '+cur.lb}</div><div class="who"><div class="av">${E((me.name||'?').slice(0,1).toUpperCase())}</div><div><b>${E(me.name)}</b><div class="m">${ms.map(sn).join(' / ')||tt('No seat')}${me.is_admin?' · '+tt('Admin'):''}${isChief()?' · '+tt('Chief'):''}</div></div>${lb}<button onclick="chPw()" title="${tt('Change password')}">🔑</button><button onclick="refresh()" title="${tt('Refresh')}">🔄</button><button onclick="logout()">${tt('Log out')}</button></div></header><div id="v"></div></main></div>`);
   const v=$('v');
-  if(openId){const f=F.find(x=>x.id==openId);H(v,f?fileView(f):'<div class="c">ഫയൽ കണ്ടെത്തിയില്ല.</div>');return}
-  const V={in:()=>list(inboxF(),'ഇൻബോക്സ് ശൂന്യമാണ്.'),rem:remView,rec:recView,tp:tapalMine,new:newForm,sent:()=>list(F.filter(f=>involved(f)&&!inboxF().includes(f)),'ഒന്നും ഇല്ല.'),
-    srch:searchView,rep:myRep,treg:tapalReg,dreg:desReg,all:()=>list(F,'ഫയലുകൾ ഒന്നും ഇല്ല.'),arep:adminRep,aud:audit,adm:admView};
+  if(openId){const f=F.find(x=>x.id==openId);H(v,f?fileView(f):'<div class="c">'+tt('File not found.')+'</div>');return}
+  const V={dash:dashView,in:()=>list(inboxF(),tt('Your inbox is empty.')),rem:remView,rec:recView,tp:tapalMine,new:newForm,sent:()=>list(F.filter(f=>involved(f)&&!inboxF().includes(f)),tt('Nothing here.')),
+    srch:searchView,rep:myRep,treg:tapalReg,dreg:desReg,all:()=>list(F,tt('No files.')),arep:adminRep,aud:audit,adm:admView,sec:secView,per:perView,idx:idxView,insp:inspView};
   H(v,V[tab]());
   if(tab=='new')nfChange();
+}
+function dashView(){
+  const ib=inboxF(),pd=+CFG.pending_days||5,t=todayL();
+  const late=ib.filter(f=>wdays(lastT(f))>pd),urg=ib.filter(f=>f.priority=='h'),tl=ib.filter(f=>f.due_on&&f.due_on<t);
+  const per=PE.filter(p=>p.active&&mySeats().includes(p.seat_id)&&p.next_due<=t);
+  const k=[['📥',tt('In my inbox'),ib.length,'in',''],['🚨',tt('Urgent'),urg.length,'in',urg.length?'red':''],['⏳',tt('Pending beyond limit'),late.length,'in',late.length?'red':''],['⛔',tt('Past time limit'),tl.length,'in',tl.length?'red':''],['⏰',tt('Reminders due'),dueRems().length,'rem',dueRems().length?'gold':''],['📨',tt('Incoming tapal'),myTapals().length,'tp',myTapals().length?'gold':''],['🔁',tt('Periodicals due'),per.length,'per',per.length?'gold':'']];
+  if(isChief())k.push(['🛡️',tt('Awaiting my approval'),RQ.filter(r=>r.status=='pending'&&r.requested_by!=uid).length,'adm','gold']);
+  if(me.is_admin)k.push(['⚙️',tt('To execute'),RQ.filter(r=>r.status=='approved').length,'adm','gold']);
+  const recent=L.slice().reverse().slice(0,8);
+  const hr=new Date().getHours(),g=hr<12?tt('Good morning'):hr<17?tt('Good afternoon'):tt('Good evening');
+  return `<div class="hero"><h2>${g}, ${E(me.name)} 👋</h2><div class="m">${new Date().toLocaleDateString(LOC(),{weekday:'long',day:'numeric',month:'long',year:'numeric'})} · ${mySeats().map(sn).join(' / ')}</div></div>
+  <div class="kpis">${k.map(x=>`<div class="kpi ${x[4]}" onclick="tab='${x[3]}';openId=null;render()"><div class="e">${x[0]}</div><div class="n">${x[2]}</div><div class="m">${x[1]}</div></div>`).join('')}</div>
+  <div class="two"><div><h3>🔥 ${tt('Needs attention')}</h3>${list(ib.slice().sort((a,b)=>lastT(a)-lastT(b)).slice(0,5),tt('Nothing is pending. Well done!'))}</div>
+  <div><h3>🕘 ${tt('Recent activity')}</h3><div class="c">${recent.map(l=>`<div class="lg"><div class="m">${fmt(l.created_at)} · ${un(l.by_user)}</div><div>${kindL(l.kind)} — <a href="#" onclick="openId=${l.file_id};render();return false">${fno(l.file_id)}</a></div></div>`).join('')||'<span class="m">'+tt('Nothing here.')+'</span>'}</div></div></div>`;
 }
 async function chPw(){
   const a=PR('പുതിയ പാസ്‌വേഡ് (കുറഞ്ഞത് 8 അക്ഷരം)','');if(a===null)return;
@@ -574,35 +257,89 @@ async function chPw(){
 function badge(f){return `${f.priority=='h'?'<span class="b hi">അടിയന്തിരം</span>':''}${f.due_on?`<span class="b ${f.status=='open'&&f.due_on<todayL()?'hi':''}">സമയപരിധി ${fmtD(f.due_on)}${f.status=='open'&&f.due_on<todayL()?' — കഴിഞ്ഞു':''}</span>`:''}<span class="b">${ORG[f.origin]}</span><span class="b ${f.status=='closed'?'cl':''}">${f.status=='closed'?'തീർപ്പാക്കി ('+E(f.disposal||'')+')':'തുറന്നത്'}</span>`}
 function list(a,empty){
   if(!a.length)return `<div class="c m">${empty}</div>`;
-  return a.map(f=>`<div class="c it ${f.priority=='h'?'u':''}" onclick="openId=${f.id};render()"><div class="r"><b>${E(f.no)}</b><span>${E(f.subject)}</span>${badge(f)}</div><div class="m">${f.status=='closed'?'':'ഇപ്പോൾ: '+sw(hold(f))+' · '+wdays(lastT(f))+' പ്രവൃത്തി ദിവസമായി'}</div></div>`).join('');
+  return a.map(f=>`<div class="c it ${f.priority=='h'?'u':''}" onclick="openId=${f.id};render()"><div class="r"><b>${E(f.no)}</b><span>${f.is_confidential?'🔒 ':''}${E(f.subject)}</span>${badge(f)}</div><div class="m">${f.status=='closed'?'':'ഇപ്പോൾ: '+sw(hold(f))+' · '+wdays(lastT(f))+' പ്രവൃത്തി ദിവസമായി'}</div></div>`).join('');
 }
 
 /* ---------- ഫയൽ ---------- */
+const FORMS={letter:'Letter',memo:'Memorandum',proceedings:'Proceedings',endorsement:'Endorsement',do_letter:'D.O. Letter',circular:'Circular',office_order:'Office Order',uo_note:'U.O. Note'};
+const formL=k=>tt(FORMS[k]||k);
+const kindL=k=>k=='attach'?tt('Attachment added'):k=='draft'?tt('Draft'):(KIND[k]||E(k));
+const draftEv=id=>DE.filter(e=>e.draft_id==id).sort((a,b)=>a.id-b.id);
+const draftLast=id=>{const e=draftEv(id);return e.length?e[e.length-1].event:null};
+const DST={put_up:['wn','Waiting for approval'],approved:['cl','Approved'],returned:['hi','Returned for revision'],issued:['cl','Issued']};
+const fsize=n=>n>1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';
+function attList(rows){
+  if(!rows.length)return '<div class="m">'+tt('No attachments.')+'</div>';
+  return rows.map(a=>`<div class="r doc">📎 <b>${E(a.name)}</b><span class="m">${a.size?fsize(a.size):''} · ${un(a.by_user)} · ${fmtD(a.created_at)}</span><span style="flex:1"></span><button onclick="dlAtt(${a.id})">⬇ ${tt('Download')}</button></div>`).join('');
+}
+async function dlAtt(id){
+  const a=AT.find(x=>x.id==id);if(!a)return;
+  const {data,error}=await SB.storage.from('efile-attachments').createSignedUrl(a.path,60,{download:a.name});
+  if(error){A(error.message);return}
+  window.open(data.signedUrl,'_blank');
+}
+async function upAtt(kind,id,seat){
+  const inp=$('upf_'+kind+id);const f=inp&&inp.files[0];if(!f){A(tt('Choose a file first'));return}
+  if(f.size>10*1024*1024){A(tt('The file is larger than 10 MB'));return}
+  const safe=f.name.replace(/[^A-Za-z0-9._-]+/g,'_');const path=`${kind}${id}/${Date.now()}-${safe}`;
+  const up=await SB.storage.from('efile-attachments').upload(path,f,{upsert:false,contentType:f.type||undefined});
+  if(up.error){A(up.error.message);return}
+  const r=await call('register_attachment',{p_file:kind=='f'?id:null,p_tapal:kind=='t'?id:null,p_seat:seat||null,p_name:f.name,p_path:path,p_size:f.size,p_mime:f.type||null});
+  if(r.ok){await loadAll();render()}
+}
+const upCtl=(kind,id,seat)=>`<div class="r"><input id="upf_${kind}${id}" type="file" style="max-width:260px"><button onclick="upAtt('${kind}',${id},${seat?"'"+seat+"'":'null'})">⬆ ${tt('Upload')}</button></div><div class="m">${tt('Up to 10 MB per file. Uploaded documents cannot be changed or deleted.')}</div>`;
+
+function draftCard(d,f,h,mineH){
+  const last=draftLast(d.id),st=DST[last]||['', '—'],evs=draftEv(d.id);
+  const child=DR.some(x=>x.parent_id==d.id);
+  let acts='';
+  if(mineH&&last=='put_up'&&anc(d.created_seat).includes(h))acts=`<button class="p" onclick="decideDraft(${d.id},true,'${h}')">✔ ${tt('Approve draft')}</button><button onclick="decideDraft(${d.id},false,'${h}')">↩ ${tt('Return draft')}</button>`;
+  if(mineH&&last=='approved'&&h==d.created_seat)acts=`<select id="im_${d.id}">${opts(Object.entries(MODE))}</select><button class="p" onclick="issueDraft(${d.id},'${h}')">📤 ${tt('Issue (send to despatch)')}</button>`;
+  if(mineH&&last=='returned'&&h==d.created_seat&&!child)acts=`<button onclick="reviseDraft(${d.id})">✏️ ${tt('Revise')}</button>`;
+  return `<div class="doc"><div class="r"><b>D${d.seq}.${d.version}</b><span class="b">${formL(d.form)}</span><span class="b ${st[0]}">${tt(st[1])}</span><span class="m">${un(d.created_by)} · ${fmtD(d.created_at)}</span></div>
+  <div><b>${E(d.subject)}</b></div>${d.addressee?`<div class="m">${tt('To')}: ${E(d.addressee)}</div>`:''}
+  <details><summary class="m">${tt('Show text')}</summary><div style="white-space:pre-wrap;margin-top:6px">${E(d.body)}</div></details>
+  ${evs.filter(e=>e.note).map(e=>`<div class="m">${DST[e.event]?tt(DST[e.event][1]):e.event}: ${E(e.note)}</div>`).join('')}
+  <p class="r"><button onclick="printDraft(${d.id})">🖨 ${tt('Print / fair copy')}</button>${acts}</p></div>`;
+}
 function fileView(f){
   const ms=mySeats(),h=hold(f),open_=f.status=='open',mineH=open_&&ms.includes(h);
-  let org=ORG[f.origin];
-  if(f.origin=='instruction')org+=': '+sn(f.instructed_by);
-  if(f.origin=='tapal'&&f.tapal_id){const t=T.find(x=>x.id==f.tapal_id);if(t)org+=': '+E(t.reg_no)+' — '+E(t.from_party)}
-  const lk=K.filter(k=>k.file_id==f.id).map(k=>{const x=F.find(y=>y.id==k.linked_file_id);return `<span class="b ${x?'':'m'}" ${x?`style="cursor:pointer" onclick="openId=${x.id};render()"`:''}>${k.kind=='back'?'ബാക്ക് ഫയൽ':'ബന്ധിപ്പിച്ചത്'}: ${x?E(x.no):'#'+k.linked_file_id}</span>`}).join(' ');
-  const tps=TE.filter(e=>e.file_id==f.id).map(e=>{const t=T.find(x=>x.id==e.tapal_id);return t?`<span class="b">തപാൽ ${E(t.reg_no)}</span>`:''}).join(' ');
+  const lg=flog(f),lks=K.filter(k=>k.file_id==f.id),dfs=DR.filter(d=>d.file_id==f.id),ats=AT.filter(a=>a.file_id==f.id),tpl=f.tapal_id?T.find(x=>x.id==f.tapal_id):null;
+  const dsp=D.filter(d=>d.file_id==f.id),rms=RM.filter(r=>r.file_id==f.id);
+  let org=f.origin=='instruction'?tt('On instruction of')+' '+sn(f.instructed_by):f.origin=='tapal'?tt('From tapal')+(tpl?' '+E(tpl.reg_no)+' — '+E(tpl.from_party):''):tt('Office initiated');
+  const route=f.path.map((p,i)=>`<span class="chip ${open_&&i==f.path.length-1?'cur':''}">${sn(p)}</span>`).join('<span class="arr">➜</span>');
+  const cover=`<div class="cover ${f.status} ${f.is_confidential?'conf':''}"><div class="r"><span class="fno">${E(f.no)}</span>${f.priority=='h'?'<span class="b hi">🚨 '+tt('Urgent')+'</span>':''}${f.due_on?`<span class="b ${open_&&f.due_on<todayL()?'hi':''}">⏱ ${tt('Time limit')} ${fmtD(f.due_on)}</span>`:''}${f.is_confidential?'<span class="b hi">🔒 '+tt('Confidential')+'</span>':''}<span class="b">${org}</span></div>
+    <span class="stamp">${open_?tt('OPEN'):tt('CLOSED')}${f.disposal?' · '+f.disposal:''}</span>
+    <h2>${E(f.subject)}</h2><div class="route">${route}</div>
+    <div class="m">${open_?tt('Now with')+': '+sw(h)+' · '+wdays(lastT(f))+' '+tt('working days'):tt('Closed')+': '+fmt(f.closed_at)}${f.index_head?' · 🧾 '+E([f.index_head,f.index_sub,f.index_title].filter(Boolean).join(' › ')):''}</div></div>`;
   let act='';
   if(mineH){
     const s=seat(h),boss=s&&s.boss_seat?seat(s.boss_seat):null;
-    const canClose=!s.boss_seat||(h==f.created_seat&&flog(f).some(l=>l.kind=='forward'));
+    const canClose=!s.boss_seat||(h==f.created_seat&&lg.some(l=>l.kind=='forward'));
     const bossEmpty=boss&&boss.active&&!seatUsers(boss.id).length;
     const pend=myTapals().filter(t=>tSeat(t.id)==h);
-    act=`<div class="c"><b>നിങ്ങളുടെ നടപടി</b> <span class="m">(സീറ്റ്: ${sn(h)})</span><label for="an">നോട്ട്</label><textarea id="an" rows="3"></textarea><p class="r">
-      ${boss&&boss.active?`<button class="p" onclick="act(${f.id},'f','${h}')">ഫോർവേഡ് → ${sn(boss.id)}</button>`:(s.boss_seat?'<span class="er">മേലധികാരി സീറ്റ് സജീവമല്ല. അഡ്മിനെ അറിയിക്കുക.</span>':'')}
-      ${f.path.length>1?`<button onclick="act(${f.id},'r','${h}')">തിരിച്ചയക്കുക ← ${sn(f.path[f.path.length-2])}</button>`:''}</p>
-      ${bossEmpty?'<p class="m wn b">ആ സീറ്റിൽ ഇപ്പോൾ ആരുമില്ല. ഫയൽ അവിടെ കാത്തിരിക്കും; അഡ്മിൻ ചുമതല നൽകണം.</p>':''}
-      ${canClose?`<div class="sec"><b>തീർപ്പാക്കുക</b><div class="r"><select id="ad"><option value="">ഡിസ്‌പോസൽ വിഭാഗം</option>${Object.entries(DISP).map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('')}</select><button onclick="act(${f.id},'c','${h}')">${s.boss_seat?'നടപടി പൂർത്തിയായി, തീർപ്പാക്കുക':'അനുമതി നൽകി തീർപ്പാക്കുക'}</button></div></div>`:''}
-      <div class="sec"><b>ബാക്ക് ഫയൽ / ബന്ധിപ്പിക്കൽ</b><div class="r"><input id="lf" list="fl" placeholder="ഫയൽ നമ്പർ (ഉദാ: ANA/2026/001)" style="flex:1;min-width:200px"><select id="lk"><option value="back">ബാക്ക് ഫയൽ</option><option value="chain">ബന്ധിപ്പിക്കുക</option></select><button onclick="linkF(${f.id},'${h}')">ചേർക്കുക</button></div><datalist id="fl">${F.filter(x=>x.id!=f.id).map(x=>`<option value="${E(x.no)}">${E(x.subject)}</option>`).join('')}</datalist></div>
-      <div class="sec"><b>ഓർമ്മപ്പെടുത്തൽ / കോൾ ബുക്ക് / ലൈ-ഓവർ</b><div class="r"><select id="rk">${opts(Object.entries(RK))}</select><input id="rd" type="date" style="width:170px"><input id="rn" type="text" placeholder="കുറിപ്പ്" style="flex:1;min-width:140px"><button onclick="addRem(${f.id},'${h}')">ചേർക്കുക</button></div><div class="m">കോൾ ബുക്ക്: ആ തീയതി വരെ ഫയൽ ഇൻബോക്സിൽ നിന്ന് മാറി നിൽക്കും. ലൈ-ഓവർ പരമാവധി 3 മാസം.</div></div>
-      ${pend.length?`<div class="sec"><b>വന്ന തപാൽ ഈ ഫയലിൽ ചേർക്കുക</b><div class="r"><select id="tpa">${opts(pend.map(t=>[t.id,E(t.reg_no)+' — '+E(t.subject)]))}</select><button onclick="addTp(${f.id},'${h}')">ചേർക്കുക</button></div></div>`:''}</div>`;
-  }else if(open_)act=`<div class="c m">ഈ ഫയൽ ഇപ്പോൾ ${sw(h)} ന്റെ കയ്യിലാണ്. നിങ്ങൾക്ക് കാണാൻ മാത്രം പറ്റും.</div>`;
-  if(canAdm()&&open_)act+=`<div class="c"><b>ഫയൽ മറ്റൊരു സീറ്റിലേക്ക് മാറ്റാൻ അഭ്യർത്ഥന</b><div class="m">ഇതിന് ചീഫിന്റെ അനുമതി വേണം.</div><label for="ao">പുതിയ സീറ്റ്</label><div class="r"><select id="ao">${seatOpts('',undefined,ST.filter(s=>s.id!=h).map(s=>s.id))}</select></div><label for="am">ഫയൽ നോട്ടിൽ ചേർക്കേണ്ട കാരണം</label><input id="am" type="text"><p><button onclick="moveReq(${f.id})">അഭ്യർത്ഥന നൽകുക</button></p></div>`;
-  const entries=flog(f);
-  return `<p><button onclick="openId=null;render()">← തിരികെ</button></p><div class="c"><div class="r"><b>${E(f.no)}</b>${badge(f)}</div><h3>${E(f.subject)}</h3><div class="m">ഉറവിടം: ${org}</div>${f.status=='open'?`<div class="m">ഇപ്പോൾ കയ്യിൽ: ${sw(h)}</div>`:`<div class="m">തീർപ്പാക്കിയത്: ${fmt(f.closed_at)}</div>`}<div class="m">വഴി: ${f.path.map(sn).join(' → ')}</div>${lk||tps?`<p class="r">${lk} ${tps}</p>`:''}${RM.filter(r=>r.file_id==f.id).map(r=>`<div class="m">${RK[r.kind]}: ${fmtD(r.remind_on)}${r.note?' — '+E(r.note):''} ${r.done_at?'(കഴിഞ്ഞു)':''}</div>`).join('')}</div>${act}<div class="c"><b>നോട്ട് ഫയൽ / ചലന രേഖ</b>${entries.map((l,i)=>`<div class="lg"><div class="m">${i+1}. ${fmt(l.created_at)} · ${un(l.by_user)}${l.by_seat?' ('+sn(l.by_seat)+')':''} · ${KIND[l.kind]||E(l.kind)}${l.to_seat?' → '+sn(l.to_seat):''}</div>${l.note?`<div>${lnote(l)}</div>`:''}</div>`).join('')}</div>`;
+    const ihs=[...new Set(F.map(x=>x.index_head).filter(Boolean))];
+    act=`<div class="c"><b>⚡ ${tt('Your action')}</b> <span class="m">(${tt('Seat')}: ${sn(h)})</span><label for="an">${tt('Note')}</label><textarea id="an" rows="3" placeholder="${tt('Write your note for the file here')}"></textarea>
+      <p class="r">${boss&&boss.active?`<button class="p" onclick="act(${f.id},'f','${h}')">➜ ${tt('Forward to')} ${sn(boss.id)}</button>`:(s.boss_seat?'<span class="er">'+tt('The superior seat is not active. Inform the admin.')+'</span>':'')}
+      ${f.path.length>1?`<button onclick="act(${f.id},'r','${h}')">↩ ${tt('Return to')} ${sn(f.path[f.path.length-2])}</button>`:''}</p>
+      ${bossEmpty?'<p class="b wn">'+tt('Nobody is in the superior seat now. The file will wait there; the admin must assign someone.')+'</p>':''}
+      <p class="m">${tt('After forwarding, the file leaves your inbox. It can only go to your superior seat.')}</p>
+      ${canClose?`<details class="tool"><summary>✅ ${tt('Close the file')}</summary><div><div class="g2"><div><label for="ad">${tt('Disposal category')}</label><select id="ad" class="f"><option value="">—</option>${Object.entries(DISP).map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('')}</select></div><div><label for="ih">${tt('Index head')}</label><input id="ih" type="text" list="ihl"><datalist id="ihl">${ihs.map(x=>`<option value="${E(x)}">`).join('')}</datalist></div><div><label for="is">${tt('Index sub head')}</label><input id="is" type="text"></div><div><label for="it">${tt('Index title')}</label><input id="it" type="text"></div></div><p><button class="p" onclick="act(${f.id},'c','${h}')">${s.boss_seat?tt('Action completed, close the file'):tt('Approve and close the file')}</button></p></div></details>`:''}
+      <details class="tool"><summary>✍️ ${tt('Prepare a draft (letter, memo, order…)')}</summary><div><div class="g2"><div><label for="dfm">${tt('Form')}</label><select id="dfm" class="f">${Object.keys(FORMS).map(k=>`<option value="${k}">${formL(k)}</option>`).join('')}</select></div><div><label for="dfa">${tt('Addressee')}</label><input id="dfa" type="text"></div></div><label for="dfs">${tt('Subject')}</label><input id="dfs" type="text"><label for="dfb">${tt('Text of the draft')}</label><textarea id="dfb" rows="8"></textarea><input type="hidden" id="dfp" value=""><p><button class="p" onclick="newDraft(${f.id},'${h}')">${tt('Put up for approval')}</button></p></div></details>
+      <details class="tool"><summary>📎 ${tt('Attach a document')}</summary><div>${upCtl('f',f.id,h)}</div></details>
+      <details class="tool"><summary>🔗 ${tt('Back file / linking')}</summary><div class="r"><input id="lf" list="fl" placeholder="${tt('File number')} (ANA/2026/001)" style="flex:1;min-width:180px"><select id="lk"><option value="back">${tt('Back file')}</option><option value="chain">${tt('Link')}</option></select><input id="lr" type="text" placeholder="${tt('Page / para reference')}" style="width:190px"><button onclick="linkF(${f.id},'${h}')">${tt('Add')}</button></div><datalist id="fl">${F.filter(x=>x.id!=f.id).map(x=>`<option value="${E(x.no)}">${E(x.subject)}</option>`).join('')}</datalist></details>
+      <details class="tool"><summary>⏰ ${tt('Reminder / Call book / Lie-over')}</summary><div class="r"><select id="rk">${opts(Object.entries(RK))}</select><input id="rd" type="date" style="width:170px"><input id="rn" type="text" placeholder="${tt('Note')}" style="flex:1;min-width:140px"><button onclick="addRem(${f.id},'${h}')">${tt('Add')}</button></div><div class="m">${tt('Call book: the file stays out of your inbox until that date. Lie-over: maximum 3 months.')}</div></details>
+      ${pend.length?`<details class="tool"><summary>📨 ${tt('Add incoming tapal to this file')}</summary><div class="r"><select id="tpa">${opts(pend.map(t=>[t.id,E(t.reg_no)+' — '+E(t.subject)]))}</select><button onclick="addTp(${f.id},'${h}')">${tt('Add')}</button></div></details>`:''}</div>`;
+  }else if(open_)act=`<div class="c m">👁 ${tt('This file is currently with')} ${sw(h)}. ${tt('You have view-only access.')}</div>`;
+  if(canAdm()&&open_)act+=`<details class="tool"><summary>🛡️ ${tt('Request to move this file to another seat')}</summary><div><div class="m">${tt('This needs the Chief’s approval.')}</div><label for="ao">${tt('New seat')}</label><select id="ao" class="f">${seatOpts('',undefined,ST.filter(s=>s.id!=h).map(s=>s.id))}</select><label for="am">${tt('Reason to record in the file note')}</label><input id="am" type="text"><p><button onclick="moveReq(${f.id})">${tt('Raise request')}</button></p></div></details>`;
+  const notes=lg.map((l,i)=>`<div class="para"><div class="pn">${i+1}</div><div class="pb"><div class="ph">${fmt(l.created_at)} · ${un(l.by_user)}${l.by_seat?' ('+sn(l.by_seat)+')':''} · <b>${kindL(l.kind)}</b>${l.to_seat?' ➜ '+sn(l.to_seat):''}</div>${l.note?`<div>${lnote(l)}</div>`:''}</div></div>`).join('');
+  const cur=`${tpl?`<div class="doc">📨 <b>${E(tpl.reg_no)}</b> — ${E(tpl.subject)}<div class="m">${tt('From')}: ${E(tpl.from_party)} · ${tt('Letter no.')}: ${E(tpl.letter_no)||'—'} · ${tt('Received')}: ${fmtD(tpl.received_on)}</div>${tpl.instruction?`<div class="m"><b>${tt('Instruction')}:</b> ${E(tpl.instruction)}</div>`:''}${attList(AT.filter(a=>a.tapal_id==tpl.id))}</div>`:''}
+    <h3>✍️ ${tt('Drafts')}</h3>${dfs.length?dfs.map(d=>draftCard(d,f,h,mineH)).join(''):'<div class="m">'+tt('No drafts yet.')+'</div>'}
+    <h3>📎 ${tt('Attachments')}</h3>${attList(ats)}
+    ${dsp.length?`<h3>📤 ${tt('Issued (despatch)')}</h3>${dsp.map(d=>`<div class="doc"><b>${E(d.reg_no)}</b> → ${E(d.to_party)} <span class="m">${fmtD(d.dispatched_on)} · ${MODE[d.mode]}</span></div>`).join('')}`:''}
+    ${lks.length?`<h3>🔗 ${tt('Back files and links')}</h3>${lks.map(k=>{const x=F.find(y=>y.id==k.linked_file_id);return `<div class="doc">${k.flag?`<span class="b cl">${tt('Flag')} ${E(k.flag)}</span> `:''}<a href="#" onclick="${x?`openId=${x.id};render();`:''}return false">${x?E(x.no)+' — '+E(x.subject):'#'+k.linked_file_id}</a> <span class="m">${k.kind=='back'?tt('Back file'):tt('Linked')}${k.ref?' · '+E(k.ref):''}</span></div>`}).join('')}`:''}
+    ${rms.length?`<h3>⏰ ${tt('Reminders')}</h3>${rms.map(r=>`<div class="m">${RK[r.kind]}: ${fmtD(r.remind_on)}${r.note?' — '+E(r.note):''} ${r.done_at?'('+tt('done')+')':''}</div>`).join('')}`:''}`;
+  return `<p><button onclick="openId=null;render()">← ${tt('Back')}</button></p>${cover}${act}<div class="two"><section class="sheet note"><h3>📝 ${tt('Note file')}</h3>${notes}</section><section class="sheet cur"><h3>📁 ${tt('Current file')}</h3>${cur}</section></div>`;
 }
 async function act(id,k,s){
   const n=($('an')||{value:''}).value.trim();
@@ -610,15 +347,82 @@ async function act(id,k,s){
   let r;
   if(k=='f')r=await call('forward_file',{p_id:id,p_note:n,p_seat:s});
   else if(k=='r')r=await call('return_file',{p_id:id,p_note:n,p_seat:s});
-  else{const d=$('ad').value;if(!d){A('ഡിസ്‌പോസൽ വിഭാഗം (R / D / K / L) തിരഞ്ഞെടുക്കുക');return}if(!C('ഫയൽ തീർപ്പാക്കിയാൽ പിന്നീട് മാറ്റാൻ പറ്റില്ല. തുടരട്ടെ?'))return;r=await call('close_file',{p_id:id,p_note:n,p_seat:s,p_disposal:d})}
+  else{const d=$('ad').value;if(!d){A('ഡിസ്‌പോസൽ വിഭാഗം (R / D / K / L) തിരഞ്ഞെടുക്കുക');return}if(!C('ഫയൽ തീർപ്പാക്കിയാൽ പിന്നീട് മാറ്റാൻ പറ്റില്ല. തുടരട്ടെ?'))return;
+    r=await call('close_file',{p_id:id,p_note:n,p_seat:s,p_disposal:d,p_index_head:$('ih').value,p_index_sub:$('is').value,p_index_title:$('it').value})}
   if(r.ok){await loadAll();openId=null;tab='in';render()}
 }
 async function linkF(id,s){
   const no=$('lf').value.trim(),x=F.find(y=>y.no==no);
   if(!x){A('ആ നമ്പറിൽ നിങ്ങൾക്ക് കാണാവുന്ന ഫയൽ ഇല്ല');return}
-  const r=await call('link_file',{p_id:id,p_back:x.id,p_kind:$('lk').value,p_seat:s});
+  const r=await call('link_file',{p_id:id,p_back:x.id,p_kind:$('lk').value,p_seat:s,p_ref:$('lr').value});
   if(r.ok){await loadAll();render()}
 }
+async function newDraft(id,s){
+  const r=await call('create_draft',{p_file:id,p_seat:s,p_form:$('dfm').value,p_addressee:$('dfa').value,p_subject:$('dfs').value,p_body:$('dfb').value,p_parent:$('dfp').value?+$('dfp').value:null});
+  if(r.ok){await loadAll();render()}
+}
+function reviseDraft(id){
+  const d=DR.find(x=>x.id==id);if(!d)return;
+  document.querySelectorAll('details.tool').forEach(x=>{if(x.querySelector('#dfs'))x.open=true});
+  $('dfm').value=d.form;$('dfa').value=d.addressee;$('dfs').value=d.subject;$('dfb').value=d.body;$('dfp').value=d.id;
+  $('dfs').scrollIntoView({behavior:'smooth',block:'center'});
+}
+async function decideDraft(id,ok,s){
+  const n=($('an')||{value:''}).value.trim();
+  if(!ok&&!n){A(tt('Write the reason in the note box first'));return}
+  const r=await call('decide_draft',{p_draft:id,p_approve:ok,p_note:n,p_seat:s});if(r.ok){await loadAll();render()}
+}
+async function issueDraft(id,s){const r=await call('issue_draft',{p_draft:id,p_seat:s,p_mode:$('im_'+id).value});if(r.ok){await loadAll();render()}}
+function printDraft(id){
+  const d=DR.find(x=>x.id==id);if(!d)return;
+  const f=F.find(x=>x.id==d.file_id)||{no:''},org=CFG.org_name||'',last=draftLast(id);
+  const esc=s=>String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const T0={letter:'',memo:'MEMORANDUM',proceedings:'PROCEEDINGS',endorsement:'ENDORSEMENT',do_letter:'D.O. LETTER',circular:'CIRCULAR',office_order:'OFFICE ORDER',uo_note:'U.O. NOTE'};
+  const sal=d.form=='do_letter'?'My dear Sir/Madam,':d.form=='letter'?'Sir/Madam,':'';
+  const sub=d.form=='do_letter'?'Yours sincerely,':d.form=='letter'?'Yours faithfully,':'';
+  const draftMark=(last=='approved'||last=='issued')?'':'<div class="wm">DRAFT — NOT APPROVED</div>';
+  const w=window.open('','_blank');if(!w){A(tt('Allow pop-ups to print'));return}
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(f.no)} D${d.seq}.${d.version}</title><style>@page{size:A4;margin:20mm}body{font:12.5pt/1.65 "Times New Roman","Noto Serif Malayalam",serif;color:#000}.lh{text-align:center;border-bottom:2px solid #000;padding-bottom:8px;margin-bottom:14px}.lh b{font-size:17pt;letter-spacing:1px}.t{text-align:center;font-weight:bold;text-decoration:underline;margin:10px 0}.r{display:flex;justify-content:space-between}.wm{position:fixed;top:40%;left:5%;font-size:44pt;color:#00000014;transform:rotate(-25deg);white-space:nowrap}.sig{margin-top:40px;text-align:right}</style></head><body>${draftMark}<div class="lh"><b>${esc(org)}</b></div>${T0[d.form]?`<div class="t">${T0[d.form]}</div>`:''}<div class="r"><span>No. ${esc(f.no)}/D${d.seq}</span><span>${new Date().toLocaleDateString('en-GB')}</span></div>${d.addressee?`<p>To<br>${esc(d.addressee).replace(/\n/g,'<br>')}</p>`:''}<p><b>Sub:</b> ${esc(d.subject)}</p><p>${sal}</p><p>${esc(d.body).replace(/\n/g,'<br>')}</p><p>${sub}</p><div class="sig">${esc(seat(d.created_seat)?seat(d.created_seat).name:'')}<br>${esc(org)}</div></body></html>`);
+  w.document.close();setTimeout(()=>{try{w.print()}catch(e){}},400);
+}
+/* ---------- registers ---------- */
+function secView(){
+  const items=SI.map(s=>{const ev=SE.filter(e=>e.item_id==s.id).sort((a,b)=>a.id-b.id);return {s,ev,last:ev.length?ev[ev.length-1].event:'received'}});
+  const SEV={received:'Received',in_custody:'In custody',returned:'Returned',encashed:'Encashed',destroyed:'Destroyed'};
+  return (perm('security')?`<div class="c"><b>🔐 ${tt('Record a valuable received')}</b><div class="g2"><div><label for="sf">${tt('Received from')}</label><input id="sf" type="text"></div><div><label for="sd">${tt('Description (e.g. DD, cheque, cash)')}</label><input id="sd" type="text"></div><div><label for="sv">${tt('Value / amount')}</label><input id="sv" type="text"></div><div><label for="st_">${tt('Related tapal (optional)')}</label><select id="st_" class="f">${opts(T.map(t=>[t.id,E(t.reg_no)+' — '+E(t.subject)]),'','—')}</select></div></div><label for="sn_">${tt('Note')}</label><input id="sn_" type="text"><p><button class="p" onclick="recSec()">${tt('Record')}</button></p></div>`:'')+
+  `<div class="c sc"><table><tr><th>${tt('Number')}</th><th>${tt('Date')}</th><th>${tt('From')}</th><th>${tt('Description')}</th><th>${tt('Status')}</th><th></th></tr>${items.map(x=>`<tr><td>${E(x.s.reg_no)}</td><td>${fmtD(x.s.received_on)}</td><td>${E(x.s.from_party)}</td><td>${E(x.s.description)}<div class="m">${E(x.s.value_note||'')}</div></td><td><span class="b ${['returned','encashed','destroyed'].includes(x.last)?'cl':'wn'}">${tt(SEV[x.last])}</span></td><td>${perm('security')&&!['returned','encashed','destroyed'].includes(x.last)?`<select id="se_${x.s.id}">${opts([['in_custody',tt('In custody')],['returned',tt('Returned')],['encashed',tt('Encashed')],['destroyed',tt('Destroyed')]])}</select> <button onclick="secEv(${x.s.id})">${tt('Update')}</button>`:''}</td></tr>`).join('')||`<tr><td colspan="6" class="m">${tt('Nothing here.')}</td></tr>`}</table></div>`;
+}
+async function recSec(){const r=await call('record_security',{p_from:$('sf').value,p_desc:$('sd').value,p_value:$('sv').value,p_tapal:$('st_').value?+$('st_').value:null,p_note:$('sn_').value});if(r.ok){await loadAll();render()}}
+async function secEv(id){const n=PR('കുറിപ്പ് (ഐച്ഛികം)','');if(n===null)return;const r=await call('security_event',{p_id:id,p_event:$('se_'+id).value,p_note:n});if(r.ok){await loadAll();render()}}
+const FREQ={weekly:'Weekly',monthly:'Monthly',quarterly:'Quarterly',half_yearly:'Half-yearly',yearly:'Yearly'};
+function perView(){
+  const ms=mySeats(),t=todayL();
+  return `<div class="c"><b>🔁 ${tt('New periodical (return / report)')}</b><div class="g2"><div><label for="pt">${tt('Title')}</label><input id="pt" type="text"></div><div><label for="pk">${tt('Type')}</label><select id="pk" class="f"><option value="receive">${tt('To receive')}</option><option value="issue">${tt('To send')}</option></select></div><div><label for="pp">${tt('From / to')}</label><input id="pp" type="text"></div><div><label for="pf">${tt('Frequency')}</label><select id="pf" class="f">${Object.entries(FREQ).map(x=>`<option value="${x[0]}">${tt(x[1])}</option>`).join('')}</select></div><div><label for="pn_">${tt('Next due date')}</label><input id="pn_" type="date"></div><div><label for="ps">${tt('Seat')}</label><select id="ps" class="f">${seatOpts(ms[0],undefined,ms)}</select></div></div><p><button class="p" onclick="newPer()">${tt('Add')}</button></p></div>
+  <div class="c sc"><table><tr><th>${tt('Title')}</th><th>${tt('Type')}</th><th>${tt('From / to')}</th><th>${tt('Frequency')}</th><th>${tt('Next due date')}</th><th>${tt('Seat')}</th><th></th></tr>${PE.filter(p=>p.active).map(p=>`<tr><td>${E(p.title)}</td><td>${p.kind=='issue'?tt('To send'):tt('To receive')}</td><td>${E(p.party)}</td><td>${tt(FREQ[p.frequency])}</td><td class="${p.next_due<=t?'er':''}">${fmtD(p.next_due)}${p.next_due<t?' ⚠':''}</td><td>${sn(p.seat_id)}</td><td>${ms.includes(p.seat_id)?`<button class="p" onclick="perDone(${p.id})">✔ ${tt('Done')}</button> <button onclick="perStop(${p.id})">${tt('Stop')}</button>`:''}</td></tr>`).join('')||`<tr><td colspan="7" class="m">${tt('Nothing here.')}</td></tr>`}</table></div>`;
+}
+async function newPer(){const r=await call('create_periodical',{p_title:$('pt').value,p_kind:$('pk').value,p_party:$('pp').value,p_freq:$('pf').value,p_next:$('pn_').value||null,p_seat:$('ps').value});if(r.ok){await loadAll();render()}}
+async function perDone(id){const n=PR('കുറിപ്പ് (ഐച്ഛികം)','');if(n===null)return;const r=await call('periodical_done',{p_id:id,p_note:n});if(r.ok){await loadAll();render()}}
+async function perStop(id){if(!C('ഈ അഭ്യർത്ഥന റദ്ദാക്കണോ?'))return;const r=await call('periodical_stop',{p_id:id});if(r.ok){await loadAll();render()}}
+function idxView(){
+  const c=F.filter(f=>f.status=='closed'&&f.index_head),un_=F.filter(f=>f.status=='closed'&&!f.index_head).length;
+  const tree={};c.forEach(f=>{const h=f.index_head,s=f.index_sub||'—';((tree[h]=tree[h]||{})[s]=tree[h][s]||[]).push(f)});
+  return `<div class="c m">${tt('Index of orders and decisions (head › sub head › title), prepared when files are closed.')} ${un_?'· '+un_+' '+tt('closed files are not indexed'):''}</div>`+
+  (Object.keys(tree).sort().map(h=>`<details class="c" open><summary><b>📂 ${E(h)}</b></summary>${Object.keys(tree[h]).sort().map(s=>`<div style="margin-left:14px"><b>${E(s)}</b>${tree[h][s].map(f=>`<div class="m" style="margin-left:14px">🧾 ${E(f.index_title||f.subject)} — <a href="#" onclick="openId=${f.id};render();return false">${E(f.no)}</a> · ${fmtD(f.closed_at)}</div>`).join('')}</div>`).join('')}</details>`).join('')||`<div class="c m">${tt('Nothing here.')}</div>`);
+}
+function inspView(){
+  const subs=subSeats(),pd=+CFG.pending_days||5;
+  return `<div class="c m">${tt('Files pending in the seats below yours (read-only). The manual asks superiors to inspect the personal registers regularly.')}</div>`+
+  `<div class="c sc"><table><tr><th>${tt('Seat')}</th><th>${tt('Person')}</th><th>${tt('Pending')}</th><th>${tt('Oldest (working days)')}</th><th>${tt('Delayed')}</th></tr>${subs.map(id=>{const a=F.filter(f=>f.status=='open'&&hold(f)==id),ages=a.map(f=>wdays(lastT(f)));return `<tr><td>${sn(id)}</td><td>${seatUsers(id).map(un).join(', ')||'—'}</td><td>${a.length}</td><td>${ages.length?Math.max(...ages):'—'}</td><td class="${ages.filter(x=>x>pd).length?'er':''}">${ages.filter(x=>x>pd).length}</td></tr>`}).join('')||`<tr><td colspan="5" class="m">${tt('Nothing here.')}</td></tr>`}</table></div>`+
+  list(F.filter(f=>f.status=='open'&&subs.includes(hold(f))),tt('Nothing is pending. Well done!'));
+}
+function attachCard(){
+  return `<div class="c"><b>📎 ${tt('Attach a document to a tapal')}</b><div class="r" style="margin-top:6px"><select id="ta_sel">${opts(T.map(t=>[t.id,E(t.reg_no)+' — '+E(t.subject)]))}</select></div><div style="margin-top:6px"><div class="r"><input id="upf_tx" type="file" style="max-width:260px"><button onclick="upTap()">⬆ ${tt('Upload')}</button></div></div></div>`;
+}
+async function upTap(){const id=+$('ta_sel').value;if(!id)return;const o=$('upf_tx'),n=$('upf_t'+id);const tmp=document.createElement('input');tmp.id='upf_t'+id;tmp.type='file';try{tmp.files=o.files}catch(e){}document.body.appendChild(tmp);await upAtt('t',id,null);tmp.remove()}
+function orgCard(){
+  return `<div class="c"><label for="orgn">${tt('Organisation name (shown in the header and on printed drafts)')}</label><div class="r"><input id="orgn" type="text" value="${E(CFG.org_name||'')}" style="max-width:420px"><button class="p" onclick="submitReq('set_setting',{key:'org_name',value:$('orgn').value.trim()})">${tt('Request the change')}</button></div></div>`;
+}
+
 async function addRem(id,s){
   const on=$('rd').value;if(!on){A('തീയതി തിരഞ്ഞെടുക്കുക');return}
   const r=await call('add_reminder',{p_file:id,p_seat:s,p_kind:$('rk').value,p_on:on,p_note:$('rn').value});
@@ -651,8 +455,11 @@ function newForm(){
   <div id="nfi"><label for="nfib">നിർദ്ദേശം നൽകിയ സീറ്റ്</label><select id="nfib" class="f"></select></div>
   <div id="nft"><label for="nftp">തപാൽ</label><select id="nftp" class="f">${opts(pt.map(t=>[t.id,E(t.reg_no)+' — '+E(t.subject)]),prefTapal,'— തിരഞ്ഞെടുക്കുക —')}</select></div>
   <label for="fs">വിഷയം</label><input id="fs" type="text"><label for="fp">പ്രയോറിറ്റി</label><select id="fp"><option value="n">സാധാരണ</option><option value="h">അടിയന്തിരം</option></select>
-  <label for="fdue">സമയപരിധി (ടൈം-ലിമിറ്റ് പേപ്പർ ആണെങ്കിൽ മാത്രം)</label><input id="fdue" type="date"><label for="fn">ആദ്യ നോട്ട്</label><textarea id="fn" rows="4"></textarea><p><button id="mkb" class="p" onclick="mk()">ഫയൽ തുടങ്ങുക</button></p><p class="m">ബാക്ക് ഫയൽ ചേർക്കാൻ ഫയൽ തുടങ്ങിയ ശേഷം അതിൽ തുറന്ന് "ബാക്ക് ഫയൽ" ഭാഗം ഉപയോഗിക്കുക.</p></div>`;
+  <label class="k"><input id="fcf" type="checkbox"> 🔒 ${tt('Confidential file (visible only to those who handle it)')}</label><label for="fdue">സമയപരിധി (ടൈം-ലിമിറ്റ് പേപ്പർ ആണെങ്കിൽ മാത്രം)</label><input id="fdue" type="date"><label for="fn">ആദ്യ നോട്ട്</label><textarea id="fn" rows="4"></textarea><p><button id="mkb" class="p" onclick="mk()">ഫയൽ തുടങ്ങുക</button></p><p class="m">ബാക്ക് ഫയൽ ചേർക്കാൻ ഫയൽ തുടങ്ങിയ ശേഷം അതിൽ തുറന്ന് "ബാക്ക് ഫയൽ" ഭാഗം ഉപയോഗിക്കുക.</p></div>`;
 }
+const tapalMine=()=>tapalMine0()+(myTapals().length?'<div class="c"><b>📎 '+tt('Attachments')+'</b>'+myTapals().map(t=>'<div class="m" style="margin-top:8px">'+E(t.reg_no)+' — '+E(t.subject)+'</div>'+attList(AT.filter(a=>a.tapal_id==t.id))+upCtl('t',t.id,null)).join('')+'</div>':'');
+const tapalReg=()=>tapalReg0()+attachCard();
+const setView=()=>orgCard()+setView0();
 function nfChange(){
   const o=$('nfo');if(!o)return;
   $('nfi').style.display=o.value=='instruction'?'':'none';$('nft').style.display=o.value=='tapal'?'':'none';
@@ -665,6 +472,7 @@ async function mk(){
   if(o=='instruction'){if(!$('nfib').value){A('നിർദ്ദേശം നൽകിയ സീറ്റ് തിരഞ്ഞെടുക്കുക');return}args.p_instructed_by=$('nfib').value}
   if(o=='tapal'){if(!$('nftp').value){A('തപാൽ തിരഞ്ഞെടുക്കുക');return}args.p_tapal=+$('nftp').value}
   if($('fdue').value)args.p_due_on=$('fdue').value;
+  if($('fcf').checked)args.p_confidential=true;
   $('mkb').disabled=true;
   const r=await call('create_file',args);
   if(!r.ok){$('mkb').disabled=false;return}
@@ -672,12 +480,12 @@ async function mk(){
 }
 
 /* ---------- തപാൽ ---------- */
-function tapalMine(){
+function tapalMine0(){
   const a=myTapals();
   if(!a.length)return '<div class="c m">ഫയലാക്കാനുള്ള തപാൽ ഒന്നുമില്ല.</div>';
   return a.map(t=>`<div class="c"><div class="r"><b>${E(t.reg_no)}</b><span>${E(t.subject)}</span><span class="b">${MODE[t.mode]}</span></div><div class="m">${t.instruction?'<b>നിർദ്ദേശം: '+E(t.instruction)+'</b><br>':''}അയച്ചത്: ${E(t.from_party)} · കത്ത് നമ്പർ: ${E(t.letter_no)||'—'} · കത്ത് തീയതി: ${fmtD(t.letter_date)||'—'} · ലഭിച്ചത്: ${fmtD(t.received_on)}</div><p><button class="p" onclick="prefTapal=${t.id};tab='new';render()">ഈ തപാലിൽ നിന്ന് ഫയൽ തുടങ്ങുക</button></p><div class="m">നിലവിലുള്ള ഫയലിൽ ചേർക്കാൻ: ആ ഫയൽ തുറന്ന് "വന്ന തപാൽ ചേർക്കുക" ഉപയോഗിക്കുക.</div></div>`).join('');
 }
-function tapalReg(){
+function tapalReg0(){
   return `<div class="c"><b>പുതിയ തപാൽ രേഖപ്പെടുത്തുക</b><div class="g2"><div><label for="tf">അയച്ചയാൾ / സ്ഥാപനം</label><input id="tf" type="text"></div><div><label for="tn">കത്ത് നമ്പർ</label><input id="tn" type="text"></div><div><label for="td">കത്ത് തീയതി</label><input id="td" type="date"></div><div><label for="tm">എത്തിയ രീതി</label><select id="tm" class="f">${opts(Object.entries(MODE))}</select></div></div><label for="ts">വിഷയം</label><input id="ts" type="text"><label for="ti">തപാൽ തുറന്നപ്പോൾ ഉദ്യോഗസ്ഥൻ നൽകിയ നിർദ്ദേശം (ഉണ്ടെങ്കിൽ)</label><input id="ti" type="text"><label for="tt">ഏത് സീറ്റിലേക്ക്</label><select id="tt" class="f">${seatOpts('','— തിരഞ്ഞെടുക്കുക —')}</select><p><button class="p" onclick="recT()">രേഖപ്പെടുത്തുക</button></p></div>
   <div class="c sc"><table><tr><th>നമ്പർ</th><th>ലഭിച്ചത്</th><th>അയച്ചയാൾ</th><th>വിഷയം</th><th>ഇപ്പോൾ</th><th></th></tr>${T.map(t=>{const d=tDisp(t.id),ev=d?F.find(f=>f.id==d.file_id):null;return `<tr><td>${E(t.reg_no)}</td><td>${fmtD(t.received_on)}</td><td>${E(t.from_party)}<div class="m">${E(t.letter_no)}</div></td><td>${E(t.subject)}${t.instruction?'<div class="m">നിർദ്ദേശം: '+E(t.instruction)+'</div>':''}</td><td>${d?'ഫയലിൽ: '+(ev?E(ev.no):'#'+d.file_id):sn(tSeat(t.id))}</td><td>${d?'':`<select id="rd${t.id}">${seatOpts(tSeat(t.id),undefined,ST.filter(s=>s.id!=tSeat(t.id)).map(s=>s.id))}</select> <button onclick="redT(${t.id})">മാറ്റുക</button>`}</td></tr>`}).join('')||'<tr><td colspan="6" class="m">ഒന്നുമില്ല</td></tr>'}</table></div>`;
 }
@@ -795,7 +603,7 @@ function describe(r){
     case 'set_chief_seat':return 'ചീഫ് സീറ്റ് ആക്കുക: '+sn(p.seat_id);
     case 'add_delegation':return 'ചുമതല കൈമാറ്റം: '+sn(p.seat_id)+' → '+un(p.user_id)+' ('+fmtD(p.from_date||r.requested_at)+' – '+(p.to_date?fmtD(p.to_date):'…')+')'+(p.reason?' · '+E(p.reason):'');
     case 'end_delegation':{const a=SA.find(x=>x.id==p.id);return 'ചുമതല അവസാനിപ്പിക്കുക: '+(a?sn(a.seat_id)+' → '+un(a.user_id):'#'+E(p.id))}
-    case 'set_setting':return 'പെൻഡിംഗ് മുന്നറിയിപ്പ് ദിവസം: '+E(p.value);
+    case 'set_setting':return p.key=='org_name'?tt('Organisation name')+': '+E(p.value):'പെൻഡിംഗ് മുന്നറിയിപ്പ് ദിവസം: '+E(p.value);
     case 'add_holiday':return 'അവധി ദിവസം ചേർക്കുക: '+fmtD(p.day)+' '+E(p.name||'');
     case 'del_holiday':return 'അവധി ദിവസം നീക്കുക: '+fmtD(p.day);
     case 'move_file':return 'ഫയൽ മാറ്റുക: '+fno(p.file_id)+' → '+sn(p.to_seat)+(p.note?' · '+E(p.note):'');
@@ -913,7 +721,7 @@ async function addDel(){
   const s=$('ds1').value,u=$('du1').value;if(!s||!u){A('സീറ്റും ആളും തിരഞ്ഞെടുക്കുക');return}
   await submitReq('add_delegation',{seat_id:s,user_id:u,from_date:$('dfr').value||todayS(),to_date:$('dto').value||null,reason:$('drs').value.trim()});
 }
-function setView(){
+function setView0(){
   const pd=+CFG.pending_days||5;
   return `<div class="c"><label for="pdv">"പെൻഡിംഗ്" മുന്നറിയിപ്പിനുള്ള പ്രവൃത്തി ദിവസം (മാനുവൽ: 5)</label><div class="r"><input id="pdv" type="number" min="1" max="90" value="${pd}" style="width:90px"><button class="p" onclick="submitReq('set_setting',{key:'pending_days',value:String(Math.max(1,Math.min(90,+$('pdv').value||5)))})">മാറ്റാൻ അഭ്യർത്ഥിക്കുക</button></div></div>
   <div class="c"><b>അവധി ദിവസങ്ങൾ</b> <span class="m">(ഞായർ സ്വയം ഒഴിവാകും; മറ്റ് അവധികൾ ഇവിടെ ചേർക്കുക)</span><div class="r" style="margin:6px 0"><input id="hd" type="date" style="width:170px"><input id="hn" type="text" placeholder="പേര്" style="flex:1;min-width:140px"><button class="p" onclick="addHol()">ചേർക്കാൻ അഭ്യർത്ഥിക്കുക</button></div>${HO.map(h=>`<div class="r"><span>${fmtD(h.day)}</span><span class="m">${E(h.name)}</span><button onclick="submitReq('del_holiday',{day:'${h.day}'})">നീക്കാൻ അഭ്യർത്ഥിക്കുക</button></div>`).join('')||'<span class="m">ഒന്നും ചേർത്തിട്ടില്ല</span>'}</div>`;
@@ -921,6 +729,6 @@ function setView(){
 async function addHol(){const d=$('hd').value;if(!d){A('തീയതി തിരഞ്ഞെടുക്കുക');return}await submitReq('add_holiday',{day:d,name:$('hn').value.trim()})}
 
 SB.auth.onAuthStateChange(ev=>{if(ev=='SIGNED_OUT'){me=null;uid=null;openId=null;render()}});
-document.addEventListener('visibilitychange',async()=>{if(document.visibilityState=='visible'&&me&&!openId&&!['new','treg','dreg','adm','srch'].includes(tab)){await loadAll();if(me)render()}});
+document.addEventListener('visibilitychange',async()=>{if(document.visibilityState=='visible'&&me&&!openId&&!['new','treg','dreg','adm','srch','sec','per'].includes(tab)){await loadAll();if(me)render()}});
 boot();
 </script></body></html>
